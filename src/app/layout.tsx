@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { fontSans } from "@/app/fonts";
+import ThemeProvider from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,7 +15,16 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="en">
-      <body className={fontSans.className}>{children}</body>
+      <body className={fontSans.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 };
