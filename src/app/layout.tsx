@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { fontSans } from "@/app/fonts";
 import ThemeProvider from "@/components/theme-provider";
+import DevUtils from "./components/dev-utils/dev-utils";
 
 export const metadata: Metadata = {
   title: "Tristan Chin",
@@ -21,7 +22,7 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={fontSans.className}>
         <ThemeProvider
           attribute="class"
@@ -29,6 +30,7 @@ const RootLayout = ({
           enableSystem
           disableTransitionOnChange
         >
+          {process.env.NODE_ENV === "development" && <DevUtils />}
           {children}
         </ThemeProvider>
       </body>
