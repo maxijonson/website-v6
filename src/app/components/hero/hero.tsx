@@ -4,10 +4,16 @@ import Image from "next/image";
 import HeroBackground from "./hero-background/hero-background";
 import HeroPattern from "$/svg/hero-pattern.svg?url";
 import HeroPatternDark from "$/svg/hero-pattern-dark.svg?url";
+import { cn } from "@/lib/utils";
 
 const Hero = () => {
   return (
-    <div className="relative flex h-screen w-full flex-col justify-center overflow-hidden bg-background align-middle after:absolute after:bottom-0 after:h-44 after:w-full after:bg-gradient-to-b after:from-transparent after:to-stone-50 after:to-75% dark:after:to-stone-950">
+    <div
+      className={cn(
+        "relative flex h-screen w-full flex-col justify-center overflow-hidden bg-background align-middle",
+        "after:absolute after:bottom-0 after:h-44 after:w-full after:bg-gradient-to-b after:from-transparent after:to-stone-50 after:to-75% dark:after:to-stone-950",
+      )}
+    >
       <Image
         src={HeroPattern}
         alt="Hero pattern"
