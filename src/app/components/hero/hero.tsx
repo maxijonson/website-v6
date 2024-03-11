@@ -1,14 +1,16 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import profileImage from "$/image/tristan/ipnos.jpg";
+import TCLogo from "$/svg/tristan/logo/logo-color-transparent.svg";
 import Image from "next/image";
 import HeroBackground from "./hero-background/hero-background";
 import HeroPattern from "$/svg/hero-pattern.svg?url";
 import HeroPatternDark from "$/svg/hero-pattern-dark.svg?url";
 import { cn } from "@/lib/utils";
+import { Suspense } from "react";
 
 const Hero = () => {
   return (
-    <div
+    <section
       className={cn(
         "relative flex h-screen w-full flex-col justify-center overflow-hidden bg-background align-middle",
         "after:absolute after:bottom-0 after:h-44 after:w-full after:bg-gradient-to-b after:from-transparent after:to-stone-50 after:to-75% dark:after:to-stone-950",
@@ -34,9 +36,17 @@ const Hero = () => {
           <AvatarImage asChild src={profileImage.src}>
             <Image src={profileImage} alt="Tristan Chin" priority />
           </AvatarImage>
-          <AvatarFallback className="bg-blue-900 text-6xl font-bold text-white">
-            TC
-          </AvatarFallback>
+          <Suspense
+            fallback={
+              <AvatarFallback className="bg-blue-900 text-6xl font-bold text-white">
+                TC
+              </AvatarFallback>
+            }
+          >
+            <AvatarFallback className="bg-transparent">
+              <TCLogo className="size-36 animate-pulse" />
+            </AvatarFallback>
+          </Suspense>
         </Avatar>
         <h1 className="pb-2 text-center text-5xl font-bold">Tristan Chin</h1>
         <h2 className="text-md text-center">
@@ -44,7 +54,7 @@ const Hero = () => {
           Web Developer
         </h2>
       </div>
-    </div>
+    </section>
   );
 };
 
