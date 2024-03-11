@@ -14,9 +14,9 @@
       id="ffflurry-grad"
       gradientTransform="rotate(270)"
     >
-      <stop stop-color="#fafaf9" stop-opacity="1" offset="0%"></stop>
-      <stop stop-color="#d6d3d1" stop-opacity="1" offset="45%"></stop>
-      <stop stop-color="#a8a29e" stop-opacity="1" offset="100%"></stop>
+      <stop stop-color="#0c0a09" stop-opacity="1" offset="0%"></stop>
+      <stop stop-color="#1c1917" stop-opacity="1" offset="45%"></stop>
+      <stop stop-color="#292524" stop-opacity="1" offset="100%"></stop>
     </linearGradient>
   </defs>
   <g fill="url(#ffflurry-grad)">

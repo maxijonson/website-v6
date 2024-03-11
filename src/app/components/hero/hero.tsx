@@ -3,16 +3,23 @@ import profileImage from "$/image/tristan/ipnos.jpg";
 import Image from "next/image";
 import HeroBackground from "./hero-background/hero-background";
 import HeroPattern from "$/svg/hero-pattern.svg?url";
+import HeroPatternDark from "$/svg/hero-pattern-dark.svg?url";
 
 const Hero = () => {
   return (
-    <div className="relative flex h-screen w-full flex-col justify-center overflow-hidden bg-gray-200 align-middle dark:bg-background">
+    <div className="relative flex h-screen w-full flex-col justify-center overflow-hidden bg-background align-middle after:absolute after:bottom-0 after:h-44 after:w-full after:bg-gradient-to-b after:from-transparent after:to-stone-50 after:to-75% dark:after:to-stone-950">
       <Image
         src={HeroPattern}
         alt="Hero pattern"
         fill
-        className="object-cover"
-        style={{ animationDuration: "60s" }}
+        className="object-cover dark:invisible"
+        priority
+      />
+      <Image
+        src={HeroPatternDark}
+        alt="Hero pattern dark"
+        fill
+        className="invisible object-cover dark:visible"
         priority
       />
       <HeroBackground />
