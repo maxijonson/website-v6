@@ -3,6 +3,7 @@ import profileImage from "$/image/tristan/dci.jpg";
 import TCLogo from "$/svg/tristan/logo/logo-color-transparent.svg";
 import Image from "next/image";
 import { Suspense } from "react";
+import { cn } from "@/lib/utils";
 
 const Intro = () => {
   return (
@@ -32,7 +33,12 @@ const Intro = () => {
           </Avatar>
         </div>
         <div className="grow">
-          <h1 className="pb-6 text-center text-3xl font-bold md:text-left md:text-5xl">
+          <h1
+            className={cn(
+              "relative w-fit pb-6 pt-6 text-center text-3xl font-bold md:text-left md:text-5xl",
+              "before:absolute before:left-0 before:top-0 before:h-2 before:w-32 before:rounded before:bg-stone-600 dark:before:bg-stone-300",
+            )}
+          >
             👋 Hello there!
           </h1>
           <div className="flex flex-col gap-3">
