@@ -9,9 +9,14 @@ const Intro = () => {
     <section className="m-auto max-w-5xl px-6 py-4" id="intro">
       <div className="flex gap-12">
         <div className="hidden items-center justify-center md:flex">
-          <Avatar className="size-52 rounded-3xl dark:grayscale">
+          <Avatar className="h-full w-60 rounded-3xl dark:grayscale">
             <AvatarImage asChild src={profileImage.src}>
-              <Image src={profileImage} alt="Tristan Chin" />
+              <Image
+                src={profileImage}
+                alt="Tristan Chin"
+                fill
+                className="object-cover"
+              />
             </AvatarImage>
             <Suspense
               fallback={
