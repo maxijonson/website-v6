@@ -40,7 +40,7 @@ const HeroLogos = () => {
       />
       <HeroLogo
         logo={LogoTs}
-        containerClassName="rotate-[60deg]"
+        containerClassName="rotate-[340deg]"
         className="animation-delay-[3900ms] dark:drop-shadow-[0_0_5px_#3178c6]"
       />
       <HeroLogo
@@ -70,7 +70,7 @@ const HeroLogos = () => {
       />
       <HeroLogo
         logo={LogoJava}
-        containerClassName="rotate-[180deg]"
+        containerClassName="rotate-[240deg]"
         className="animation-delay-[2700ms] dark:drop-shadow-[0_0_5px_#E76F00]"
       />
       <HeroLogo
@@ -85,7 +85,7 @@ const HeroLogos = () => {
       />
       <HeroLogo
         logo={LogoNext}
-        containerClassName="rotate-[240deg]"
+        containerClassName="rotate-[180deg]"
         className="animation-delay-[300ms] dark:drop-shadow-[0_0_5px_#FFFFFF]"
       />
       <HeroLogo
@@ -110,7 +110,7 @@ const HeroLogos = () => {
       />
       <HeroLogo
         logo={LogoMysql}
-        containerClassName="rotate-[340deg]"
+        containerClassName="rotate-[60deg]"
         className="animation-delay-[3600ms] dark:drop-shadow-[0_0_5px_#00758f]"
       />
     </Suspense>

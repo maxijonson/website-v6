@@ -12,7 +12,7 @@ const Hero = () => {
     <section
       className={cn(
         "relative flex h-screen w-full flex-col justify-center overflow-hidden bg-background align-middle",
-        "after:absolute after:bottom-0 after:h-44 after:w-full after:bg-gradient-to-b after:from-transparent after:to-stone-50 after:to-75% dark:after:to-stone-950",
+        "after:absolute after:bottom-[-1px] after:h-44 after:w-full after:bg-gradient-to-b after:from-transparent after:to-stone-50 after:to-75% dark:after:to-stone-950",
       )}
     >
       <HeroPattern />
