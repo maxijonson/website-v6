@@ -6,7 +6,7 @@ import type React from "react";
 interface HeroLogoProps {
   logo:
     | React.ComponentType<SVGProps<SVGSVGElement>>
-    | React.LazyExoticComponent<React.ComponentType<SVGProps<SVGSVGElement>>>;
+    | React.LazyExoticComponent<React.FC<React.SVGProps<SVGElement>>>;
   containerClassName?: string;
   className?: string;
 }

@@ -2,11 +2,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import profileImage from "$/image/tristan/ipnos.jpg";
 import TCLogo from "$/svg/tristan/logo/logo-color-transparent.svg";
 import Image from "next/image";
-import HeroBackground from "./hero-background/hero-background";
-import HeroPattern from "$/svg/hero-pattern.svg?url";
-import HeroPatternDark from "$/svg/hero-pattern-dark.svg?url";
+import HeroLogos from "./hero-logos/hero-logos";
 import { cn } from "@/lib/utils";
 import { Suspense } from "react";
+import HeroPattern from "./hero-pattern/hero-pattern";
 
 const Hero = () => {
   return (
@@ -16,21 +15,8 @@ const Hero = () => {
         "after:absolute after:bottom-0 after:h-44 after:w-full after:bg-gradient-to-b after:from-transparent after:to-stone-50 after:to-75% dark:after:to-stone-950",
       )}
     >
-      <Image
-        src={HeroPattern}
-        alt="Hero pattern"
-        fill
-        className="object-cover dark:invisible"
-        priority
-      />
-      <Image
-        src={HeroPatternDark}
-        alt="Hero pattern dark"
-        fill
-        className="invisible object-cover dark:visible"
-        priority
-      />
-      <HeroBackground />
+      <HeroPattern />
+      <HeroLogos />
       <div className="z-10 flex flex-col">
         <Avatar className="mb-4 size-40 self-center">
           <AvatarImage asChild src={profileImage.src}>

@@ -20,7 +20,7 @@ const LogoSanity = React.lazy(() => import("$/svg/logo/logo-sanity.svg"));
 const LogoSass = React.lazy(() => import("$/svg/logo/logo-sass.svg"));
 const LogoTs = React.lazy(() => import("$/svg/logo/logo-typescript.svg"));
 
-const HeroBackground = () => {
+const HeroLogos = () => {
   return (
     <Suspense fallback={null}>
       <HeroLogo
@@ -117,4 +117,4 @@ const HeroBackground = () => {
   );
 };
 
-export default HeroBackground;
+export default HeroLogos;

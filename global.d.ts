@@ -10,7 +10,7 @@ declare module "*.svg?url" {
 }
 
 declare module "*.svg" {
-  import React from "react";
-  const content: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  import { FC, SVGProps } from "react";
+  const content: FC<SVGProps<SVGElement>>;
   export default content;
 }
