@@ -14,7 +14,7 @@ const HeroPattern = () => {
     const rects = ref.current.querySelectorAll("rect");
     rects.forEach((rect) => {
       rect.classList.add(animateShootingStars);
-      rect.style.animationDelay = `${Math.random() * 5000}ms`;
+      rect.style.animationDelay = `${Math.random() * 10000}ms`;
     });
     ref.current.classList.remove("opacity-0");
   };
