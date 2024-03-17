@@ -46,8 +46,8 @@ const Intro = () => {
               make great software!
             </p>
             <p className={cn("text-center text-lg", "md:text-left md:text-xl")}>
-              Other than development, a huge Star Wars fan! I've seen all of the
-              movie and series... a couple of times! My favorite Jedi has to be
+              Other than development, a huge Star Wars fan! I've seen all the
+              movies and series... a couple of times! My favorite Jedi has to be
               Ahsoka Tano, for her unique fighting style and wisdom. I also
               mostly listen to EDM music. While I listen to many artists in the
               genre, my favorite is Illenium, with his great vocal chops!
