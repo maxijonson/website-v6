@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
-import { animationDelayPlugin } from "./tailwind/plugins/animation-delay";
+import { animationDelayPlugin } from "./src/tailwind/plugins/animation-delay";
 
 const config = {
   darkMode: ["class"],

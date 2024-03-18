@@ -15,7 +15,7 @@ const Skill = ({ name, icon, proficiency }: SkillProps) => {
           <div
             key={`${i}`}
             className={cn("size-5", {
-              grayscale: proficiency - 1 < i,
+              "opacity-25 grayscale": proficiency - 1 < i,
             })}
           >
             {icon}

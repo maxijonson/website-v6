@@ -9,10 +9,10 @@ interface SkillsGroupProps {
 
 const SkillsGroup = ({ name, children }: SkillsGroupProps) => {
   return (
-    <Card className="w-">
+    <Card>
       <CardHeader>
         <CardTitle
-          className={cn("text-2xl font-bold uppercase", "md:text-4xl")}
+          className={cn("text-2xl font-bold uppercase", "md:text-3xl")}
         >
           {name}
         </CardTitle>
