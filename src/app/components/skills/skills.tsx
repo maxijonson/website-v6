@@ -14,6 +14,7 @@ import LogoAngular from "$/svg/logo/logo-angular.svg";
 import LogoNode from "$/svg/logo/logo-node.svg";
 import LogoNest from "$/svg/logo/logo-nest.svg";
 import LogoSass from "$/svg/logo/logo-sass.svg";
+import LogoSanity from "$/svg/logo/logo-sanity.svg";
 import LogoJava from "$/svg/logo/logo-java.svg";
 import LogoCSharp from "$/svg/logo/logo-csharp.svg";
 import LogoPython from "$/svg/logo/logo-python.svg";
@@ -21,6 +22,7 @@ import LogoCpp from "$/svg/logo/logo-cpp.svg";
 import LogoRust from "$/svg/logo/logo-rust.svg";
 import LogoFirebase from "$/svg/logo/logo-firebase.svg";
 import LogoMongoDB from "$/svg/logo/logo-mongodb.svg";
+import LogoPrisma from "$/svg/logo/logo-prisma.svg";
 import LogoMySQL from "$/svg/logo/logo-mysql.svg";
 import LogoOracle from "$/svg/logo/logo-oracle.svg";
 import LogoSQLServer from "$/svg/logo/logo-sqlserver.svg";
@@ -115,6 +117,7 @@ const Skills = () => {
           <Skill name="Node" icon={<LogoNode />} proficiency={4} />
           <Skill name="NestJS" icon={<LogoNest />} proficiency={4} />
           <Skill name="SCSS" icon={<LogoSass />} proficiency={4} />
+          <Skill name="Sanity" icon={<LogoSanity />} proficiency={3} />
         </SkillsGroup>
         <SkillsGroup name="Application">
           <Skill name="Java" icon={<LogoJava />} proficiency={3} />
@@ -130,6 +133,7 @@ const Skills = () => {
         <SkillsGroup name="Database">
           <Skill name="Firebase" icon={<LogoFirebase />} proficiency={4} />
           <Skill name="MongoDB" icon={<LogoMongoDB />} proficiency={3} />
+          <Skill name="Prisma" icon={<LogoPrisma />} proficiency={3} />
           <Skill name="MySQL" icon={<LogoMySQL />} proficiency={3} />
           <Skill name="Oracle SQL" icon={<LogoOracle />} proficiency={2} />
           <Skill name="SQL Server" icon={<LogoSQLServer />} proficiency={2} />
