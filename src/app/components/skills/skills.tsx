@@ -105,6 +105,7 @@ const Skills = () => {
         <SkillsGroup name="Web">
           <Skill name="HTML" icon={<LogoHtml />} proficiency={5} />
           <Skill name="CSS" icon={<LogoCss />} proficiency={5} />
+          <Skill name="SCSS" icon={<LogoSass />} proficiency={4} />
           <Skill name="JavaScript" icon={<LogoJavaScript />} proficiency={5} />
           <Skill name="TypeScript" icon={<LogoTypeScript />} proficiency={5} />
           <Skill name="React" icon={<LogoReact />} proficiency={5} />
@@ -116,7 +117,6 @@ const Skills = () => {
           <Skill name="Angular" icon={<LogoAngular />} proficiency={3} />
           <Skill name="Node" icon={<LogoNode />} proficiency={4} />
           <Skill name="NestJS" icon={<LogoNest />} proficiency={4} />
-          <Skill name="SCSS" icon={<LogoSass />} proficiency={4} />
           <Skill name="Sanity" icon={<LogoSanity />} proficiency={3} />
         </SkillsGroup>
         <SkillsGroup name="Application">
