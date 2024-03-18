@@ -1,3 +1,4 @@
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 import HomeHeading from "../home-heading/home-heading";
 import HomeSection from "../home-section/home-section";
 import SkillsGroup from "./skills-group/skills-group";
@@ -30,6 +31,12 @@ import LogoVercel from "$/svg/logo/logo-vercel.svg";
 import LogoBash from "$/svg/logo/logo-bash.svg";
 import LogoAndroid from "$/svg/logo/logo-android.svg";
 import LogoSwift from "$/svg/logo/logo-swift.svg";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { Button } from "@/components/ui/button";
 
 const Skills = () => {
   return (
@@ -40,32 +47,50 @@ const Skills = () => {
         specialize in Web technologies, I've learned a thing or two in other
         fields while I was in school and in past job experiences.
       </p>
-      <p className={cn("pb-4 text-center text-lg", "md:text-left md:text-xl")}>
-        I'm aware rating skills on a scale of 1 to 5 is subjective and skills
-        are not really measurable that way, but here's a quick rundown of how I
-        rated each of them:
-      </p>
-      <ul className={cn("pb-4 text-center text-lg", "md:text-left md:text-xl")}>
-        <li>
-          <b>1</b> - I've tried it, but can barely make something with it.
-        </li>
-        <li>
-          <b>2</b> - I've used it, but can't make anything beyond simple with
-          it.
-        </li>
-        <li>
-          <b>3</b> - I've got a good grasp of it and can make something decent
-          with it.
-        </li>
-        <li>
-          <b>4</b> - I've used it multiple times and can get a project done with
-          it by myself.
-        </li>
-        <li>
-          <b>5</b> - I use this almost every day! They're usually my
-          technologies of choice when creating my own projects.
-        </li>
-      </ul>
+      <Collapsible className="mb-6">
+        <CollapsibleTrigger asChild>
+          <Button variant="outline">
+            <InfoCircledIcon className="mr-2" /> About the ratings
+          </Button>
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <p
+            className={cn(
+              "pb-4 text-center text-lg",
+              "md:text-left md:text-xl",
+            )}
+          >
+            I'm aware rating skills on a scale of 1 to 5 is subjective and
+            skills are not really measurable that way, but here's a quick
+            rundown of how I rated each of them:
+          </p>
+          <ul
+            className={cn(
+              "pb-4 text-center text-lg",
+              "md:text-left md:text-xl",
+            )}
+          >
+            <li>
+              <b>1</b> - I've tried it, but can barely make something with it.
+            </li>
+            <li>
+              <b>2</b> - I've used it, but only for simple use cases.
+            </li>
+            <li>
+              <b>3</b> - I've got a good grasp of it and can make something
+              decent with it.
+            </li>
+            <li>
+              <b>4</b> - I've used it multiple times and can get a project done
+              with it by myself.
+            </li>
+            <li>
+              <b>5</b> - I use this almost every day! They're usually my
+              technologies of choice when creating my own projects.
+            </li>
+          </ul>
+        </CollapsibleContent>
+      </Collapsible>
       <div
         className={cn(
           "grid grid-cols-1 gap-4",
@@ -86,7 +111,7 @@ const Skills = () => {
           />
           <Skill name="Angular" icon={<LogoAngular />} proficiency={3} />
           <Skill name="Node" icon={<LogoNode />} proficiency={4} />
-          <Skill name="NestJS" icon={<LogoNest />} proficiency={5} />
+          <Skill name="NestJS" icon={<LogoNest />} proficiency={4} />
           <Skill name="SCSS" icon={<LogoSass />} proficiency={4} />
         </SkillsGroup>
         <SkillsGroup name="Application">
