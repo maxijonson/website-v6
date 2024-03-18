@@ -49,9 +49,11 @@ const Skills = () => {
       </p>
       <Collapsible className="mb-6">
         <CollapsibleTrigger asChild>
-          <Button variant="outline">
-            <InfoCircledIcon className="mr-2" /> About the ratings
-          </Button>
+          <div className={cn("flex justify-center", "md:justify-start")}>
+            <Button variant="outline">
+              <InfoCircledIcon className="mr-2" /> About the ratings
+            </Button>
+          </div>
         </CollapsibleTrigger>
         <CollapsibleContent>
           <p
