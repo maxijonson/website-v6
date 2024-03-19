@@ -5,7 +5,6 @@ import {
   CardTitle,
   CardDescription,
   CardHeader,
-  CardContent,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { StaticImageData } from "next/image";
@@ -48,7 +47,7 @@ const Project = ({
     <Card className="flex h-full min-h-28 flex-col">
       <CardHeader
         className={cn(
-          "flex flex-col gap-2 grow",
+          "flex grow flex-col gap-2",
           "md:flex-row-reverse md:justify-between md:gap-6",
         )}
       >
