@@ -2,6 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useEffect } from "react";
+import BreakpointOverlay from "./breakpoint-overlay/breakpoint-overlay";
 
 const DevUtils = () => {
   const { setTheme, theme } = useTheme();
@@ -13,7 +14,11 @@ const DevUtils = () => {
     };
   }, [setTheme, theme]);
 
-  return null;
+  return (
+    <>
+      <BreakpointOverlay />
+    </>
+  );
 };
 
 export default DevUtils;

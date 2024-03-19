@@ -44,7 +44,7 @@ const Skills = () => {
   return (
     <HomeSection id="skills">
       <HomeHeading>Skills</HomeHeading>
-      <p className={cn("pb-4 text-center text-lg", "md:text-left md:text-xl")}>
+      <p className={cn("pb-4 text-lg", "md:text-xl")}>
         Here's a list of my technical skills. As you can see, while I mostly
         specialize in Web technologies, I've learned a thing or two in other
         fields while I was in school and in past job experiences.
@@ -58,22 +58,12 @@ const Skills = () => {
           </div>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <p
-            className={cn(
-              "pb-4 text-center text-lg",
-              "md:text-left md:text-xl",
-            )}
-          >
+          <p className={cn("pb-4 text-lg", "md:text-xl")}>
             I'm aware rating skills on a scale of 1 to 5 is subjective and
             skills are not really measurable that way, but here's a quick
             rundown of how I rated each of them:
           </p>
-          <ul
-            className={cn(
-              "pb-4 text-center text-lg",
-              "md:text-left md:text-xl",
-            )}
-          >
+          <ul className={cn("pb-4 text-lg", "md:text-xl")}>
             <li>
               <b>1</b> - I've tried it, but can barely make something with it.
             </li>
