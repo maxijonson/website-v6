@@ -60,15 +60,18 @@ const Skills = () => {
         <CollapsibleContent>
           <p className={cn("pb-4 text-lg", "md:text-xl")}>
             I'm aware rating skills on a scale of 1 to 5 is subjective and
-            skills are not really measurable that way, but here's a quick
-            rundown of how I rated each of them:
+            skills are not really measurable that way, but since this isn't a CV
+            and long explanations don't make pretty layouts like this one,
+            here's the general idea of what each rating means (how I
+            subjectively chose them!):
           </p>
           <ul className={cn("pb-4 text-lg", "md:text-xl")}>
             <li>
-              <b>1</b> - I've tried it, but can barely make something with it.
+              <b>1</b> - I've tried it or haven't used it in at least 3 years.
             </li>
             <li>
-              <b>2</b> - I've used it, but only for simple use cases.
+              <b>2</b> - I've used it a little or haven't used it in at least a
+              year.
             </li>
             <li>
               <b>3</b> - I've got a good grasp of it and can make something
@@ -110,10 +113,10 @@ const Skills = () => {
           <Skill name="Sanity" icon={<LogoSanity />} proficiency={3} />
         </SkillsGroup>
         <SkillsGroup name="Application">
-          <Skill name="Java" icon={<LogoJava />} proficiency={3} />
+          <Skill name="Java" icon={<LogoJava />} proficiency={2} />
           <Skill name="C#" icon={<LogoCSharp />} proficiency={3} />
           <Skill name="Python" icon={<LogoPython />} proficiency={3} />
-          <Skill name="C++" icon={<LogoCpp />} proficiency={2} />
+          <Skill name="C++" icon={<LogoCpp />} proficiency={1} />
           <Skill
             name="Rust"
             icon={<LogoRust className="dark:drop-shadow-[0_0_1px_#FFFFFF]" />}
@@ -140,7 +143,7 @@ const Skills = () => {
         </SkillsGroup>
         <SkillsGroup name="Other">
           <Skill name="Bash" icon={<LogoBash />} proficiency={4} />
-          <Skill name="Android" icon={<LogoAndroid />} proficiency={2} />
+          <Skill name="Android" icon={<LogoAndroid />} proficiency={1} />
           <Skill name="Swift" icon={<LogoSwift />} proficiency={1} />
         </SkillsGroup>
       </div>
