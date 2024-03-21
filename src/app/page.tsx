@@ -1,3 +1,4 @@
+import Experience from "./components/experience/experience";
 import Hero from "./components/hero/hero";
 import Intro from "./components/intro/intro";
 import Projects from "./components/projects/projects";
@@ -10,6 +11,7 @@ const Home = () => {
       <Intro />
       <Skills />
       <Projects />
+      <Experience />
     </main>
   );
 };

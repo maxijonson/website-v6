@@ -5,13 +5,12 @@ import HomeSection from "../home-section/home-section";
 import Link from "next/link";
 import Project from "./project/project";
 import type React from "react";
-import ImgCuisto from "$/image/projects/cuisto.png";
-import ImgIntellibot from "$/image/projects/intellibot.png";
-import ImgGptTurbo from "$/image/projects/gpt-turbo.png";
-import ImgNuclui from "$/image/projects/nuclui.png";
-import ImgPunchbot from "$/image/projects/punchbot.png";
-import ImgReact from "$/image/projects/react.jpg";
-import ImgVideoMerger from "$/image/projects/video-merger.png";
+import imageCuisto from "$/image/project/cuisto.png";
+import imageIntellibot from "$/image/project/intellibot.png";
+import imageGptTurbo from "$/image/project/gpt-turbo.png";
+import imageNuclui from "$/image/project/nuclui.png";
+import imagePunchbot from "$/image/project/punchbot.png";
+import imageVideoMerger from "$/image/project/video-merger.png";
 import { SiNpm, SiSpigotmc } from "react-icons/si";
 import { VscGlobe } from "react-icons/vsc";
 
@@ -37,7 +36,7 @@ const Projects = () => {
         <Project
           name="GPT Turbo"
           description="An isomorphic TypeScript library to interact with OpenAI's Chat Completion GPT models and manage conversation history."
-          image={ImgGptTurbo}
+          image={imageGptTurbo}
           links={[
             {
               label: "GitHub",
@@ -86,7 +85,7 @@ const Projects = () => {
         <Project
           name="Video Merger"
           description="A simple web API to merge multiple videos into one. Built to work with iOS Shortcuts, use this tool to merge your videos straight from your Photos app!"
-          image={ImgVideoMerger}
+          image={imageVideoMerger}
           links={[
             {
               label: "GitHub",
@@ -98,7 +97,7 @@ const Projects = () => {
         <Project
           name="Nuclui"
           description="A React UI framework, built with TypeScript, to make your developement easier so you can give more focus on your app and less on the design!"
-          image={ImgNuclui}
+          image={imageNuclui}
           links={[
             {
               label: "GitHub",
@@ -132,7 +131,7 @@ const Projects = () => {
         <Project
           name="Intellibot"
           description="The ultimate multipurpose Discord bot."
-          image={ImgIntellibot}
+          image={imageIntellibot}
           links={[
             {
               label: "GitHub",
@@ -144,7 +143,7 @@ const Projects = () => {
         <Project
           name="Punchbot"
           description="Minimalist Discord bot to keep track of time worked on projects."
-          image={ImgPunchbot}
+          image={imagePunchbot}
           links={[
             {
               label: "GitHub",
@@ -185,7 +184,7 @@ const Projects = () => {
         <Project
           name="React (Wallpaper Engine)"
           description="Have an audio visualizer as your desktop wallpaper. Includes 100+ customizable options."
-          image={ImgReact}
+          initials="RE"
           links={[
             {
               label: "GitHub",
@@ -197,7 +196,7 @@ const Projects = () => {
         <Project
           name="Cuisto"
           description="Restaurant system to manage inventory, suppliers and orders."
-          image={ImgCuisto}
+          image={imageCuisto}
           links={[
             {
               label: "GitHub",

@@ -52,7 +52,7 @@ const Project = ({
         )}
       >
         <div className="flex justify-center">
-          <Avatar className="size-16">
+          <Avatar className={cn("size-16")}>
             {image ? (
               <AvatarImage asChild src={image.src}>
                 <Image src={image} alt={name} />
