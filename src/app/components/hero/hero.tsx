@@ -36,7 +36,7 @@ const Hero = () => {
           </Suspense>
         </Avatar>
         <h1 className="pb-2 text-center text-5xl font-bold">Tristan Chin</h1>
-        <h2 className="text-md text-center">
+        <h2 className="text-md text-center text-muted-foreground">
           B. Eng. Software Engineering & <br />
           Web Developer
         </h2>
