@@ -47,23 +47,20 @@ const Company = ({
         </div>
       </div>
       <div className="flex grow flex-col pb-5">
-        <h2 className="text-lg font-bold">{name}</h2>
-        <span className={cn("text-sm text-stone-500", "dark:text-stone-400")}>
-          {from} - {to || "Present"}
-        </span>
         <div className="flex justify-between">
-          <span
-            className={cn(
-              "text-sm italic text-stone-500",
-              "dark:text-stone-400",
-            )}
-          >
-            {position}
-          </span>
+          <h2 className="text-lg font-bold">{name}</h2>
           <Badge variant="outline" className="ml-2">
             {type}
           </Badge>
         </div>
+        <span className={cn("text-sm text-stone-500", "dark:text-stone-400")}>
+          {from} - {to || "Present"}
+        </span>
+        <span
+          className={cn("text-sm italic text-stone-500", "dark:text-stone-400")}
+        >
+          {position}
+        </span>
         {description && (
           <p className={cn("text-stone-700", "dark:text-stone-300")}>
             {description}
