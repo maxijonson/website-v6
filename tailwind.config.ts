@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 import { animationDelayPlugin } from "./src/tailwind/plugins/animation-delay";
+import { Breakpoint } from "./src/utils/breakpoint";
 
 const config = {
   darkMode: ["class"],
@@ -11,7 +12,11 @@ const config = {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1400px",
+        sm: `${Breakpoint.smpx}`,
+        md: `${Breakpoint.mdpx}`,
+        lg: `${Breakpoint.lgpx}`,
+        xl: `${Breakpoint.xlpx}`,
+        "2xl": `${Breakpoint.xxlpx}`,
       },
     },
     extend: {

@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import * as classes from "./credential.css";
+import { Breakpoint } from "@/utils/breakpoint";
 
 export interface CredentialProps {
   name: string;
@@ -30,7 +31,13 @@ const Credential = ({
           classes.imageContainer,
         )}
       >
-        <Image src={image} alt={name} fill className="object-cover" />
+        <Image
+          src={image}
+          alt={name}
+          fill
+          className="object-cover"
+          sizes={`(max-width: ${Breakpoint.mdpx}) 100vw, 50vw`}
+        />
       </div>
       <div className="relative flex flex-col items-start p-6">
         <Badge>{type}</Badge>
