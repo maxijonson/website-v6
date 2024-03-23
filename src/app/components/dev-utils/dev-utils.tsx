@@ -1,21 +1,10 @@
-"use client";
-
-import { useTheme } from "next-themes";
-import { useEffect } from "react";
 import BreakpointOverlay from "./breakpoint-overlay/breakpoint-overlay";
+import ToggleTheme from "./toggle-theme/toggle-theme";
 
 const DevUtils = () => {
-  const { setTheme, theme } = useTheme();
-
-  useEffect(() => {
-    (window as any).toggleTheme = () => {
-      if (!theme) return;
-      setTheme(theme === "light" ? "dark" : "light");
-    };
-  }, [setTheme, theme]);
-
   return (
     <>
+      <ToggleTheme />
       <BreakpointOverlay />
     </>
   );

@@ -8,7 +8,7 @@ import ContactCard from "./contact-card/contact-card";
 
 const Contact = () => {
   return (
-    <HomeSection id="contact" className="pb-24">
+    <HomeSection id="contact">
       <HomeHeading>Contact</HomeHeading>
       <div className="flex flex-col items-center gap-4">
         <div className="flex gap-3">

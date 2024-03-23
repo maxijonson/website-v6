@@ -8,15 +8,24 @@ import Skills from "./components/skills/skills";
 
 const Home = () => {
   return (
-    <main>
-      <Hero />
-      <Intro />
-      <Skills />
-      <Projects />
-      <Experience />
-      <Education />
-      <Contact />
-    </main>
+    <>
+      <main>
+        <Hero />
+        <Intro />
+        <Skills />
+        <Projects />
+        <Experience />
+        <Education />
+        <Contact />
+      </main>
+      <footer className="py-8 text-center text-sm">
+        &copy; 2024
+        {new Date().getFullYear() !== 2024
+          ? ` - ${new Date().getFullYear()}`
+          : ""}{" "}
+        &middot; Tristan Chin &middot; All rights reserved
+      </footer>
+    </>
   );
 };
 
