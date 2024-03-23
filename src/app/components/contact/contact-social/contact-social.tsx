@@ -10,7 +10,7 @@ interface ContactSocialProps {
 
 const ContactSocial = ({ name, url, children }: ContactSocialProps) => {
   return (
-    <Button asChild size="icon" variant="outline">
+    <Button asChild size="icon" variant="outline" className="rounded-full">
       <Link href={url} target="_blank" title={name}>
         {children}
       </Link>
