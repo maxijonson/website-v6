@@ -6,29 +6,12 @@ import DevUtils from "./components/dev-utils/dev-utils";
 import ogImage from "$/image/meta/og.png";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import { getBaseURL } from "@/utils/getBaseURL";
 
 export const generateMetadata = (): Metadata => {
   const description =
     "Personal website of Tristan Chin, B. Eng. Software Engineering and Web Developer.";
-  const metadataBase = (() => {
-    if (
-      process.env.VERCEL_GIT_COMMIT_REF === "develop" ||
-      process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF === "develop"
-    ) {
-      return new URL("https://staging.chintristan.io");
-    }
-    switch (process.env.NODE_ENV) {
-      case "development":
-        return new URL("http://localhost:3000");
-      case "production":
-        return new URL("https://chintristan.io");
-      default:
-        if (process.env.VERCEL_URL) {
-          return new URL(`https://${process.env.VERCEL_URL}`);
-        }
-        return undefined;
-    }
-  })();
+  const metadataBase = getBaseURL();
 
   return {
     metadataBase,
