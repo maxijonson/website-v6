@@ -18,7 +18,7 @@ const Hero = () => {
     >
       <HeroPattern />
       <HeroLogos />
-      <div className="z-10 flex flex-col">
+      <div className="hero-content z-10 flex flex-col">
         <Avatar className="mb-4 size-40 self-center">
           <AvatarImage asChild src={profileImage.src}>
             <Image src={profileImage} alt="Tristan Chin" priority />

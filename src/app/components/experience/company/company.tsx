@@ -34,7 +34,7 @@ const Company = ({
             "dark:bg-stone-800",
           )}
         >
-          <Avatar className="sticky top-10 size-8">
+          <Avatar className={cn("sticky top-20 size-8", "md:top-24")}>
             <AvatarImage asChild src={image.src}>
               <Image src={image} alt={name} />
             </AvatarImage>
