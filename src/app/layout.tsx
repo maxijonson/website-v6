@@ -10,9 +10,8 @@ import { Analytics } from "@vercel/analytics/react";
 export const generateMetadata = (): Metadata => {
   const description =
     "Personal website of Tristan Chin, B. Eng. Software Engineering and Web Developer.";
-  console.info(process.env);
   const metadataBase = (() => {
-    if (process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF === "develop") {
+    if (process.env.VERCEL_GIT_COMMIT_REF === "develop") {
       return new URL("https://staging.chintristan.io");
     }
     switch (process.env.NODE_ENV) {
@@ -27,6 +26,7 @@ export const generateMetadata = (): Metadata => {
         return undefined;
     }
   })();
+  console.info("metadataBase", metadataBase?.toString() ?? "undefined");
 
   return {
     metadataBase,
