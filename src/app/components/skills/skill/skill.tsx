@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import type React from "react";
 
 export interface SkillProps {
   name: string;
@@ -6,9 +7,20 @@ export interface SkillProps {
   proficiency: 1 | 2 | 3 | 4 | 5;
 }
 
-const Skill = ({ name, icon, proficiency }: SkillProps) => {
+const Skill = ({
+  name,
+  icon,
+  proficiency,
+  ...rootProps
+}: SkillProps & React.ComponentPropsWithoutRef<"div">) => {
   return (
-    <div className="flex items-center justify-between gap-4">
+    <div
+      {...rootProps}
+      className={cn(
+        "flex items-center justify-between gap-4",
+        rootProps.className,
+      )}
+    >
       <span className="text-md">{name}</span>
       <div className="flex items-center gap-1">
         {Array.from({ length: 5 }).map((_, i) => (

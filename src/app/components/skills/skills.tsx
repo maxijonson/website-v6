@@ -1,4 +1,10 @@
 import { InfoCircledIcon } from "@radix-ui/react-icons";
+import {
+  SiMixpanel,
+  SiCloudflare,
+  SiMeta,
+  SiGoogletagmanager,
+} from "react-icons/si";
 import HomeHeading from "../home-heading/home-heading";
 import HomeSection from "../home-section/home-section";
 import SkillsGroup from "./skills-group/skills-group";
@@ -110,7 +116,6 @@ const Skills = () => {
           <Skill name="Angular" icon={<LogoAngular />} proficiency={3} />
           <Skill name="Node" icon={<LogoNode />} proficiency={4} />
           <Skill name="NestJS" icon={<LogoNest />} proficiency={4} />
-          <Skill name="Sanity" icon={<LogoSanity />} proficiency={3} />
         </SkillsGroup>
         <SkillsGroup name="Application">
           <Skill name="Java" icon={<LogoJava />} proficiency={2} />
@@ -132,7 +137,12 @@ const Skills = () => {
           <Skill name="SQL Server" icon={<LogoSQLServer />} proficiency={2} />
         </SkillsGroup>
         <SkillsGroup name="Cloud">
-          <Skill name="GCP" icon={<LogoGCP />} proficiency={3} />
+          <Skill
+            name="GCP"
+            icon={<LogoGCP />}
+            proficiency={3}
+            title="Google Cloud Platform"
+          />
           <Skill name="Azure" icon={<LogoAzure />} proficiency={3} />
           <Skill name="Heroku" icon={<LogoHeroku />} proficiency={4} />
           <Skill
@@ -141,7 +151,31 @@ const Skills = () => {
             proficiency={3}
           />
         </SkillsGroup>
+        <SkillsGroup name="Analytics">
+          <Skill
+            name="Mixpanel"
+            icon={<SiMixpanel color="#a086d3" />}
+            proficiency={3}
+          />
+          <Skill
+            name="Zaraz"
+            icon={<SiCloudflare color="#f38020" />}
+            proficiency={2}
+          />
+          <Skill
+            name="Meta Pixel"
+            icon={<SiMeta color="#0082fb" />}
+            proficiency={2}
+          />
+          <Skill
+            name="GTM"
+            icon={<SiGoogletagmanager color="#4285f4" />}
+            proficiency={2}
+            title="Google Tag Manager"
+          />
+        </SkillsGroup>
         <SkillsGroup name="Other">
+          <Skill name="Sanity" icon={<LogoSanity />} proficiency={3} />
           <Skill name="Bash" icon={<LogoBash />} proficiency={4} />
           <Skill name="Android" icon={<LogoAndroid />} proficiency={1} />
           <Skill name="Swift" icon={<LogoSwift />} proficiency={1} />

@@ -8,10 +8,14 @@ import { cn } from "@/lib/utils";
 const ContactEmail = () => {
   const [showCopied, setShowCopied] = useState(false);
 
-  const copyEmail = () => {
+  const copyEmail = async () => {
     if (showCopied) return;
-    navigator.clipboard.writeText("tristan.chin@chintristan.io");
-    setShowCopied(true);
+    try {
+      await navigator.clipboard.writeText("tristan.chin@chintristan.io");
+      setShowCopied(true);
+    } catch {
+      window.open("mailto:tristan.chin@chintristan.io");
+    }
   };
 
   useEffect(() => {
