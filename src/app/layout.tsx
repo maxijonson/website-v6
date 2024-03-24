@@ -15,6 +15,9 @@ export const generateMetadata = (): Metadata => {
       case "development":
         return new URL("http://localhost:3000");
       case "production":
+        if (process.env.VERCEL_GIT_COMMIT_REF === "develop") {
+          return new URL("https://staging.chintristan.io");
+        }
         return new URL("https://chintristan.io");
       default:
         if (process.env.VERCEL_URL) {
