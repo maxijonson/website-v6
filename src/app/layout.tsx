@@ -5,6 +5,7 @@ import ThemeProvider from "@/components/theme-provider";
 import DevUtils from "./components/dev-utils/dev-utils";
 import ogImage from "$/image/meta/og.png";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 export const generateMetadata = (): Metadata => {
   const description =
@@ -93,6 +94,7 @@ const RootLayout = ({
           {children}
         </ThemeProvider>
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
