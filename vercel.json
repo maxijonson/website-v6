@@ -3,8 +3,18 @@
   "headers": [
     {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "staging.chintristan.io" }],
-      "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }]
+      "has": [
+        {
+          "type": "host",
+          "value": "staging.chintristan.io"
+        }
+      ],
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
     }
   ]
 }
