@@ -29,22 +29,7 @@ export const generateMetadata = (): Metadata => {
         return undefined;
     }
   })();
-  console.info("metadataBase", metadataBase?.toString() ?? "undefined");
-  console.info("openGraph", {
-    type: "website",
-    locale: "en_US",
-    countryName: "Canada",
-    title: "Tristan Chin's Personal Website",
-    description,
-    images: [
-      {
-        url: ogImage.src,
-        alt: "Tristan Chin's Personal Website",
-        width: ogImage.width,
-        height: ogImage.height,
-      },
-    ],
-  });
+
   return {
     metadataBase,
     title: "Tristan Chin",
@@ -71,7 +56,7 @@ export const generateMetadata = (): Metadata => {
       description,
       images: [
         {
-          url: ogImage.src,
+          url: new URL(ogImage.src, metadataBase),
           alt: "Tristan Chin's Personal Website",
           width: ogImage.width,
           height: ogImage.height,
@@ -86,7 +71,7 @@ export const generateMetadata = (): Metadata => {
       title: "Tristan Chin's Personal Website",
       images: [
         {
-          url: ogImage.src,
+          url: new URL(ogImage.src, metadataBase),
           alt: "Tristan Chin's Personal Website",
           width: ogImage.width,
           height: ogImage.height,
