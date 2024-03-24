@@ -90,7 +90,7 @@ const RootLayout = ({
     <html lang="en" suppressHydrationWarning>
       <body className={fontSans.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {process.env.NODE_ENV === "development" && <DevUtils />}
+          {process.env.NODE_ENV !== "production" && <DevUtils />}
           {children}
         </ThemeProvider>
         <SpeedInsights />

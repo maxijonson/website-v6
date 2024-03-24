@@ -35,7 +35,9 @@ const Hero = () => {
             </AvatarFallback>
           </Suspense>
         </Avatar>
-        <h1 className="pb-2 text-center text-5xl font-bold">Tristan Chin</h1>
+        <h1 className="pb-2 text-center text-5xl font-bold">
+          {process.env.NODE_ENV}
+        </h1>
         <h2 className="text-md text-center text-muted-foreground">
           B. Eng. Software Engineering & <br />
           Web Developer
