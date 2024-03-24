@@ -4,6 +4,7 @@ import { fontSans } from "@/app/fonts";
 import ThemeProvider from "@/components/theme-provider";
 import DevUtils from "./components/dev-utils/dev-utils";
 import ogImage from "$/image/meta/og.png";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const generateMetadata = (): Metadata => {
   const description =
@@ -91,6 +92,7 @@ const RootLayout = ({
           {process.env.NODE_ENV === "development" && <DevUtils />}
           {children}
         </ThemeProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
