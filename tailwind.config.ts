@@ -89,7 +89,11 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), animationDelayPlugin],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/typography"),
+    animationDelayPlugin,
+  ],
 } satisfies Config;
 
 export default config;
