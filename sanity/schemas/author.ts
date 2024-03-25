@@ -9,6 +9,10 @@ export default defineType({
       name: "name",
       title: "Name",
       type: "string",
+      validation: (rule) => [
+        rule.required().error("Required"),
+        rule.min(3).max(80).error("Must be between 3 and 80 characters"),
+      ],
     }),
     defineField({
       name: "slug",
@@ -18,6 +22,7 @@ export default defineType({
         source: "name",
         maxLength: 96,
       },
+      validation: (rule) => [rule.required().error("Required")],
     }),
     defineField({
       name: "image",
@@ -31,24 +36,18 @@ export default defineType({
           name: "alt",
           type: "string",
           title: "Alternative Text",
+          validation: (rule) => [rule.required().error("Required")],
         },
       ],
+      validation: (rule) => [rule.required().error("Required")],
     }),
     defineField({
       name: "bio",
       title: "Bio",
-      type: "array",
-      of: [
-        {
-          title: "Block",
-          type: "block",
-          styles: [{ title: "Normal", value: "normal" }],
-          lists: [],
-          marks: {
-            decorators: [],
-            annotations: [],
-          },
-        },
+      type: "string",
+      validation: (rule) => [
+        rule.required().error("Required"),
+        rule.min(3).max(250).error("Must be between 3 and 250 characters"),
       ],
     }),
   ],
