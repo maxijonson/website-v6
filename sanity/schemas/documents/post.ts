@@ -1,7 +1,7 @@
 import { defineField, defineType } from "sanity";
 import author from "./author";
 import tag from "./tag";
-import blockContent from "./blockContent";
+import blockContent from "../fields/block-content";
 
 export default defineType({
   name: "post",
@@ -15,6 +15,15 @@ export default defineType({
       validation: (rule) => [
         rule.required().error("Required"),
         rule.min(3).max(80).error("Must be between 3 and 80 characters"),
+      ],
+    }),
+    defineField({
+      name: "summary",
+      title: "Summary",
+      type: "string",
+      validation: (rule) => [
+        rule.required().error("Required"),
+        rule.min(3).max(250).error("Must be between 3 and 250 characters"),
       ],
     }),
     defineField({
@@ -54,15 +63,6 @@ export default defineType({
       type: "array",
       of: [{ type: "reference", to: { type: tag.name } }],
       validation: (rule) => [rule.required().error("Required")],
-    }),
-    defineField({
-      name: "summary",
-      title: "Summary",
-      type: "string",
-      validation: (rule) => [
-        rule.required().error("Required"),
-        rule.min(3).max(250).error("Must be between 3 and 250 characters"),
-      ],
     }),
     defineField({
       name: "body",

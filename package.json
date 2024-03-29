@@ -7,7 +7,8 @@
     "build": "npm run lint && next build",
     "start": "next start",
     "lint": "next lint --max-warnings=0 && prettier --check .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "sanity:types": "sanity schema extract --path './sanity/generated/.sanity-generated.schema.json' --enforce-required-fields && sanity typegen generate && npm run format"
   },
   "dependencies": {
     "@portabletext/react": "^3.0.15",
@@ -38,7 +39,8 @@
     "sharp": "^0.33.3",
     "styled-components": "^6.1.8",
     "tailwind-merge": "^2.2.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
