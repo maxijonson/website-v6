@@ -13,7 +13,9 @@ export type RawCategory = {
   _rev: string;
   name: string;
   slug: Slug;
+  caption: string;
   description: string;
+  keywords: Array<string>;
   image: {
     asset: {
       _ref: string;

@@ -9,11 +9,16 @@ import { structureTool } from "sanity/structure";
 
 import { apiVersion, projectId } from "./sanity/env";
 import { schema } from "./sanity/schema";
+import { codeInput } from "@sanity/code-input";
 
 const configBase = {
   projectId,
   schema,
-  plugins: [structureTool(), visionTool({ defaultApiVersion: apiVersion })],
+  plugins: [
+    structureTool(),
+    visionTool({ defaultApiVersion: apiVersion }),
+    codeInput(),
+  ],
 } satisfies Partial<Config>;
 
 export default defineConfig([

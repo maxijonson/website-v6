@@ -19,7 +19,9 @@ export type RawTag = {
     _weak?: boolean;
     [internalGroqTypeReferenceTo]?: "category";
   };
+  caption: string;
   description: string;
+  keywords: Array<string>;
   image: {
     asset: {
       _ref: string;

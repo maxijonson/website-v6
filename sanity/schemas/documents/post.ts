@@ -1,12 +1,26 @@
-import { defineField, defineType } from "sanity";
+import { defineField, defineType, type FieldGroupDefinition } from "sanity";
 import author from "./author";
 import tag from "./tag";
-import blockContent from "../fields/block-content";
+import postContent from "../fields/post-content";
+
+const groupDetails = {
+  name: "Details",
+  title: "Details",
+} satisfies FieldGroupDefinition;
+const groupMedia = {
+  name: "media",
+  title: "Media",
+} satisfies FieldGroupDefinition;
+const groupSeo = {
+  name: "seo",
+  title: "SEO",
+} satisfies FieldGroupDefinition;
 
 export default defineType({
   name: "post",
   title: "Post",
   type: "document",
+  groups: [groupDetails, groupMedia, groupSeo],
   fields: [
     defineField({
       name: "title",
@@ -16,6 +30,7 @@ export default defineType({
         rule.required().error("Required"),
         rule.min(3).max(80).error("Must be between 3 and 80 characters"),
       ],
+      group: groupDetails.name,
     }),
     defineField({
       name: "summary",
@@ -25,6 +40,7 @@ export default defineType({
         rule.required().error("Required"),
         rule.min(3).max(250).error("Must be between 3 and 250 characters"),
       ],
+      group: groupDetails.name,
     }),
     defineField({
       name: "slug",
@@ -35,6 +51,7 @@ export default defineType({
         maxLength: 96,
       },
       validation: (rule) => [rule.required().error("Required")],
+      group: groupDetails.name,
     }),
     defineField({
       name: "author",
@@ -42,6 +59,24 @@ export default defineType({
       type: "reference",
       to: { type: author.name },
       validation: (rule) => [rule.required().error("Required")],
+      group: groupDetails.name,
+    }),
+    defineField({
+      name: "tags",
+      title: "Tags",
+      type: "array",
+      of: [{ type: "reference", to: { type: tag.name } }],
+      validation: (rule) => [rule.required().error("Required")],
+      group: groupDetails.name,
+    }),
+    defineField({
+      name: "keywords",
+      title: "Keywords",
+      description:
+        "Additional keywords to add in addition to the tags' keywords.",
+      type: "array",
+      of: [{ type: "string" }],
+      group: groupSeo.name,
     }),
     defineField({
       name: "image",
@@ -56,19 +91,14 @@ export default defineType({
         },
       ],
       validation: (rule) => [rule.required().error("Required")],
-    }),
-    defineField({
-      name: "tags",
-      title: "Tags",
-      type: "array",
-      of: [{ type: "reference", to: { type: tag.name } }],
-      validation: (rule) => [rule.required().error("Required")],
+      group: groupMedia.name,
     }),
     defineField({
       name: "body",
       title: "Body",
-      type: blockContent.name,
+      type: postContent.name,
       validation: (rule) => [rule.required().error("Required")],
+      group: groupDetails.name,
     }),
   ],
 
@@ -76,7 +106,7 @@ export default defineType({
     select: {
       title: "title",
       author: "author.name",
-      media: "mainImage",
+      media: "image",
     },
     prepare(selection) {
       const { author } = selection;

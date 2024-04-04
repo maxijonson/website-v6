@@ -1,9 +1,23 @@
-import { defineField, defineType } from "sanity";
+import { defineField, defineType, type FieldGroupDefinition } from "sanity";
+
+const groupDetails = {
+  name: "Details",
+  title: "Details",
+} satisfies FieldGroupDefinition;
+const groupMedia = {
+  name: "media",
+  title: "Media",
+} satisfies FieldGroupDefinition;
+const groupSeo = {
+  name: "seo",
+  title: "SEO",
+} satisfies FieldGroupDefinition;
 
 export default defineType({
   name: "category",
   title: "Category",
   type: "document",
+  groups: [groupDetails, groupMedia, groupSeo],
   fields: [
     defineField({
       name: "name",
@@ -13,6 +27,7 @@ export default defineType({
         rule.required().error("Required"),
         rule.min(3).max(80).error("Must be between 3 and 80 characters"),
       ],
+      group: groupDetails.name,
     }),
     defineField({
       name: "slug",
@@ -23,6 +38,17 @@ export default defineType({
         maxLength: 96,
       },
       validation: (rule) => [rule.required().error("Required")],
+      group: groupDetails.name,
+    }),
+    defineField({
+      name: "caption",
+      title: "Caption",
+      type: "text",
+      validation: (rule) => [
+        rule.required().error("Required"),
+        rule.min(3).max(100).error("Must be between 3 and 100 characters"),
+      ],
+      group: groupDetails.name,
     }),
     defineField({
       name: "description",
@@ -32,6 +58,14 @@ export default defineType({
         rule.required().error("Required"),
         rule.min(3).max(250).error("Must be between 3 and 250 characters"),
       ],
+      group: groupDetails.name,
+    }),
+    defineField({
+      name: "keywords",
+      title: "Keywords",
+      type: "array",
+      of: [{ type: "string" }],
+      group: groupSeo.name,
     }),
     defineField({
       name: "image",
@@ -46,6 +80,7 @@ export default defineType({
         },
       ],
       validation: (rule) => [rule.required().error("Required")],
+      group: groupMedia.name,
     }),
   ],
 });

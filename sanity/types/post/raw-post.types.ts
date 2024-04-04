@@ -21,6 +21,14 @@ export type RawPost = {
     _weak?: boolean;
     [internalGroqTypeReferenceTo]?: "author";
   };
+  tags: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "tag";
+  }>;
+  keywords: Array<string>;
   image: {
     asset: {
       _ref: string;
@@ -33,12 +41,5 @@ export type RawPost = {
     alt: string;
     _type: "image";
   };
-  tags: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "tag";
-  }>;
   body: RawBlockContent;
 };
