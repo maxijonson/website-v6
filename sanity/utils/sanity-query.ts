@@ -225,7 +225,7 @@ class SanityQuery {
   public async get<
     T extends Record<string, any> = Record<string, any>,
   >(): Promise<T> {
-    return client.fetch(this.toGroq());
+    return client.fetch<T>(this.toGroq());
   }
 
   public toGroqCount() {
