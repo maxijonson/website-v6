@@ -3,9 +3,9 @@ import type {
   SanityImageHotspot,
   Slug,
   internalGroqTypeReferenceTo,
-} from "../sanity.types";
+} from "./sanity.types";
 
-export type RawAuthor = {
+export type Author = {
   _id: string;
   _type: "author";
   _createdAt: string;

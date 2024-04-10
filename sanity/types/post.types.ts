@@ -1,26 +1,33 @@
+import type { BlockContent } from "./block-content.types";
 import type {
   SanityImageCrop,
   SanityImageHotspot,
   Slug,
   internalGroqTypeReferenceTo,
-} from "../sanity.types";
+} from "./sanity.types";
 
-export type RawTag = {
+export type Post = {
   _id: string;
-  _type: "tag";
+  _type: "post";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
+  title: string;
+  summary: string;
   slug: Slug;
-  category: {
+  author: {
     _ref: string;
     _type: "reference";
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "category";
+    [internalGroqTypeReferenceTo]?: "author";
   };
-  caption: string;
-  description: string;
+  tags: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "tag";
+  }>;
   keywords: Array<string>;
   image: {
     asset: {
@@ -34,4 +41,5 @@ export type RawTag = {
     alt: string;
     _type: "image";
   };
+  body: BlockContent;
 };

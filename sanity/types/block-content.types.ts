@@ -2,9 +2,9 @@ import type {
   SanityImageCrop,
   SanityImageHotspot,
   internalGroqTypeReferenceTo,
-} from "../sanity.types";
+} from "./sanity.types";
 
-export type RawBlockContent = Array<
+export type BlockContent = Array<
   | {
       children: Array<{
         marks: Array<string>;

@@ -1,3 +1,4 @@
+import type { FilteredResponseQueryOptions } from "next-sanity";
 import { client } from "./client";
 
 export interface SanityQueryOrder {
@@ -16,7 +17,7 @@ export type SanityField =
   | "_weak"
   | (string & NonNullable<unknown>);
 
-class SanityQuery {
+class SanityQuery<TDoc extends Record<string, any> = Record<string, any>> {
   private filters: string[] = [];
   private amount: number | null = null;
   private offset: number | null = null;
@@ -145,13 +146,15 @@ class SanityQuery {
   }
 
   public getGroqOrder(afterSlice = false) {
-    if (this.orders.length === 0) {
+    const filteredOrders = this.orders.filter(
+      (o) => (o.afterSlice ?? false) === afterSlice,
+    );
+    if (filteredOrders.length === 0) {
       return "";
     }
     return [
       " | order(",
-      this.orders
-        .filter((o) => (o.afterSlice ?? false) === afterSlice)
+      filteredOrders
         .map(({ field, direction }) => `\t${field} ${direction}`)
         .join(",\n"),
       ")",
@@ -186,20 +189,23 @@ class SanityQuery {
    *
    * **🔗 Can be chained:** Calling this method multiple times will add more projections
    *
-   * @param fieldOrValue The value of the alias. Can be a field name or any arbitrary value (like a subquery)
    * @param alias The alias to rename the field to in the result
+   * @param fieldOrValue The value of the alias. Can be a field name or any arbitrary value (like a subquery)
    */
-  public alias(fieldOrValue: SanityField, alias: string) {
+  public alias(alias: string, fieldOrValue: SanityField) {
     return this.pick(`'${alias}': ${fieldOrValue}`);
   }
 
   /**
-   * Helper for the `pick` method to pick all fields (...).
+   * Helper for the `pick` method to define multiple possible values when one of them is null.
    *
    * **🔗 Can be chained:** Calling this method multiple times will add more projections
+   *
+   * @param alias The alias to rename the field to in the result
+   * @param fieldOrValues The fields or values to coalesce
    */
-  public pickAll() {
-    return this.pick("...");
+  public coalesce(alias: string, ...fieldOrValues: SanityField[]) {
+    return this.alias(alias, `coalesce(${fieldOrValues.join(", ")})`);
   }
 
   public getGroqProjections() {
@@ -222,10 +228,10 @@ class SanityQuery {
     ].join("\n");
   }
 
-  public async get<
-    T extends Record<string, any> = Record<string, any>,
-  >(): Promise<T> {
-    return client.fetch<T>(this.toGroq());
+  public async get<TResult extends TDoc[] = TDoc[]>(
+    options: FilteredResponseQueryOptions = {},
+  ) {
+    return client.fetch<TResult>(this.toGroq(), {}, options);
   }
 
   public toGroqCount() {
