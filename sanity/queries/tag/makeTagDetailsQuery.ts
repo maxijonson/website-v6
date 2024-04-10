@@ -1,4 +1,4 @@
-import type { Tag } from "../../types/tag.types";
+import type { Tag } from "../../sanity.types";
 import SanityQuery from "../../utils/sanity-query";
 import {
   makeCategoryDetailsQuery,

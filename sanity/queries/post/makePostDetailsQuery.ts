@@ -1,4 +1,4 @@
-import type { Post } from "../../types/post.types";
+import type { Post } from "../../sanity.types";
 import SanityQuery from "../../utils/sanity-query";
 import {
   makeAuthorDetailsQuery,

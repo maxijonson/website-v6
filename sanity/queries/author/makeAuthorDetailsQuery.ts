@@ -1,4 +1,4 @@
-import type { Author } from "../../types/author.types";
+import type { Author } from "../../sanity.types";
 import SanityQuery from "../../utils/sanity-query";
 
 export type AuthorDetails = Pick<Author, "name" | "bio" | "image"> & {

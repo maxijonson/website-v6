@@ -1,4 +1,4 @@
-import type { Category } from "../../types/category.types";
+import type { Category } from "../../sanity.types";
 import SanityQuery from "../../utils/sanity-query";
 
 export type CategoryDetails = Pick<
