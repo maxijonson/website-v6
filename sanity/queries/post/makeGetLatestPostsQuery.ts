@@ -1,9 +1,9 @@
 import { makePostDetailsQuery } from "./makePostDetailsQuery";
 
-export const makeLatestPostsQuery = () => {
+export const makeGetLatestPostsQuery = () => {
   return makePostDetailsQuery().orderBy(["createdAt", "desc"]).limit(4);
 };
 
 export const getLatestPosts = () => {
-  return makeLatestPostsQuery().get();
+  return makeGetLatestPostsQuery().get();
 };

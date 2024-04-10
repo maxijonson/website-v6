@@ -25,4 +25,6 @@ export const makeTagDetailsQuery = () =>
     .alias("slug", "slug.current")
     .alias("createdAt", "_createdAt")
     .alias("updatedAt", "_updatedAt")
-    .pick(`category->${makeCategoryDetailsQuery().getGroqProjections()}`);
+    .pick(
+      `category->${makeCategoryDetailsQuery().getGroqProjections().replaceAll("\n", " ").replaceAll("\t", "")}`,
+    );

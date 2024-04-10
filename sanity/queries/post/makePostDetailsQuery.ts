@@ -30,9 +30,11 @@ export const makePostDetailsQuery = () =>
     .alias("slug", "slug.current")
     .alias("createdAt", "_createdAt")
     .alias("updatedAt", "_updatedAt")
-    .pick(`author->${makeAuthorDetailsQuery().getGroqProjections()}`)
+    .pick(
+      `author->${makeAuthorDetailsQuery().getGroqProjections().replaceAll("\n", " ").replaceAll("\t", "")}`,
+    )
     .coalesce(
       "tags",
-      `tags[]->${makeTagDetailsQuery().getGroqProjections()}`,
+      `tags[]->${makeTagDetailsQuery().getGroqProjections().replaceAll("\n", " ").replaceAll("\t", "")}`,
       "[]",
     );
