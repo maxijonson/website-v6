@@ -1,4 +1,8 @@
 import { defineField, defineType } from "sanity";
+import {
+  makeImageField,
+  makeImageFieldDefaultOptions,
+} from "../../utils/field-generators/make-image-field";
 
 export default defineType({
   name: "author",
@@ -24,21 +28,11 @@ export default defineType({
       },
       validation: (rule) => [rule.required().error("Required")],
     }),
-    defineField({
-      name: "image",
-      title: "Image",
-      type: "image",
+    makeImageField("image", {
       options: {
+        ...makeImageFieldDefaultOptions,
         hotspot: true,
       },
-      fields: [
-        {
-          name: "alt",
-          type: "string",
-          title: "Alternative Text",
-          validation: (rule) => [rule.required().error("Required")],
-        },
-      ],
       validation: (rule) => [rule.required().error("Required")],
     }),
     defineField({

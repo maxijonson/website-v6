@@ -9,22 +9,25 @@ import {
   type TagDetails,
 } from "../tag/makeTagDetailsQuery";
 
-export type PostDetails = Pick<
-  Post,
-  "title" | "summary" | "image" | "keywords"
-> & {
+export type PostDetails = Pick<Post, "title" | "summary" | "keywords"> & {
   id: Post["_id"];
   slug: string;
   createdAt: Post["_createdAt"];
   updatedAt: Post["_updatedAt"];
   author: AuthorDetails;
   tags: TagDetails[];
+  image: Post["image"] & {
+    metadata: {
+      lqip: string;
+    };
+  };
 };
 
 export const makePostDetailsQuery = () =>
   new SanityQuery<PostDetails>()
     .where("_type == 'post'")
-    .pick("title", "summary", "image")
+    .pick("title", "summary")
+    .pickImage("image", { metadata: ["lqip"] })
     .coalesce("keywords", "keywords", "[]")
     .alias("id", "_id")
     .alias("slug", "slug.current")

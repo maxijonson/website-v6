@@ -23,8 +23,12 @@ const HomeHeader = () => {
         className={cn(
           "relative flex w-full max-w-full items-center rounded-md border-[1px] border-transparent bg-transparent p-2 transition-[background-color,border-color,max-width] ease-in-out",
           {
-            "max-w-screen-lg border-stone-400 bg-white/70 backdrop-blur dark:border-stone-800 dark:bg-stone-950/70":
-              showBackground,
+            [cn(
+              "max-w-screen-lg border-stone-400 bg-white",
+              "supports-[backdrop-filter]:bg-white/70 supports-[backdrop-filter]:backdrop-blur",
+              "dark:border-stone-800 dark:bg-stone-950",
+              "supports-[backdrop-filter]:dark:bg-stone-950/70",
+            )]: showBackground,
           },
         )}
       >

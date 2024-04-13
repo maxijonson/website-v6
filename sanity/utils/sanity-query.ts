@@ -208,6 +208,38 @@ class SanityQuery<TDoc extends Record<string, any> = Record<string, any>> {
     return this.alias(alias, `coalesce(${fieldOrValues.join(", ")})`);
   }
 
+  /**
+   * Helper for the `pick` method to retrieve an image field with metadata.
+   *
+   * **🔗 Can be chained:** Calling this method multiple times will add more projections
+   *
+   * @param name the name of the image field
+   */
+  public pickImage(
+    name: string,
+    options: {
+      metadata?: ("palette" | "lqip" | "blurHash" | "dimensions")[];
+    } = {},
+  ) {
+    const { metadata: _m = [] } = options;
+    const metadata = Array.from(new Set(_m));
+    return this.pick(
+      [
+        `${name} {`,
+        "...,",
+        metadata?.length && [
+          `'metadata': {`,
+          metadata.map((m) => `"${m}": asset->metadata.${m}`).join(","),
+          "}",
+        ],
+        "}",
+      ]
+        .flat()
+        .filter((s) => typeof s === "string" && !!s)
+        .join(" "),
+    );
+  }
+
   public getGroqProjections() {
     if (this.projections.length === 0) {
       return "";

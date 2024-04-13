@@ -1,4 +1,5 @@
 import { defineField, defineType, type FieldGroupDefinition } from "sanity";
+import { makeImageField } from "../../utils/field-generators/make-image-field";
 
 const groupDetails = {
   name: "Details",
@@ -67,18 +68,7 @@ export default defineType({
       of: [{ type: "string" }],
       group: groupSeo.name,
     }),
-    defineField({
-      name: "image",
-      title: "Image",
-      type: "image",
-      fields: [
-        {
-          name: "alt",
-          type: "string",
-          title: "Alternative Text",
-          validation: (rule) => [rule.required().error("Required")],
-        },
-      ],
+    makeImageField("image", {
       validation: (rule) => [rule.required().error("Required")],
       group: groupMedia.name,
     }),

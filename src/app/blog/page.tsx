@@ -1,7 +1,11 @@
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { getLatestPosts } from "../../../sanity/queries/post/makeGetLatestPostsQuery";
+import PostCard from "./components/post-card/post-card";
 
-const BlogPage = () => {
+const BlogPage = async () => {
+  const latestPosts = await getLatestPosts();
+
   return (
     <main className="min-h-dvh">
       <section
@@ -46,9 +50,27 @@ const BlogPage = () => {
       </section>
 
       <section className={cn("mx-auto max-w-5xl px-4 pt-6")}>
-        <h2 className={cn("text-3xl font-bold", "md:text-4xl")}>
+        <h2 className={cn("mb-4 text-3xl font-bold", "md:text-4xl")}>
           Latest Posts
         </h2>
+        <div
+          className={cn(
+            "grid w-full grid-cols-1 gap-8",
+            "sm:grid-cols-2",
+            "md:grid-cols-3",
+          )}
+        >
+          {latestPosts.map((post, i) => (
+            <PostCard
+              key={post.id}
+              post={post}
+              className={cn({
+                [cn("sm:col-span-2", "md:col-span-3")]: i === 0,
+                [cn("sm:col-span-2", "md:col-span-1")]: i === 1,
+              })}
+            />
+          ))}
+        </div>
       </section>
     </main>
   );
