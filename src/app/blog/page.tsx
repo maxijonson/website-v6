@@ -84,7 +84,9 @@ const BlogPage = async () => {
               post={post}
               className={cn({
                 [cn("sm:col-span-2", "md:col-span-3")]: i === 0,
-                [cn("sm:col-span-2", "md:col-span-1")]: i === 1,
+                [cn("sm:col-span-2", "md:col-span-1")]:
+                  (latestPosts.length - 1) % 2 !== 0 &&
+                  i === latestPosts.length - 1,
               })}
             />
           ))}

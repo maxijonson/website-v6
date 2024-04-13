@@ -20,11 +20,16 @@ const PostCard = ({ post, className }: PostCardProps) => {
         className={cn(
           "flex flex-col gap-2 overflow-hidden rounded-md bg-stone-100 outline outline-1 outline-stone-300/0 transition-all duration-500",
           "group-hover:outline-stone-300/100",
+          "md:gap-4",
           "dark:bg-stone-900/5",
           "dark:group-hover:outline-stone-800/100",
         )}
       >
-        <header className="relative flex h-52 flex-col justify-end overflow-hidden">
+        <header
+          className={cn(
+            "relative flex h-52 flex-col justify-end overflow-hidden",
+          )}
+        >
           <div
             className={cn(
               "absolute size-full",
@@ -51,6 +56,8 @@ const PostCard = ({ post, className }: PostCardProps) => {
             <h3
               className={cn(
                 "text-xl font-extrabold text-stone-900",
+                "md:text-2xl",
+                "lg:text-3xl",
                 "dark:text-stone-100",
               )}
             >
@@ -60,7 +67,11 @@ const PostCard = ({ post, className }: PostCardProps) => {
         </header>
         <div>
           <p
-            className={cn("px-4 text-sm text-stone-700", "dark:text-stone-200")}
+            className={cn(
+              "px-4 text-sm text-stone-700",
+              "md:text-base",
+              "dark:text-stone-200",
+            )}
           >
             {post.summary}
           </p>
@@ -71,13 +82,13 @@ const PostCard = ({ post, className }: PostCardProps) => {
             "dark:text-stone-200",
           )}
         >
-          <div className="flex items-center gap-2">
-            <PostAuthorAvatar author={post.author} className="size-10" />
-            <p className="text-sm font-semibold">{post.author.name}</p>
+          <div className={cn("flex items-center gap-2")}>
+            <PostAuthorAvatar author={post.author} className={cn("size-10")} />
+            <p className={cn("text-sm font-semibold")}>{post.author.name}</p>
           </div>
           <time
             dateTime={new Date(post.createdAt).toISOString()}
-            className="text-sm font-semibold"
+            className={cn("text-sm font-semibold")}
             suppressHydrationWarning
           >
             {new Date(post.createdAt).toLocaleDateString("en", {
