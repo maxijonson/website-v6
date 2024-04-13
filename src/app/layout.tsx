@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { fontSans } from "@/app/fonts";
 import ThemeProvider from "@/components/theme-provider";
-import DevUtils from "./components/dev-utils/dev-utils";
+import DevUtilsClient from "./components/dev-utils/dev-utils";
 import ogImage from "$/image/meta/og.png";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
@@ -79,7 +79,7 @@ const RootLayout = ({
     <html lang="en" suppressHydrationWarning>
       <body className={fontSans.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {process.env.NODE_ENV !== "production" && <DevUtils />}
+          <DevUtilsClient />
           {children}
         </ThemeProvider>
         <SpeedInsights />
