@@ -27,7 +27,7 @@ const PostCard = ({ post, className }: PostCardProps) => {
       >
         <header
           className={cn(
-            "relative flex h-52 flex-col justify-end overflow-hidden",
+            "relative flex min-h-52 flex-col justify-end overflow-hidden",
           )}
         >
           <div
