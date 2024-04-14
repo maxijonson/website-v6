@@ -1,7 +1,7 @@
 import { getImageDimensions } from "@sanity/asset-utils";
-import type { PostDetails } from "../../../../../sanity/queries/post/makePostDetailsQuery";
 import { getImageBuilder } from "../../../../../sanity/utils/image";
 import Image from "next/image";
+import type { PostDetails } from "../../../../../sanity/selections/post-details";
 
 interface PostImageProps {
   image: PostDetails["image"];
