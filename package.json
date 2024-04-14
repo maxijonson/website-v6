@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint --max-warnings=0 && prettier --check .",
     "format": "prettier --write .",
-    "sanity:types": "sanity schema extract --path './sanity/generated/.sanity-generated.schema.json' --enforce-required-fields --workspace 'Production' && sanity typegen generate && npm run format"
+    "sanity:types": "sanity schema extract --path './sanity/generated/.sanity-generated.schema.json' --enforce-required-fields --workspace 'Production' && sanity typegen generate && npm run format -- --log-level silent"
   },
   "dependencies": {
     "@portabletext/react": "^3.0.15",
