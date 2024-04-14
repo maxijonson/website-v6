@@ -4,7 +4,6 @@ import { client } from "./client";
 export interface SanityQueryOrder {
   field: string;
   direction?: "asc" | "desc";
-  afterSlice?: boolean;
 }
 
 export type SanityField =
@@ -125,11 +124,7 @@ class SanityQuery<TDoc extends Record<string, any> = Record<string, any>> {
    */
   public orderBy(
     ...orders: (
-      | [
-          SanityQueryOrder["field"],
-          SanityQueryOrder["direction"]?,
-          SanityQueryOrder["afterSlice"]?,
-        ]
+      | [SanityQueryOrder["field"], SanityQueryOrder["direction"]?]
       | string
     )[]
   ) {
@@ -145,16 +140,13 @@ class SanityQuery<TDoc extends Record<string, any> = Record<string, any>> {
     return this;
   }
 
-  public getGroqOrder(afterSlice = false) {
-    const filteredOrders = this.orders.filter(
-      (o) => (o.afterSlice ?? false) === afterSlice,
-    );
-    if (filteredOrders.length === 0) {
+  public getGroqOrder() {
+    if (this.orders.length === 0) {
       return "";
     }
     return [
       " | order(",
-      filteredOrders
+      this.orders
         .map(({ field, direction }) => `\t${field} ${direction}`)
         .join(",\n"),
       ")",
@@ -254,25 +246,35 @@ class SanityQuery<TDoc extends Record<string, any> = Record<string, any>> {
       this.target,
       this.getGroqFilter(),
       this.getGroqProjections(),
-      this.getGroqOrder(false),
+      this.getGroqOrder(),
       this.getGroqSlice(),
-      this.getGroqOrder(true),
     ].join("\n");
   }
 
   public async get<TResult extends TDoc[] = TDoc[]>(
+    params: Record<string, any> = {},
     options: FilteredResponseQueryOptions = {},
   ) {
-    return client.fetch<TResult>(this.toGroq(), {}, options);
+    return client.fetch<TResult>(this.toGroq(), params, options);
   }
 
   public toGroqCount() {
     const body = [this.getGroqFilter()].map((s) => s.split("\n").join("\n\t"));
-    return [`count(${this.target}`, ...body, ")"].join("\n");
+    return ["count(", `\t${this.target}`, ...body, ")"].join("\n");
   }
 
   public async count(): Promise<number> {
     return client.fetch(this.toGroqCount());
+  }
+
+  /**
+   * Chains another query to the current query.
+   *
+   * **⚠ Calling this method will return the subsequent query instance.
+   * The next chained methods will be applied on the subsequent query, not the one prior to this call.**
+   */
+  public then<TSubdoc extends Record<string, any> = TDoc>() {
+    return new SanityQuery<TSubdoc>(this.toGroq());
   }
 }
 
