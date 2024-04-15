@@ -11,14 +11,19 @@ export interface PostCardProps {
     author: PostAuthorAvatarProps["author"];
   };
   className?: string;
+  heading?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 }
 
-const PostCard = ({ post, className }: PostCardProps) => {
+const PostCard = ({
+  post,
+  className,
+  heading: Heading = "h1",
+}: PostCardProps) => {
   return (
     <Link href="/blog" className={cn("group", className)}>
       <article
         className={cn(
-          "flex flex-col gap-2 overflow-hidden rounded-md bg-stone-100 outline outline-1 outline-stone-300/0 transition-all duration-500",
+          "flex h-full flex-col gap-2 overflow-hidden rounded-md bg-stone-100 outline outline-1 outline-stone-300/0 transition-[outline-color] duration-500",
           "group-hover:outline-stone-300/100",
           "md:gap-4",
           "dark:bg-stone-900/5",
@@ -27,7 +32,7 @@ const PostCard = ({ post, className }: PostCardProps) => {
       >
         <header
           className={cn(
-            "relative flex min-h-52 flex-col justify-end overflow-hidden",
+            "relative flex min-h-52 flex-grow flex-col justify-end overflow-hidden",
           )}
         >
           <div
@@ -49,11 +54,11 @@ const PostCard = ({ post, className }: PostCardProps) => {
           </div>
           <div
             className={cn(
-              "z-10 flex min-h-12 flex-col justify-end gap-1 bg-gradient-to-b from-transparent to-stone-100 to-80% px-4 pb-2",
+              "z-10 flex h-1/2 min-h-12 flex-col justify-end gap-1 bg-gradient-to-b from-transparent from-40% to-stone-100 to-80% px-4 pb-2",
               "dark:to-stone-950",
             )}
           >
-            <h3
+            <Heading
               className={cn(
                 "text-xl font-extrabold text-stone-900",
                 "md:text-2xl",
@@ -62,7 +67,7 @@ const PostCard = ({ post, className }: PostCardProps) => {
               )}
             >
               {post.title}
-            </h3>
+            </Heading>
           </div>
         </header>
         <div>

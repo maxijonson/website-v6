@@ -4,6 +4,7 @@ import PostCard from "./components/post-card/post-card";
 import BlogHomeBanner from "$/image/blog/blog-home-banner.jpg";
 import Image from "next/image";
 import { getLatestPosts } from "../../../sanity/queries/post/getLatestPosts";
+import Link from "next/link";
 
 const BlogPage = async () => {
   const [latestPosts] = await Promise.all([getLatestPosts()]);
@@ -40,17 +41,19 @@ const BlogPage = async () => {
             "md:items-start",
           )}
         >
-          <Badge
-            variant="secondary"
-            className={cn("rounded-full bg-stone-200", "dark:bg-stone-800")}
-          >
-            <h1 className={cn("uppercase")}>Blog</h1>
-          </Badge>
+          <Link href="/blog">
+            <Badge
+              variant="secondary"
+              className={cn("rounded-full bg-stone-200", "dark:bg-stone-800")}
+            >
+              <h1 className={cn("uppercase")}>Blog</h1>
+            </Badge>
+          </Link>
           <p
             className={cn(
               "pt-2 text-center text-2xl font-bold text-stone-950",
-              "dark:text-stone-50",
               "md:text-3xl",
+              "dark:text-stone-50",
             )}
           >
             Exploring The Tech Stack
@@ -58,8 +61,9 @@ const BlogPage = async () => {
           <p
             className={cn(
               "pt-2 text-center text-xs text-stone-800",
+              "sm:text-sm",
+              "md:text-base",
               "dark:text-stone-300",
-              "md:text-sm",
             )}
           >
             Check out some of the blog posts I've written about tech and
@@ -73,19 +77,22 @@ const BlogPage = async () => {
           Latest Posts
         </h2>
         <div
-          className={cn(
-            "grid w-full grid-cols-1 gap-8",
-            "sm:grid-cols-2",
-            "md:grid-cols-3",
-          )}
+          className={cn("grid w-full grid-cols-1 gap-8", "sm:grid-cols-2", {
+            "lg:grid-cols-3": (latestPosts.length - 1) % 3 === 0,
+            "lg:grid-cols-2": (latestPosts.length - 1) % 2 === 0,
+            "lg:grid-cols-1":
+              (latestPosts.length - 1) % 2 !== 0 &&
+              (latestPosts.length - 1) % 3 !== 0,
+          })}
         >
           {latestPosts.map((post, i) => (
             <PostCard
               key={post.id}
               post={post}
+              heading="h3"
               className={cn({
-                [cn("sm:col-span-2", "md:col-span-3")]: i === 0,
-                [cn("sm:col-span-2", "md:col-span-1")]:
+                [cn("col-span-full", "lg:min-h-[400px]")]: i === 0,
+                [cn("sm:col-span-full", "lg:col-span-1")]:
                   (latestPosts.length - 1) % 2 !== 0 &&
                   i === latestPosts.length - 1,
               })}
