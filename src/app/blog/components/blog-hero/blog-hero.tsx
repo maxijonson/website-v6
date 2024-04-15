@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import Image, { type ImageProps } from "next/image";
 import Link from "next/link";
+import { RxCaretRight } from "react-icons/rx";
 
 export interface BlogHeroProps {
   banner: ImageProps["src"];
@@ -53,13 +54,10 @@ const BlogHero = ({
       >
         <nav>
           <ul
-            className={cn(
-              "flex flex-wrap justify-center gap-2",
-              "md:justify-start",
-            )}
+            className={cn("flex flex-wrap justify-center", "md:justify-start")}
           >
             {breadcrumbs.map((breadcrumb, i) => (
-              <li key={breadcrumb.href}>
+              <li key={breadcrumb.href} className="flex items-center">
                 <Link href={breadcrumb.href}>
                   <Badge
                     variant={
@@ -81,6 +79,9 @@ const BlogHero = ({
                     )}
                   </Badge>
                 </Link>
+                {i !== breadcrumbs.length - 1 && (
+                  <RxCaretRight className="mx-1" />
+                )}
               </li>
             ))}
           </ul>

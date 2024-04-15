@@ -40,11 +40,12 @@ const PostCard = ({
         >
           <div
             className={cn(
-              "absolute size-full",
+              "absolute left-1/2 top-0 h-[calc(100%-1px)] w-[calc(100%-1px)] -translate-x-1/2 overflow-hidden",
+              "sm:h-full sm:w-full",
               "after:absolute after:left-0 after:top-0 after:size-full after:bg-stone-100/50 after:transition-all after:duration-1000",
               "group-hover:after:bg-stone-200/30",
               "dark:after:bg-stone-950/75",
-              "group-hover:dark:after:bg-stone-950/40",
+              "dark:group-hover:after:bg-stone-950/40",
             )}
           >
             <PostImage

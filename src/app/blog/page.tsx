@@ -1,9 +1,8 @@
-import { cn } from "@/lib/utils";
-import PostCard from "./components/post-card/post-card";
 import BlogHomeBanner from "$/image/blog/blog-home-banner.jpg";
 import { getLatestPosts } from "../../../sanity/queries/post/getLatestPosts";
 import { getCategories } from "../../../sanity/queries/categories/getCategories";
 import BlogHero from "./components/blog-hero/blog-hero";
+import BlogSection from "./components/blog-section/blog-section";
 
 const BlogPage = async () => {
   const [latestPosts, categories] = await Promise.all([
@@ -25,34 +24,13 @@ const BlogPage = async () => {
         }))}
       />
 
-      <section className={cn("mx-auto max-w-5xl px-4 pt-6")}>
-        <h1 className={cn("mb-4 text-3xl font-bold", "md:text-4xl")}>
-          Latest Posts
-        </h1>
-        <div
-          className={cn("grid w-full grid-cols-1 gap-8", "sm:grid-cols-2", {
-            "lg:grid-cols-3": (latestPosts.length - 1) % 3 === 0,
-            "lg:grid-cols-2": (latestPosts.length - 1) % 2 === 0,
-            "lg:grid-cols-1":
-              (latestPosts.length - 1) % 2 !== 0 &&
-              (latestPosts.length - 1) % 3 !== 0,
-          })}
-        >
-          {latestPosts.map((post, i) => (
-            <PostCard
-              key={post.id}
-              post={post}
-              heading="h2"
-              className={cn({
-                [cn("col-span-full", "lg:min-h-[400px]")]: i === 0,
-                [cn("sm:col-span-full", "lg:col-span-1")]:
-                  (latestPosts.length - 1) % 2 !== 0 &&
-                  i === latestPosts.length - 1,
-              })}
-            />
-          ))}
-        </div>
-      </section>
+      <div className="flex flex-col gap-4">
+        <BlogSection
+          title="Latest Posts"
+          posts={latestPosts}
+          variant="featured"
+        />
+      </div>
     </main>
   );
 };
