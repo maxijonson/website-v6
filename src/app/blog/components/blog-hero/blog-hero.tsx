@@ -7,7 +7,7 @@ import { RxCaretRight } from "react-icons/rx";
 export interface BlogHeroProps {
   banner: ImageProps["src"];
   bannerAlt: ImageProps["alt"];
-  caption: string;
+  title: string;
   description: string;
   breadcrumbs: { label: string; href: string }[];
   categories?: { label: string; href: string }[];
@@ -16,7 +16,7 @@ export interface BlogHeroProps {
 const BlogHero = ({
   banner,
   bannerAlt,
-  caption,
+  title,
   description,
   breadcrumbs,
   categories = [],
@@ -93,7 +93,7 @@ const BlogHero = ({
             "dark:text-stone-50",
           )}
         >
-          {caption}
+          {title}
         </p>
         <p
           className={cn(
