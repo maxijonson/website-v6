@@ -1,9 +1,5 @@
-import type { BaseQuery } from "groqd";
+import { qS, type QueryLike } from "./s";
 
-export const qCoalesce = (...values: (BaseQuery<any> | string)[]) => {
-  return [
-    "coalesce(",
-    values.map((v) => (typeof v === "string" ? v : v.query)).join(", "),
-    ")",
-  ].join("");
+export const qCoalesce = (...values: QueryLike[]) => {
+  return ["coalesce(", qS(values).join(", "), ")"].join("");
 };

@@ -6,7 +6,7 @@ import Image from "next/image";
 import { getLatestPosts } from "../../../sanity/queries/post/getLatestPosts";
 
 const BlogPage = async () => {
-  const latestPosts = await getLatestPosts();
+  const [latestPosts] = await Promise.all([getLatestPosts()]);
 
   return (
     <main className="min-h-dvh">
