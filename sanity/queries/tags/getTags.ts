@@ -17,9 +17,11 @@ export const makeGetTagsQuery = ({ filter }: GetTagsQueryOptions = {}) =>
         qType("tag"),
         qGt(
           qCount(
-            q("*").filterByType("post").filter("references(^._id)").grab({
-              _id: q.string(),
-            }),
+            q("*")
+              .filter(qAnd(qType("post"), "references(^._id)"))
+              .grab({
+                _id: q.string(),
+              }),
           ),
           0,
         ),
