@@ -7,7 +7,10 @@ import Link from "next/link";
 import type { PostDetails } from "../../../../../sanity/selections/post-details";
 
 export interface PostCardProps {
-  post: Pick<PostDetails, "title" | "createdAt" | "image" | "summary"> & {
+  post: Pick<
+    PostDetails,
+    "title" | "createdAt" | "image" | "summary" | "slug"
+  > & {
     author: PostAuthorAvatarProps["author"];
   };
   className?: string;
@@ -20,7 +23,7 @@ const PostCard = ({
   heading: Heading = "h1",
 }: PostCardProps) => {
   return (
-    <Link href="/blog" className={cn("group", className)}>
+    <Link href={`/blog/${post.slug}`} className={cn("group", className)}>
       <article
         className={cn(
           "flex h-full flex-col gap-2 overflow-hidden rounded-md bg-stone-100 outline outline-1 outline-stone-300/0 transition-[outline-color] duration-500",
