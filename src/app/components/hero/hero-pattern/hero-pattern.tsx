@@ -7,43 +7,38 @@ import { animateShootingStars } from "./hero-pattern.css";
 import { cn } from "@/lib/utils";
 
 const HeroPattern = () => {
-  const lightRef = useRef<SVGElement>(null);
-  const darkRef = useRef<SVGElement>(null);
-
-  const animateRects = (ref: typeof lightRef) => {
-    if (!ref.current) return;
-    const rects = ref.current.querySelectorAll("rect");
-    rects.forEach((rect) => {
-      rect.classList.add(animateShootingStars);
-      rect.style.animationDelay = `${Math.random() * 10000}ms`;
-    });
-    ref.current.classList.remove("opacity-0");
-  };
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    animateRects(lightRef);
-    animateRects(darkRef);
+    if (!containerRef.current) return;
+    containerRef.current.querySelectorAll("& > svg").forEach((element) => {
+      if (!element) return;
+      const rects = element.querySelectorAll("rect");
+      rects.forEach((rect) => {
+        rect.classList.add(animateShootingStars);
+        rect.style.animationDelay = `${Math.random() * 10000}ms`;
+      });
+      element.classList.remove("opacity-0");
+    });
   }, []);
 
   return (
-    <>
+    <div className="absolute left-0 top-0 size-full" ref={containerRef}>
       <HeroPatternLight
-        ref={lightRef}
         preserveAspectRatio="xMidYMid slice"
         className={cn(
-          "absolute left-0 top-0 h-full w-full opacity-0",
+          "absolute left-0 top-0 size-full opacity-0",
           "dark:invisible",
         )}
       />
       <HeroPatternDark
-        ref={darkRef}
         preserveAspectRatio="xMidYMid slice"
         className={cn(
-          "invisible absolute left-0 top-0 h-full w-full opacity-0",
+          "invisible absolute left-0 top-0 size-full opacity-0",
           "dark:visible",
         )}
       />
-    </>
+    </div>
   );
 };
 
