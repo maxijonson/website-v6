@@ -1,6 +1,8 @@
 import { cn } from "@/lib/utils";
 import type { PostCardProps } from "../post-card/post-card";
 import PostCard from "../post-card/post-card";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export type BlogSectionVariant = "grid" | "featured";
 
@@ -8,9 +10,15 @@ export interface BlogSectionProps {
   title: string;
   posts: PostCardProps["post"][];
   variant?: BlogSectionVariant;
+  url?: string;
 }
 
-const BlogSection = ({ title, posts, variant = "grid" }: BlogSectionProps) => {
+const BlogSection = ({
+  title,
+  posts,
+  variant = "grid",
+  url,
+}: BlogSectionProps) => {
   const rootVariants = {
     grid: {
       container: cn(
@@ -30,8 +38,17 @@ const BlogSection = ({ title, posts, variant = "grid" }: BlogSectionProps) => {
   } satisfies Record<BlogSectionVariant, { container: string }>;
 
   return (
-    <section className={cn("mx-auto max-w-5xl px-4 pt-6")}>
-      <h1 className={cn("mb-4 text-3xl font-bold", "md:text-4xl")}>{title}</h1>
+    <section className={cn("mx-auto flex max-w-5xl flex-col gap-4 px-4 pt-6")}>
+      <div className="flex items-center justify-between">
+        <h2 className="text-3xl font-bold">
+          {url ? <Link href={url}>{title}</Link> : title}
+        </h2>
+        {url && (
+          <Link href={url} className="text-sm font-medium text-primary">
+            <Button variant="link">View All</Button>
+          </Link>
+        )}
+      </div>
       <div className={rootVariants[variant].container}>
         {posts.map((post, i) => {
           const postVariants = {

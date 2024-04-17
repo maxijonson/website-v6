@@ -5,12 +5,27 @@ import BlogHero from "./components/blog-hero/blog-hero";
 import BlogSection from "./components/blog-section/blog-section";
 import Footer from "@/components/footer/footer";
 import BlogHeader from "./components/blog-header/blog-header";
+import { getLatestPostsByCategoryId } from "../../../sanity/queries/post/getLatestPostsByCategoryId";
 
 const BlogPage = async () => {
   const [latestPosts, categories] = await Promise.all([
     getLatestPosts(),
     getCategories(),
   ]);
+
+  const latestPostsByCategory = (
+    await Promise.all(
+      categories.map(async (category) => {
+        const posts = await getLatestPostsByCategoryId(category.id);
+        return {
+          category,
+          posts: posts.filter((post) =>
+            latestPosts.every((latestPost) => latestPost.id !== post.id),
+          ),
+        };
+      }),
+    )
+  ).filter(({ posts }) => posts.length > 0);
 
   return (
     <>
@@ -34,6 +49,14 @@ const BlogPage = async () => {
             posts={latestPosts}
             variant="featured"
           />
+          {latestPostsByCategory.map(({ category, posts }) => (
+            <BlogSection
+              key={category.id}
+              title={category.name}
+              posts={posts}
+              url={`/blog/${category.slug}`}
+            />
+          ))}
         </div>
       </main>
       <Footer />

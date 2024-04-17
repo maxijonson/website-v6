@@ -8,6 +8,6 @@ export const makeGetLatestPostsQuery = () =>
     .filter(qType("post"))
     .grab$(postDetailsSelection)
     .order("createdAt desc")
-    .slice(0, 3);
+    .slice(0, 4);
 
 export const getLatestPosts = () => runQuery(makeGetLatestPostsQuery());
