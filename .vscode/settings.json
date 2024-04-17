@@ -1,3 +1,9 @@
 {
-  "tailwindCSS.classAttributes": ["class", "className", ".*ClassName", ".*Class", ".*ClassNames"],
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    ".*ClassName",
+    ".*Class",
+    ".*ClassNames"
+  ]
 }
