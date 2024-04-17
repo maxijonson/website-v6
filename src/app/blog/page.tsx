@@ -4,6 +4,7 @@ import { getCategories } from "../../../sanity/queries/categories/getCategories"
 import BlogHero from "./components/blog-hero/blog-hero";
 import BlogSection from "./components/blog-section/blog-section";
 import Footer from "@/components/footer/footer";
+import BlogHeader from "./components/blog-header/blog-header";
 
 const BlogPage = async () => {
   const [latestPosts, categories] = await Promise.all([
@@ -13,6 +14,7 @@ const BlogPage = async () => {
 
   return (
     <>
+      <BlogHeader />
       <main className="min-h-dvh">
         <BlogHero
           banner={BlogHomeBanner}

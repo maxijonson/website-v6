@@ -24,14 +24,16 @@ const BlogHero = ({
   return (
     <section
       className={cn(
-        "relative flex min-h-64 flex-col items-center justify-center bg-gradient-to-tr from-stone-200 to-stone-50 py-7 text-stone-800",
+        "blog-hero",
+        "relative flex min-h-64 flex-col items-center justify-center bg-gradient-to-tr from-stone-200 to-stone-50 pb-7 pt-16 text-stone-800",
         "dark:from-stone-900 dark:to-stone-950 dark:text-stone-300",
-        "md:py-10",
+        "md:py-24",
       )}
     >
       <div
         className={cn(
-          "absolute size-full overflow-hidden",
+          "blog-hero-background-container",
+          "absolute top-0 size-full overflow-hidden",
           "after:absolute after:size-full after:bg-stone-50/80",
           "supports-[backdrop-filter]:after:bg-stone-50/60 supports-[backdrop-filter]:after:backdrop-blur-sm",
           "dark:after:bg-stone-950/80",
@@ -40,7 +42,7 @@ const BlogHero = ({
       >
         <Image
           src={banner}
-          className="object-cover"
+          className="blog-hero-background object-cover"
           alt={bannerAlt}
           fill
           priority
@@ -48,6 +50,7 @@ const BlogHero = ({
       </div>
       <div
         className={cn(
+          "blog-hero-content-container",
           "z-10 mx-auto flex w-full max-w-5xl flex-col items-center justify-center gap-2 px-4",
           "md:items-start",
         )}

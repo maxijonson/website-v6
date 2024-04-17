@@ -1,15 +1,18 @@
 "use client";
 
-import * as React from "react";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
-import { Button } from "@/components/ui/button";
-import useHomeHeader from "../home-header-context/useHomeHeader";
+import { Button, type ButtonProps } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
-const ThemeSwitch = () => {
+export interface ThemeSwitchProps {
+  variant?: ButtonProps["variant"];
+}
+
+const ThemeSwitch = ({ variant = "ghost" }: ThemeSwitchProps) => {
   const { setTheme, resolvedTheme } = useTheme();
-  const { showBackground } = useHomeHeader();
+  const [isThemeResolved, setIsThemeResolved] = useState(false);
 
   const handleToggleTheme = () => {
     setTheme(resolvedTheme === "light" ? "dark" : "light");
@@ -20,10 +23,14 @@ const ThemeSwitch = () => {
   const deactivatedIconClassName = "opacity-0 rotate-0";
   const activatedIconClassName = "opacity-1 rotate-[360deg]";
 
-  if (!resolvedTheme || showBackground === null) return null;
+  useEffect(() => {
+    setIsThemeResolved(resolvedTheme !== undefined);
+  }, [resolvedTheme]);
+
+  if (!isThemeResolved) return null;
   return (
     <Button
-      variant={showBackground ? "ghost" : "link"}
+      variant={variant}
       size="icon"
       onClick={handleToggleTheme}
       className="relative rounded-full"

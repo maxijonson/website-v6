@@ -7,7 +7,7 @@ const Footer = () => {
       suppressHydrationWarning
     >
       <Contact />
-      <div>&copy; {new Date().getFullYear()} &middot; Tristan Chin</div>
+      <div>{new Date().getFullYear()} &copy; Tristan Chin</div>
     </footer>
   );
 };

@@ -5,7 +5,10 @@ import { useViewportBelow } from "@/hooks/user-viewport-below";
 import { cn } from "@/lib/utils";
 
 const HomeHeader = () => {
-  const showBackground = useViewportBelow(".hero-content");
+  const showBackground = useViewportBelow(
+    ".blog-hero-content-container",
+    -0.25,
+  );
 
   return (
     <Header
