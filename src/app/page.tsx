@@ -9,7 +9,7 @@ import Skills from "./components/skills/skills";
 
 const Home = () => {
   return (
-    <>
+    <div>
       <HomeHeader />
       <main>
         <Hero />
@@ -20,7 +20,7 @@ const Home = () => {
         <Education />
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

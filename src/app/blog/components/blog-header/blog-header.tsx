@@ -25,7 +25,7 @@ const HomeHeader = () => {
           )]: !showBackground,
         }),
       }}
-      themeSwitchProps={{
+      themeSwitch={{
         variant: !showBackground ? "link" : undefined,
       }}
     />

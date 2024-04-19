@@ -24,7 +24,7 @@ const BlogOverview = ({ hero, sections }: BlogOverviewProps) => {
   }));
 
   return (
-    <>
+    <div>
       <BlogHeader />
       <main className="min-h-dvh">
         <BlogHero {...hero} />
@@ -39,7 +39,7 @@ const BlogOverview = ({ hero, sections }: BlogOverviewProps) => {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 
