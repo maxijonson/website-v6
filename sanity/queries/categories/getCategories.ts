@@ -7,13 +7,7 @@ import { qType } from "../../utils/groqd/type";
 import { qGt } from "../../utils/groqd/gt";
 import { categoryDetailsSelection } from "../../selections/category-details";
 
-export interface GetCategoriesQueryOptions {
-  filter?: string;
-}
-
-export const makeGetCategoriesQuery = ({
-  filter,
-}: GetCategoriesQueryOptions = {}) =>
+export const makeGetCategoriesQuery = () =>
   q("*")
     .filter(
       qAnd(
@@ -28,7 +22,6 @@ export const makeGetCategoriesQuery = ({
           ),
           0,
         ),
-        filter,
       ),
     )
     .grab$(categoryDetailsSelection);
