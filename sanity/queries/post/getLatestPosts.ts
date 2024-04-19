@@ -1,13 +1,13 @@
-import { q } from "groqd";
 import { runQuery } from "../../utils/run-query";
-import { postDetailsSelection } from "../../selections/post-details";
-import { qType } from "../../utils/groqd/type";
+import { makeGetPostsQuery } from "./getPosts";
 
-export const makeGetLatestPostsQuery = () =>
-  q("*")
-    .filter(qType("post"))
-    .grab$(postDetailsSelection)
-    .order("createdAt desc")
-    .slice(0, 4);
+export interface GetLatestPostsQueryOptions {
+  filter?: string;
+}
+
+export const makeGetLatestPostsQuery = ({
+  filter,
+}: GetLatestPostsQueryOptions = {}) =>
+  makeGetPostsQuery({ filter }).order("createdAt desc").slice(0, 4);
 
 export const getLatestPosts = () => runQuery(makeGetLatestPostsQuery());
