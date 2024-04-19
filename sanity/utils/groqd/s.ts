@@ -1,3 +1,4 @@
+import { isDefined } from "@/utils/isDefined";
 import type { BaseQuery } from "groqd";
 
 export type QueryLike = BaseQuery<any> | string | number | boolean;
@@ -9,7 +10,7 @@ export const qS = <
   value: T,
 ): R => {
   if (Array.isArray(value)) {
-    return value.map((v) => qS(v)).filter((s) => !!s) as R;
+    return value.map((v) => qS(v)).filter(isDefined) as R;
   }
   if (typeof value === "string") return value as R;
   if (typeof value === "number") return `${value}` as R;
