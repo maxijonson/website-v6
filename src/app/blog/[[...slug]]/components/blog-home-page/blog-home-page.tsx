@@ -1,10 +1,10 @@
 import BlogHomeBanner from "$/image/blog/blog-home-banner.jpg";
-import { getLatestPosts } from "../../../sanity/queries/post/getLatestPosts";
-import { getCategories } from "../../../sanity/queries/categories/getCategories";
-import { getLatestPostsByCategoryId } from "../../../sanity/queries/post/getLatestPostsByCategoryId";
-import BlogOverview from "./components/blog-overview/blog-overview";
+import { getCategories } from "../../../../../../sanity/queries/categories/getCategories";
+import { getLatestPosts } from "../../../../../../sanity/queries/post/getLatestPosts";
+import { getLatestPostsByCategoryId } from "../../../../../../sanity/queries/post/getLatestPostsByCategoryId";
+import BlogOverview from "../blog-overview/blog-overview";
 
-const BlogPage = async () => {
+const BlogHomePage = async () => {
   const [latestPosts, categories] = await Promise.all([
     getLatestPosts(),
     getCategories(),
@@ -49,4 +49,4 @@ const BlogPage = async () => {
   );
 };
 
-export default BlogPage;
+export default BlogHomePage;

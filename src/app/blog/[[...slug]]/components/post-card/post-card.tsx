@@ -4,7 +4,7 @@ import PostAuthorAvatar, {
   type PostAuthorAvatarProps,
 } from "../post-author-avatar/post-author-avatar";
 import Link from "next/link";
-import type { PostDetails } from "../../../../../sanity/selections/post-details";
+import type { PostDetails } from "../../../../../../sanity/selections/post-details";
 
 export interface PostCardProps {
   post: Pick<
