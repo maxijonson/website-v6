@@ -1,4 +1,5 @@
 import type {
+  GenerateMetadata,
   GenerateStaticParams,
   PageProps,
   RouteCatchAllHandler,
@@ -25,11 +26,23 @@ const handlers: BlogRouteHandler[] = [
 export const generateStaticParams: GenerateStaticParams<
   Record<string, never>,
   BlogPageParams
-> = async () => {
+> = async (parentProps) => {
   const generatedParams = await Promise.all(
-    handlers.map((handler) => handler.generateStaticParams({ params: {} })),
+    handlers.map((handler) => handler.generateStaticParams(parentProps)),
   );
   return generatedParams.flat();
+};
+
+export const generateMetadata: GenerateMetadata<BlogPageParams> = async (
+  pageProps,
+  parent,
+) => {
+  for (const handler of handlers) {
+    if (await handler.canHandle(pageProps)) {
+      return handler.generateMetadata(pageProps, parent);
+    }
+  }
+  return {};
 };
 
 const BlogPage = async (props: BlogPageProps) => {

@@ -1,3 +1,5 @@
+import type { Metadata, ResolvingMetadata } from "next";
+
 export type RouteParams = Record<string, string | string[]>;
 
 export interface PageProps<TParams extends RouteParams = RouteParams> {
@@ -11,9 +13,15 @@ export interface RouteCatchAllHandler<
   canHandle: (pageProps: PageProps<TParams>) => boolean | Promise<boolean>;
   render: (pageProps: PageProps<TParams>) => JSX.Element | Promise<JSX.Element>;
   generateStaticParams: GenerateStaticParams<TParentParams, TParams>;
+  generateMetadata: GenerateMetadata<TParams>;
 }
 
 export type GenerateStaticParams<
   TIn extends RouteParams = RouteParams,
   TOut extends RouteParams = RouteParams,
-> = (parentParams: PageProps<TIn>) => TOut[] | Promise<TOut[]>;
+> = (parentProps: PageProps<TIn>) => TOut[] | Promise<TOut[]>;
+
+export type GenerateMetadata<TParams extends RouteParams = RouteParams> = (
+  pageProps: PageProps<TParams>,
+  parent: ResolvingMetadata,
+) => Metadata | Promise<Metadata>;
