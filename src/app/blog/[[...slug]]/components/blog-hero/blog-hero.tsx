@@ -92,7 +92,7 @@ const BlogHero = ({
         <p
           className={cn(
             "text-center text-2xl font-bold text-stone-950",
-            "md:text-3xl",
+            "md:text-left md:text-3xl",
             "dark:text-stone-50",
           )}
         >
@@ -102,14 +102,14 @@ const BlogHero = ({
           className={cn(
             "text-center text-xs text-stone-800",
             "sm:text-sm",
-            "md:text-base",
+            "md:text-left md:text-base",
             "dark:text-stone-300",
           )}
         >
           {description}
         </p>
         <nav>
-          {categories.length && (
+          {categories.length > 0 && (
             <ul
               className={cn(
                 "flex flex-wrap justify-center gap-2",

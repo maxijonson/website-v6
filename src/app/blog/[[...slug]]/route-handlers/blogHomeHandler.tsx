@@ -1,8 +1,7 @@
-import type { RouteCatchAllHandler } from "@/utils/types";
 import BlogHomePage from "../components/blog-home-page/blog-home-page";
-import type { BlogPageProps } from "../page";
+import type { BlogRouteHandler } from "../page";
 
-export const blogHomeHandler: RouteCatchAllHandler<BlogPageProps["params"]> = {
+export const blogHomeHandler: BlogRouteHandler = {
   canHandle: ({ params: { slug = [] } }) => slug.length === 0,
   render: BlogHomePage,
 };

@@ -38,7 +38,9 @@ const BlogSection = ({
   } satisfies Record<BlogSectionVariant, { container: string }>;
 
   return (
-    <section className={cn("mx-auto flex max-w-5xl flex-col gap-4 px-4 pt-6")}>
+    <section
+      className={cn("mx-auto flex w-full max-w-5xl flex-col gap-4 px-4 pt-6")}
+    >
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-bold">
           {url ? <Link href={url}>{title}</Link> : title}
