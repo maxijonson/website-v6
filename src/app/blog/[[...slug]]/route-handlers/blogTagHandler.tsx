@@ -1,6 +1,7 @@
 import type { BlogRouteHandler } from "../page";
 import { findTagBySlug } from "../../../../../sanity/queries/tags/findTagBySlug";
 import BlogTagPage from "../components/blog-tag-page/blog-tag-page";
+import { getTags } from "../../../../../sanity/queries/tags/getTags";
 
 export const blogTagHandler: BlogRouteHandler = {
   canHandle: async ({ params: { slug = [] } }) => {
@@ -9,4 +10,8 @@ export const blogTagHandler: BlogRouteHandler = {
     return !!tag;
   },
   render: BlogTagPage,
+  generateStaticParams: async () => {
+    const tags = await getTags();
+    return tags.map((tag) => ({ slug: [tag.slug] }));
+  },
 };

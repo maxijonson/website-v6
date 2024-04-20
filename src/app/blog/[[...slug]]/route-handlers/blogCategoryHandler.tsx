@@ -1,6 +1,7 @@
 import { findCategoryBySlug } from "../../../../../sanity/queries/categories/findCategoryBySlug";
 import type { BlogRouteHandler } from "../page";
 import BlogCategoryPage from "../components/blog-category-page/blog-category-page";
+import { getCategories } from "../../../../../sanity/queries/categories/getCategories";
 
 export const blogCategoryHandler: BlogRouteHandler = {
   canHandle: async ({ params: { slug = [] } }) => {
@@ -9,4 +10,8 @@ export const blogCategoryHandler: BlogRouteHandler = {
     return !!category;
   },
   render: BlogCategoryPage,
+  generateStaticParams: async () => {
+    const categories = await getCategories();
+    return categories.map((category) => ({ slug: [category.slug] }));
+  },
 };
