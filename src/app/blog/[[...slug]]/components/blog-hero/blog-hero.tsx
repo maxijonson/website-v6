@@ -25,7 +25,7 @@ const BlogHero = ({
     <section
       className={cn(
         "blog-hero",
-        "relative flex min-h-64 flex-col items-center justify-center bg-gradient-to-tr from-stone-200 to-stone-50 pb-7 pt-16 text-stone-800",
+        "relative flex min-h-64 flex-col items-center justify-center bg-gradient-to-tr from-stone-200 to-stone-50 pb-7 pt-20 text-stone-800",
         "dark:from-stone-900 dark:to-stone-950 dark:text-stone-300",
         "md:py-24",
       )}
@@ -51,13 +51,16 @@ const BlogHero = ({
       <div
         className={cn(
           "blog-hero-content-container",
-          "z-10 mx-auto flex w-full max-w-5xl flex-col items-center justify-center gap-2 px-4",
+          "z-10 mx-auto flex w-full max-w-5xl flex-col items-center justify-center gap-4 px-4",
           "md:items-start",
         )}
       >
         <nav>
           <ul
-            className={cn("flex flex-wrap justify-center", "md:justify-start")}
+            className={cn(
+              "flex flex-wrap justify-center [row-gap:4px]",
+              "md:justify-start",
+            )}
           >
             {breadcrumbs.map((breadcrumb, i) => (
               <li key={breadcrumb.href} className="flex items-center">
