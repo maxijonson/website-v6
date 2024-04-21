@@ -1,6 +1,7 @@
 import { defineField, defineType, type FieldGroupDefinition } from "sanity";
 import category from "./category";
 import { makeImageField } from "../../utils/field-generators/make-image-field";
+import { isUniqueSlug } from "../../utils/isUniqueSlug";
 
 const groupDetails = {
   name: "Details",
@@ -38,6 +39,7 @@ export default defineType({
       options: {
         source: "name",
         maxLength: 96,
+        isUnique: isUniqueSlug,
       },
       validation: (rule) => [rule.required().error("Required")],
       group: groupDetails.name,

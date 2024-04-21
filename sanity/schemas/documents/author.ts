@@ -3,6 +3,7 @@ import {
   makeImageField,
   makeImageFieldDefaultOptions,
 } from "../../utils/field-generators/make-image-field";
+import { isUniqueSlug } from "../../utils/isUniqueSlug";
 
 export default defineType({
   name: "author",
@@ -25,6 +26,7 @@ export default defineType({
       options: {
         source: "name",
         maxLength: 96,
+        isUnique: isUniqueSlug,
       },
       validation: (rule) => [rule.required().error("Required")],
     }),

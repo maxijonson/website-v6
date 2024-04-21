@@ -3,6 +3,7 @@ import author from "./author";
 import tag from "./tag";
 import postContent from "../fields/post-content";
 import { makeImageField } from "../../utils/field-generators/make-image-field";
+import { isUniqueSlug } from "../../utils/isUniqueSlug";
 
 const groupDetails = {
   name: "Details",
@@ -50,8 +51,9 @@ export default defineType({
       options: {
         source: "title",
         maxLength: 96,
+        isUnique: isUniqueSlug,
       },
-      validation: (rule) => [rule.required().error("Required")],
+      validation: (rule) => [rule.required().error("Requiredz")],
       group: groupDetails.name,
     }),
     defineField({
