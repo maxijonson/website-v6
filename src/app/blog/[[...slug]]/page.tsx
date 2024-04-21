@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import { blogHomeHandler } from "./route-handlers/blogHomeHandler";
 import { blogCategoryHandler } from "./route-handlers/blogCategoryHandler";
 import { blogTagHandler } from "./route-handlers/blogTagHandler";
+import { blogPostHandler } from "./route-handlers/blogPostHandler";
 
 export type BlogPageParams = {
   slug?: string[];
@@ -19,6 +20,7 @@ export type BlogRouteHandler = RouteCatchAllHandler<BlogPageParams>;
 
 const handlers: BlogRouteHandler[] = [
   blogHomeHandler,
+  blogPostHandler,
   blogCategoryHandler,
   blogTagHandler,
 ];

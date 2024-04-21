@@ -21,6 +21,11 @@ const BlogHero = ({
   breadcrumbs,
   categories = [],
 }: BlogHeroProps) => {
+  const breadcrumbClassName = cn(
+    "max-w-40 truncate",
+    "sm:max-w-60",
+    "md:max-w-none",
+  );
   return (
     <section
       className={cn(
@@ -79,9 +84,13 @@ const BlogHero = ({
                     })}
                   >
                     {i === breadcrumbs.length - 1 ? (
-                      <h1>{breadcrumb.label}</h1>
+                      <h1 className={breadcrumbClassName}>
+                        {breadcrumb.label}
+                      </h1>
                     ) : (
-                      <span>{breadcrumb.label}</span>
+                      <span className={breadcrumbClassName}>
+                        {breadcrumb.label}
+                      </span>
                     )}
                   </Badge>
                 </Link>

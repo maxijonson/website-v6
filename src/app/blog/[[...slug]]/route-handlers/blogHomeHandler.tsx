@@ -31,15 +31,19 @@ export const blogHomeHandler: BlogRouteHandler = {
       },
     ];
 
+    const keywords = Array.from(
+      new Set<string>([
+        "blog",
+        ...categories.map((category) => category.name),
+        ...tags.map((tag) => tag.name),
+      ]),
+    );
+
     return {
       ...definedParentMetadata,
       title,
       description,
-      keywords: [
-        "blog",
-        ...categories.map((category) => category.name),
-        ...tags.map((tag) => tag.name),
-      ],
+      keywords,
       openGraph: {
         ...definedParentMetadata.openGraph,
         title,

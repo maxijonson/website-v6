@@ -1,47 +1,56 @@
-import type { BlogRouteHandler } from "../page";
-import { findTagBySlug } from "../../../../../sanity/queries/tags/findTagBySlug";
-import BlogTagPage from "../components/blog-tag-page/blog-tag-page";
-import { getTags } from "../../../../../sanity/queries/tags/getTags";
 import { getDefinedParentMetadata } from "@/utils/getDefinedParentMetadata";
 import { getImageDimensions } from "@sanity/asset-utils";
 import type { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
+import { findPostBySlug } from "../../../../../sanity/queries/post/findPostBySlug";
+import { getPosts } from "../../../../../sanity/queries/post/getPosts";
 import { urlForImage } from "../../../../../sanity/utils/image";
+import BlogPostPage from "../components/blog-post-page/blog-post-page";
+import type { BlogRouteHandler } from "../page";
 
-export const blogTagHandler: BlogRouteHandler = {
+export const blogPostHandler: BlogRouteHandler = {
   canHandle: async ({ params: { slug = [] } }) => {
     if (slug.length !== 1) return false;
-    const tag = await findTagBySlug(slug[0]);
-    return !!tag;
+    const post = await findPostBySlug(slug[0]);
+    return !!post;
   },
-  render: BlogTagPage,
+  render: BlogPostPage,
   generateStaticParams: async () => {
-    const tags = await getTags();
-    return tags.map((tag) => ({ slug: [tag.slug] }));
+    const posts = await getPosts();
+    return posts.map((post) => ({ slug: [post.slug] }));
   },
   generateMetadata: async ({ params: { slug = [] } }, parent) => {
     if (slug.length !== 1) return {};
 
-    const [tag, definedParentMetadata] = await Promise.all([
-      findTagBySlug(slug[0]),
+    const [post, definedParentMetadata] = await Promise.all([
+      findPostBySlug(slug[0]),
       getDefinedParentMetadata(parent),
     ]);
-    if (!tag) return {};
+    if (!post) return {};
 
-    const title = `${tag.name} - Tristan Chin's Blog`;
-    const description = tag.description;
+    const title = post.title;
+    const description = post.summary;
 
-    const imageDimensions = getImageDimensions(tag.image);
+    const imageDimensions = getImageDimensions(post.image);
     const ogImages: Required<OpenGraph["images"]> = [
       {
-        url: urlForImage(tag.image),
-        alt: tag.image.alt,
+        url: urlForImage(post.image),
+        alt: post.image.alt,
         width: imageDimensions.width,
         height: imageDimensions.height,
       },
     ];
 
     const keywords = Array.from(
-      new Set<string>(["blog", tag.name, ...tag.keywords]),
+      new Set<string>([
+        "blog",
+        ...post.keywords,
+        ...post.tags.flatMap((tag) => [
+          tag.name,
+          tag.category.name,
+          ...tag.keywords,
+          ...tag.category.keywords,
+        ]),
+      ]),
     );
 
     return {

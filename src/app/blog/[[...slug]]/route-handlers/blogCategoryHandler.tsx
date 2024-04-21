@@ -43,16 +43,20 @@ export const blogCategoryHandler: BlogRouteHandler = {
       },
     ];
 
-    return {
-      ...definedParentMetadata,
-      title,
-      description,
-      keywords: [
+    const keywords = Array.from(
+      new Set<string>([
         "blog",
         category.name,
         ...category.keywords,
         ...tags.map((tag) => tag.name),
-      ],
+      ]),
+    );
+
+    return {
+      ...definedParentMetadata,
+      title,
+      description,
+      keywords,
       openGraph: {
         ...definedParentMetadata.openGraph,
         title,
