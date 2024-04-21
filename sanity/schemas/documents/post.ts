@@ -53,7 +53,7 @@ export default defineType({
         maxLength: 96,
         isUnique: isUniqueSlug,
       },
-      validation: (rule) => [rule.required().error("Requiredz")],
+      validation: (rule) => [rule.required().error("Required")],
       group: groupDetails.name,
     }),
     defineField({
