@@ -37,7 +37,7 @@ const PostBodyImage = (
         />
       </DialogTrigger>
       <DialogContent
-        className="scrollbar my-4 max-h-full w-full max-w-[80%] overflow-auto border-none bg-transparent px-0 py-8"
+        className="my-4 max-h-full w-full max-w-[80%] overflow-auto border-none bg-transparent px-0 py-8 scrollbar"
         withCloseButton={false}
       >
         <div>

@@ -8,6 +8,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { getBaseURL } from "@/utils/getBaseURL";
 import { scrollbarClassName } from "@/tailwind/classes";
+import { cn } from "@/lib/utils";
 
 export const generateMetadata = (): Metadata => {
   const description =
@@ -77,7 +78,11 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="en" suppressHydrationWarning className={scrollbarClassName}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn(scrollbarClassName, "scroll-smooth")}
+    >
       <body className={fontSans.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <DevUtilsClient />
