@@ -1,5 +1,6 @@
 import { BsTwitterX } from "react-icons/bs";
 import { RxLinkedinLogo, RxInstagramLogo, RxGithubLogo } from "react-icons/rx";
+import { IoLogoReddit } from "react-icons/io5";
 import ContactEmail from "./contact-email/contact-email";
 import ContactSocial from "./contact-social/contact-social";
 
@@ -30,6 +31,12 @@ const Contact = () => {
           name="Twitter - @MaxiJonson"
         >
           <BsTwitterX className="size-5" />
+        </ContactSocial>
+        <ContactSocial
+          url="https://www.reddit.com/user/maxijonson/"
+          name="Reddit - u/maxijonson"
+        >
+          <IoLogoReddit className="size-5" />
         </ContactSocial>
       </div>
       <ContactEmail />
