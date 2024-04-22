@@ -43,6 +43,7 @@ const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
             author={post.author}
           />
           <div className={cn("mx-auto flex w-full max-w-5xl pt-8")}>
+            <PostBody body={body} />
             {headings.length > 0 && (
               <aside
                 className={cn("hidden w-full max-w-xs flex-col p-4", "lg:flex")}
@@ -53,7 +54,6 @@ const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
                 </div>
               </aside>
             )}
-            <PostBody body={body} />
           </div>
         </article>
       </main>
