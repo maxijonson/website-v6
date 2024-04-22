@@ -32,7 +32,7 @@ const BlogHero = ({
   const breadcrumbClassName = cn(
     "max-w-40 truncate",
     "sm:max-w-60",
-    "md:max-w-none",
+    "md:max-w-80",
   );
   const RootElement = asHeader ? "header" : "section";
 
@@ -111,6 +111,25 @@ const BlogHero = ({
             ))}
           </ul>
         </nav>
+        <p
+          className={cn(
+            "text-center text-2xl font-bold text-stone-950",
+            "md:text-left md:text-3xl",
+            "dark:text-stone-50",
+          )}
+        >
+          {title}
+        </p>
+        <p
+          className={cn(
+            "text-center text-xs text-stone-800",
+            "sm:text-sm",
+            "md:text-left md:text-base",
+            "dark:text-stone-300",
+          )}
+        >
+          {description}
+        </p>
         {(author || date) && (
           <div className="flex items-center gap-2">
             {author && (
@@ -133,25 +152,6 @@ const BlogHero = ({
             )}
           </div>
         )}
-        <p
-          className={cn(
-            "text-center text-2xl font-bold text-stone-950",
-            "md:text-left md:text-3xl",
-            "dark:text-stone-50",
-          )}
-        >
-          {title}
-        </p>
-        <p
-          className={cn(
-            "text-center text-xs text-stone-800",
-            "sm:text-sm",
-            "md:text-left md:text-base",
-            "dark:text-stone-300",
-          )}
-        >
-          {description}
-        </p>
         <nav>
           {categories.length > 0 && (
             <ul
