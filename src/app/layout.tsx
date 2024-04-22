@@ -7,6 +7,7 @@ import ogImage from "$/image/meta/og.png";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { getBaseURL } from "@/utils/getBaseURL";
+import { scrollbarClassName } from "@/tailwind/classes";
 
 export const generateMetadata = (): Metadata => {
   const description =
@@ -76,7 +77,7 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={scrollbarClassName}>
       <body className={fontSans.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <DevUtilsClient />

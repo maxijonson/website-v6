@@ -3,6 +3,8 @@ import { cn } from "@/lib/utils";
 import Image, { type ImageProps } from "next/image";
 import Link from "next/link";
 import { RxCaretRight } from "react-icons/rx";
+import type { PostDetails } from "../../../../../../sanity/selections/post-details";
+import PostAuthorAvatar from "../post-author-avatar/post-author-avatar";
 
 export interface BlogHeroProps {
   banner: ImageProps["src"];
@@ -11,6 +13,9 @@ export interface BlogHeroProps {
   description: string;
   breadcrumbs: { label: string; href: string }[];
   categories?: { label: string; href: string }[];
+  date?: Date | string;
+  asHeader?: boolean;
+  author?: PostDetails["author"];
 }
 
 const BlogHero = ({
@@ -20,14 +25,19 @@ const BlogHero = ({
   description,
   breadcrumbs,
   categories = [],
+  date,
+  asHeader = false,
+  author,
 }: BlogHeroProps) => {
   const breadcrumbClassName = cn(
     "max-w-40 truncate",
     "sm:max-w-60",
     "md:max-w-none",
   );
+  const RootElement = asHeader ? "header" : "section";
+
   return (
-    <section
+    <RootElement
       className={cn(
         "blog-hero",
         "relative flex min-h-64 flex-col items-center justify-center bg-gradient-to-tr from-stone-200 to-stone-50 pb-7 pt-20 text-stone-800",
@@ -101,6 +111,28 @@ const BlogHero = ({
             ))}
           </ul>
         </nav>
+        {(author || date) && (
+          <div className="flex items-center gap-2">
+            {author && (
+              <div className={cn("flex items-center gap-2")}>
+                <PostAuthorAvatar author={author} className={cn("size-10")} />
+                <p className={cn("text-sm font-semibold")}>{author.name}</p>
+              </div>
+            )}
+            {author && date && <span aria-hidden="true">•</span>}
+            {date && (
+              <time
+                dateTime={new Date(date).toISOString()}
+                className={cn("text-sm font-semibold")}
+                suppressHydrationWarning
+              >
+                {new Date(date).toLocaleDateString("en", {
+                  dateStyle: "long",
+                })}
+              </time>
+            )}
+          </div>
+        )}
         <p
           className={cn(
             "text-center text-2xl font-bold text-stone-950",
@@ -144,7 +176,7 @@ const BlogHero = ({
           )}
         </nav>
       </div>
-    </section>
+    </RootElement>
   );
 };
 

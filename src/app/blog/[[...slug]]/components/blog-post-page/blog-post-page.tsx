@@ -5,6 +5,8 @@ import type { BlogPageProps } from "../../page";
 import { notFound } from "next/navigation";
 import { findPostBySlug } from "../../../../../../sanity/queries/post/findPostBySlug";
 import { urlForImage } from "../../../../../../sanity/utils/image";
+import { getPostBody } from "../../../../../../sanity/queries/post/getPostBody";
+import PostBody from "../post-body/post-body";
 
 const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   if (slug.length !== 1) notFound();
@@ -12,12 +14,15 @@ const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   const post = await findPostBySlug(slug[0]);
   if (!post) notFound();
 
+  const body = await getPostBody(post.id);
+
   return (
     <div>
       <BlogHeader />
       <main className="min-h-dvh">
         <article>
           <BlogHero
+            asHeader
             banner={urlForImage(post.image)}
             bannerAlt={post.image.alt}
             title={post.title}
@@ -30,7 +35,12 @@ const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
               label: tag.name,
               href: `/blog/${tag.slug}`,
             }))}
+            date={post.createdAt}
+            author={post.author}
           />
+          <div className="pt-8">
+            <PostBody body={body} />
+          </div>
         </article>
       </main>
       <Footer />
