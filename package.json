@@ -8,8 +8,9 @@
     "start": "next start",
     "lint": "next lint --max-warnings=0 && prettier --check .",
     "format": "prettier --write .",
-    "sanity:types": "sanity schema extract --path './sanity/generated/.sanity-generated.schema.json' --enforce-required-fields --workspace 'Production' && sanity typegen generate && npm run format -- --log-level silent",
-    "sanity:groqfmt": "tsx scripts/groqfmt.ts"
+    "sanity:typegen": "sanity schema extract --path './sanity/generated/.sanity-generated.schema.json' --enforce-required-fields --workspace=staging && sanity typegen generate && npm run format -- --log-level silent",
+    "sanity:groqfmt": "tsx scripts/groqfmt.ts",
+    "tunnel": "dotenvx run -f .env.local -f .env --overload --quiet -- tsx scripts/tunnel.ts --env-file=.env.local"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.1.2",
@@ -51,6 +52,8 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@dotenvx/dotenvx": "^0.35.1",
+    "@ngrok/ngrok": "^1.2.0",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/typography": "^0.5.12",
     "@types/node": "^20.12.7",
