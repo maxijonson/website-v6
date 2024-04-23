@@ -37,7 +37,7 @@ export type WebhookBody = InferType<typeof webhookBodySchema>;
 
 export async function POST(req: NextRequest) {
   try {
-    const { isValidSignature, body } = await parseBody<WebhookBody>(
+    const { isValidSignature, body } = await parseBody<unknown>(
       req,
       process.env.SANITY_REVALIDATE_SECRET,
       true,
