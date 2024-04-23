@@ -1,11 +1,11 @@
 import { q } from "groqd";
-import { runQuery } from "../../utils/run-query";
 import { qCount } from "../../utils/groqd/count";
 import { makeGetTagsQuery } from "../tags/getTags";
 import { qAnd } from "../../utils/groqd/and";
 import { qType } from "../../utils/groqd/type";
 import { qGt } from "../../utils/groqd/gt";
 import { categoryDetailsSelection } from "../../selections/category-details";
+import { makeQueryRunner } from "../../utils/runQuery";
 
 export interface GetCategoriesQueryOptions {
   filter?: string;
@@ -33,6 +33,6 @@ export const makeGetCategoriesQuery = ({
     )
     .grab$(categoryDetailsSelection);
 
-export const getCategories = async () => {
+export const getCategories = makeQueryRunner(async (runQuery) => {
   return runQuery(makeGetCategoriesQuery());
-};
+});

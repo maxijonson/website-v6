@@ -1,4 +1,18 @@
-import { runQuery } from "./run-query";
+import { makeSafeQueryRunner } from "groqd";
+import { client } from "./client";
+import type {
+  FilteredResponseQueryOptions,
+  QueryParams,
+  QueryWithoutParams,
+} from "next-sanity";
+
+const runQuery = makeSafeQueryRunner(
+  (
+    query,
+    params?: QueryWithoutParams | QueryParams,
+    options?: FilteredResponseQueryOptions,
+  ) => client.fetch(query, params, options),
+);
 
 export interface BaseQueryOptions {
   tags?: string[];

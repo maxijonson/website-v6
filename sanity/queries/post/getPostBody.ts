@@ -1,12 +1,12 @@
 import { q } from "groqd";
 import { qAnd } from "../../utils/groqd/and";
 import { qType } from "../../utils/groqd/type";
-import { runQuery } from "../../utils/run-query";
 import { postBodySelection } from "../../selections/post-body";
+import { makeQueryRunner } from "../../utils/runQuery";
 
 export const makeGetPostBodyQuery = () =>
   q("*")
-    .filter(qAnd(qType("post"), "_id == $id"))
+    .filter(qAnd(qType("post"), "_id == $postId"))
     .grab$({
       body: [
         `
@@ -23,6 +23,12 @@ export const makeGetPostBodyQuery = () =>
     })
     .grabOne("body", postBodySelection.body);
 
-export const getPostBody = async (id: string) => {
-  return (await runQuery(makeGetPostBodyQuery(), { id }))[0];
-};
+export const getPostBody = makeQueryRunner(async (runQuery, postId: string) => {
+  return (
+    await runQuery(
+      makeGetPostBodyQuery(),
+      { postId },
+      { next: { tags: [postId] } },
+    )
+  )[0];
+});

@@ -15,28 +15,28 @@
 // Source: schema.json
 export type SanityImagePaletteSwatch = {
   _type: "sanity.imagePaletteSwatch";
-  background: string;
-  foreground: string;
-  population: number;
-  title: string;
+  background?: string;
+  foreground?: string;
+  population?: number;
+  title?: string;
 };
 
 export type SanityImagePalette = {
   _type: "sanity.imagePalette";
-  darkMuted: SanityImagePaletteSwatch;
-  lightVibrant: SanityImagePaletteSwatch;
-  darkVibrant: SanityImagePaletteSwatch;
-  vibrant: SanityImagePaletteSwatch;
-  dominant: SanityImagePaletteSwatch;
-  lightMuted: SanityImagePaletteSwatch;
-  muted: SanityImagePaletteSwatch;
+  darkMuted?: SanityImagePaletteSwatch;
+  lightVibrant?: SanityImagePaletteSwatch;
+  darkVibrant?: SanityImagePaletteSwatch;
+  vibrant?: SanityImagePaletteSwatch;
+  dominant?: SanityImagePaletteSwatch;
+  lightMuted?: SanityImagePaletteSwatch;
+  muted?: SanityImagePaletteSwatch;
 };
 
 export type SanityImageDimensions = {
   _type: "sanity.imageDimensions";
-  height: number;
-  width: number;
-  aspectRatio: number;
+  height?: number;
+  width?: number;
+  aspectRatio?: number;
 };
 
 export type SanityFileAsset = {
@@ -45,57 +45,57 @@ export type SanityFileAsset = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  originalFilename: string;
-  label: string;
-  title: string;
-  description: string;
-  altText: string;
-  sha1hash: string;
-  extension: string;
-  mimeType: string;
-  size: number;
-  assetId: string;
-  uploadId: string;
-  path: string;
-  url: string;
-  source: SanityAssetSourceData;
+  originalFilename?: string;
+  label?: string;
+  title?: string;
+  description?: string;
+  altText?: string;
+  sha1hash?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
+  assetId?: string;
+  uploadId?: string;
+  path?: string;
+  url?: string;
+  source?: SanityAssetSourceData;
 };
 
 export type Geopoint = {
   _type: "geopoint";
-  lat: number;
-  lng: number;
-  alt: number;
+  lat?: number;
+  lng?: number;
+  alt?: number;
 };
 
 export type PostContent = Array<
   | {
-      children: Array<{
-        marks: Array<string>;
-        text: string;
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
         _type: "span";
         _key: string;
       }>;
-      style: "normal" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem: "bullet";
-      markDefs: Array<{
-        href: string;
+      style?: "normal" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet";
+      markDefs?: Array<{
+        href?: string;
         _type: "link";
         _key: string;
       }>;
-      level: number;
+      level?: number;
       _type: "block";
       _key: string;
     }
   | {
-      asset: {
+      asset?: {
         _ref: string;
         _type: "reference";
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
-      hotspot: SanityImageHotspot;
-      crop: SanityImageCrop;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
       alt: string;
       _type: "image";
       _key: string;
@@ -121,16 +121,16 @@ export type Tag = {
   };
   caption: string;
   description: string;
-  keywords: Array<string>;
+  keywords?: Array<string>;
   image: {
-    asset: {
+    asset?: {
       _ref: string;
       _type: "reference";
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
-    hotspot: SanityImageHotspot;
-    crop: SanityImageCrop;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
     alt: string;
     _type: "image";
   };
@@ -146,16 +146,16 @@ export type Category = {
   slug: Slug;
   caption: string;
   description: string;
-  keywords: Array<string>;
+  keywords?: Array<string>;
   image: {
-    asset: {
+    asset?: {
       _ref: string;
       _type: "reference";
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
-    hotspot: SanityImageHotspot;
-    crop: SanityImageCrop;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
     alt: string;
     _type: "image";
   };
@@ -183,16 +183,16 @@ export type Post = {
     _key: string;
     [internalGroqTypeReferenceTo]?: "tag";
   }>;
-  keywords: Array<string>;
+  keywords?: Array<string>;
   image: {
-    asset: {
+    asset?: {
       _ref: string;
       _type: "reference";
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
-    hotspot: SanityImageHotspot;
-    crop: SanityImageCrop;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
     alt: string;
     _type: "image";
   };
@@ -208,14 +208,14 @@ export type Author = {
   name: string;
   slug: Slug;
   image: {
-    asset: {
+    asset?: {
       _ref: string;
       _type: "reference";
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
-    hotspot: SanityImageHotspot;
-    crop: SanityImageCrop;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
     alt: string;
     _type: "image";
   };
@@ -224,18 +224,18 @@ export type Author = {
 
 export type SanityImageCrop = {
   _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
 };
 
 export type SanityImageHotspot = {
   _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
 };
 
 export type SanityImageAsset = {
@@ -244,52 +244,52 @@ export type SanityImageAsset = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  originalFilename: string;
-  label: string;
-  title: string;
-  description: string;
-  altText: string;
-  sha1hash: string;
-  extension: string;
-  mimeType: string;
-  size: number;
-  assetId: string;
-  uploadId: string;
-  path: string;
-  url: string;
-  metadata: SanityImageMetadata;
-  source: SanityAssetSourceData;
+  originalFilename?: string;
+  label?: string;
+  title?: string;
+  description?: string;
+  altText?: string;
+  sha1hash?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
+  assetId?: string;
+  uploadId?: string;
+  path?: string;
+  url?: string;
+  metadata?: SanityImageMetadata;
+  source?: SanityAssetSourceData;
 };
 
 export type SanityAssetSourceData = {
   _type: "sanity.assetSourceData";
-  name: string;
-  id: string;
-  url: string;
+  name?: string;
+  id?: string;
+  url?: string;
 };
 
 export type SanityImageMetadata = {
   _type: "sanity.imageMetadata";
-  location: Geopoint;
-  dimensions: SanityImageDimensions;
-  palette: SanityImagePalette;
-  lqip: string;
-  blurHash: string;
-  hasAlpha: boolean;
-  isOpaque: boolean;
+  location?: Geopoint;
+  dimensions?: SanityImageDimensions;
+  palette?: SanityImagePalette;
+  lqip?: string;
+  blurHash?: string;
+  hasAlpha?: boolean;
+  isOpaque?: boolean;
 };
 
 export type Slug = {
   _type: "slug";
   current: string;
-  source: string;
+  source?: string;
 };
 
 export type Code = {
   _type: "code";
-  language: string;
-  filename: string;
-  code: string;
-  highlightedLines: Array<number>;
+  language?: string;
+  filename?: string;
+  code?: string;
+  highlightedLines?: Array<number>;
 };
 export declare const internalGroqTypeReferenceTo: unique symbol;

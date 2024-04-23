@@ -1,4 +1,4 @@
-import { runQuery } from "../../utils/run-query";
+import { makeQueryRunner } from "../../utils/runQuery";
 import { makeGetPostsQuery } from "./getPosts";
 
 export interface GetLatestPostsQueryOptions {
@@ -10,4 +10,6 @@ export const makeGetLatestPostsQuery = ({
 }: GetLatestPostsQueryOptions = {}) =>
   makeGetPostsQuery({ filter }).order("createdAt desc").slice(0, 4);
 
-export const getLatestPosts = () => runQuery(makeGetLatestPostsQuery());
+export const getLatestPosts = makeQueryRunner((runQuery) =>
+  runQuery(makeGetLatestPostsQuery()),
+);
