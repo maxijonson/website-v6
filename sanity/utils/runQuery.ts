@@ -32,8 +32,8 @@ export const makeQueryRunner = <
   fn: TFnIn,
 ) => {
   return (...args: TArgsOut): ReturnType<TFnIn> => {
+    const { tags = [] } = args.slice().pop() ?? {};
     const wrappedRunQuery = (...wArgs: Parameters<typeof runQuery>) => {
-      const { tags = [] } = args.pop() ?? {};
       return runQuery(wArgs[0], wArgs[1], {
         ...wArgs[2],
         next: {

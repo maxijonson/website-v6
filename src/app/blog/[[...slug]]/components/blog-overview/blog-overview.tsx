@@ -4,13 +4,15 @@ import type { BlogHeroProps } from "../blog-hero/blog-hero";
 import type { BlogSectionProps } from "../blog-section/blog-section";
 import BlogHero from "../blog-hero/blog-hero";
 import BlogSection from "../blog-section/blog-section";
+import type React from "react";
 
 export interface BlogOverviewProps {
   hero: BlogHeroProps;
   sections: BlogSectionProps[];
+  children?: React.ReactNode;
 }
 
-const BlogOverview = ({ hero, sections }: BlogOverviewProps) => {
+const BlogOverview = ({ hero, sections, children }: BlogOverviewProps) => {
   const postSlugs = new Set<string>();
   const uniqueSections = sections.map((section) => ({
     ...section,
@@ -37,6 +39,8 @@ const BlogOverview = ({ hero, sections }: BlogOverviewProps) => {
               ),
           )}
         </div>
+
+        {children}
       </main>
       <Footer />
     </div>

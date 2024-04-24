@@ -1,7 +1,7 @@
-import { revalidateTag } from "next/cache";
-import { type NextRequest, NextResponse } from "next/server";
+import { q } from "groqd";
 import { parseBody } from "next-sanity/webhook";
-import { q, type InferType } from "groqd";
+import { revalidateTag } from "next/cache";
+import { NextResponse, type NextRequest } from "next/server";
 import { qIn } from "../../../../../sanity/utils/groqd/in";
 
 const webhookBodyQueryFilter = q("*").filter(
@@ -32,8 +32,7 @@ const webhookBodyQuery = webhookBodyQueryFilter
   })
   .slice(0);
 
-export const webhookBodySchema = webhookBodyQuery.schema;
-export type WebhookBody = InferType<typeof webhookBodySchema>;
+const webhookBodySchema = webhookBodyQuery.schema;
 
 export async function POST(req: NextRequest) {
   try {
