@@ -6,6 +6,7 @@ import { qType } from "../../utils/groqd/type";
 import { qGt } from "../../utils/groqd/gt";
 import { categoryDetailsSelection } from "../../selections/category-details";
 import { makeQueryRunner } from "../../utils/runQuery";
+import categorySchema from "../../schemas/documents/category";
 
 export interface GetCategoriesQueryOptions {
   filter?: string;
@@ -34,5 +35,9 @@ export const makeGetCategoriesQuery = ({
     .grab$(categoryDetailsSelection);
 
 export const getCategories = makeQueryRunner(async (runQuery) => {
-  return runQuery(makeGetCategoriesQuery());
+  return runQuery(
+    makeGetCategoriesQuery(),
+    {},
+    { next: { tags: [categorySchema.name] } },
+  );
 });

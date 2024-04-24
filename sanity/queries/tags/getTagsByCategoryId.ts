@@ -1,3 +1,4 @@
+import tagSchema from "../../schemas/documents/tag";
 import { makeQueryRunner } from "../../utils/runQuery";
 import { makeGetTagsQuery } from "./getTags";
 
@@ -9,6 +10,6 @@ export const getTagsByCategoryId = makeQueryRunner(
     runQuery(
       makeGetTagsByCategoryIdQuery(),
       { categoryId },
-      { next: { tags: [categoryId] } },
+      { next: { tags: [categoryId, tagSchema.name] } },
     ),
 );

@@ -2,32 +2,33 @@ import { q } from "groqd";
 import { parseBody } from "next-sanity/webhook";
 import { revalidateTag } from "next/cache";
 import { NextResponse, type NextRequest } from "next/server";
-import { qIn } from "../../../../../sanity/utils/groqd/in";
+import { categoryDetailsSelection } from "../../../../../sanity/selections/category-details";
+import { postDetailsSelection } from "../../../../../sanity/selections/post-details";
+import { tagDetailsSelection } from "../../../../../sanity/selections/tag-details";
+import { isDefined, type Defined } from "@/utils/isDefined";
 
-const webhookBodyQueryFilter = q("*").filter(
-  qIn("_type", ["post", "category", "tag"]),
-);
-
-const slugSchema = q.object({
-  current: q.string(),
-});
-
-const webhookBodyQuery = webhookBodyQueryFilter
+const webhookBodyQuery = q("*")
+  .filter("_type in ['post', 'category', 'tag', 'author']")
   .select({
     "_type == 'post'": {
-      _type: q.literal("post"),
-      _id: q.string(),
-      slug: slugSchema,
-    },
-    "_type == 'category'": {
-      _type: q.literal("category"),
-      _id: q.string(),
-      slug: slugSchema,
-    },
-    "_type == 'tag'": {
-      _type: q.literal("tag"),
-      _id: q.string(),
-      slug: slugSchema,
+      type: ["_type", q.literal("post")],
+      id: postDetailsSelection.id,
+      slug: postDetailsSelection.slug,
+      tags: q("tags")
+        .filter()
+        .deref()
+        .grab$({
+          type: ["_type", q.literal("tag")],
+          id: tagDetailsSelection.id,
+          slug: tagDetailsSelection.slug,
+          category: q("category")
+            .deref()
+            .grab$({
+              type: ["_type", q.literal("category")],
+              id: categoryDetailsSelection.id,
+              slug: categoryDetailsSelection.slug,
+            }),
+        }),
     },
   })
   .slice(0);
@@ -58,11 +59,36 @@ export async function POST(req: NextRequest) {
     }
 
     const data = parseResult.data;
-    const revalidatedTags: string[] = [data._type, data._id, data.slug.current];
+    const tags = new Set<string>();
 
-    revalidatedTags.forEach((t) => revalidateTag(t));
+    tags.add(data.id);
+    tags.add(data.slug);
+    tags.add(data.type);
 
-    return NextResponse.json({ data, revalidatedTags });
+    switch (data.type) {
+      case "post":
+        data.tags.forEach((tag) => {
+          tags.add(tag.id);
+          tags.add(tag.slug);
+          tags.add(tag.category.id);
+          tags.add(tag.category.slug);
+        });
+        break;
+    }
+
+    const revalidatedTags = Array.from(tags)
+      .filter((t): t is Defined<string> => isDefined(t))
+      .map((t) => {
+        revalidateTag(t);
+        return t;
+      });
+
+    const payload = {
+      data,
+      revalidatedTags,
+    } as const;
+
+    return NextResponse.json(payload);
   } catch (err) {
     console.error(err);
     if (err instanceof Error) {

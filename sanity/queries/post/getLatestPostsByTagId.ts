@@ -2,6 +2,7 @@ import { qGt } from "../../utils/groqd/gt";
 import { qCount } from "../../utils/groqd/count";
 import { makeGetLatestPostsQuery } from "./getLatestPosts";
 import { makeQueryRunner } from "../../utils/runQuery";
+import postSchema from "../../schemas/documents/post";
 
 export const makeGetLatestPostsByTagIdQuery = () =>
   makeGetLatestPostsQuery({
@@ -13,7 +14,7 @@ export const getLatestPostsByTagId = makeQueryRunner(
     return runQuery(
       makeGetLatestPostsByTagIdQuery(),
       { tagId },
-      { next: { tags: [tagId] } },
+      { next: { tags: [tagId, postSchema.name] } },
     );
   },
 );

@@ -40,3 +40,6 @@ sanity/generated/*
 !sanity/generated/.gitkeep
 
 sandbox.groq
+
+sanity/exports/*
+!sanity/exports/.gitkeep

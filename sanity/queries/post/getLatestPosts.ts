@@ -1,3 +1,4 @@
+import postSchema from "../../schemas/documents/post";
 import { makeQueryRunner } from "../../utils/runQuery";
 import { makeGetPostsQuery } from "./getPosts";
 
@@ -11,5 +12,9 @@ export const makeGetLatestPostsQuery = ({
   makeGetPostsQuery({ filter }).order("createdAt desc").slice(0, 4);
 
 export const getLatestPosts = makeQueryRunner((runQuery) =>
-  runQuery(makeGetLatestPostsQuery()),
+  runQuery(
+    makeGetLatestPostsQuery(),
+    {},
+    { next: { tags: [postSchema.name] } },
+  ),
 );

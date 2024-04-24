@@ -5,7 +5,7 @@ import path from "path";
 
 (async () => {
   try {
-    const queryFile = path.join(__dirname, "..", "sandbox.groq");
+    const queryFile = path.join(__dirname, "sandbox.groq");
     if (!existsSync(queryFile)) {
       await fs.writeFile(
         queryFile,

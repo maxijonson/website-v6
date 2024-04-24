@@ -6,7 +6,6 @@ import { q } from "groqd";
 import { qAnd } from "./groqd/and";
 import { qOr } from "./groqd/or";
 import { qType } from "./groqd/type";
-import { qIn } from "./groqd/in";
 
 export const isUniqueSlug: SlugIsUniqueValidator = async (slug, context) => {
   const { document, getClient } = context;
@@ -19,7 +18,7 @@ export const isUniqueSlug: SlugIsUniqueValidator = async (slug, context) => {
       q("*")
         .filter(
           qAnd(
-            qNot(qIn("_id", ["$draft", "$published"])),
+            qNot("_id in [$draft, $published]"),
             qOr(
               qType("post"),
               qType("category"),
