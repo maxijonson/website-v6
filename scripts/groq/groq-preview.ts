@@ -1,11 +1,10 @@
 import { existsSync } from "fs";
 import fs from "fs/promises";
-import { q } from "groqd";
 import { format } from "groqfmt-nodejs";
 import path from "path";
-import { categoryDetailsSelection } from "../../sanity/selections/category-details";
+import { makeGetPostsByCategoryIdQuery } from "../../sanity/queries/post/getPostsByCategoryId";
 import { postDetailsSelection } from "../../sanity/selections/post-details";
-import { tagDetailsSelection } from "../../sanity/selections/tag-details";
+import { reselect } from "../../sanity/utils/groqd/reselect";
 
 (async () => {
   try {
@@ -18,31 +17,14 @@ import { tagDetailsSelection } from "../../sanity/selections/tag-details";
       );
       console.info("sandbox.groq created");
     }
-    const query = q("*")
-      .filter("_type in ['post', 'category', 'tag', 'author']")
-      .select({
-        "_type == 'post'": {
-          type: ["_type", q.literal("post")],
-          id: postDetailsSelection.id,
-          slug: postDetailsSelection.slug,
-          tags: q("tags")
-            .filter()
-            .deref()
-            .grab$({
-              type: ["_type", q.literal("tag")],
-              id: tagDetailsSelection.id,
-              slug: tagDetailsSelection.slug,
-              category: q("category")
-                .deref()
-                .grab$({
-                  type: ["_type", q.literal("category")],
-                  id: categoryDetailsSelection.id,
-                  slug: categoryDetailsSelection.slug,
-                }),
-            }),
-        },
-      })
-      .slice(0);
+
+    const query = makeGetPostsByCategoryIdQuery().grab$(
+      reselect({
+        id: postDetailsSelection.id,
+        slug: postDetailsSelection.slug,
+      }),
+    );
+
     const queryFormatted = format(query.query);
     await fs.writeFile(queryFile, queryFormatted, "utf-8");
   } catch (error) {

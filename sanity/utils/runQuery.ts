@@ -6,7 +6,7 @@ import type {
   QueryWithoutParams,
 } from "next-sanity";
 
-const runQuery = makeSafeQueryRunner(
+export const runSafeQuery = makeSafeQueryRunner(
   (
     query,
     params?: QueryWithoutParams | QueryParams,
@@ -23,7 +23,7 @@ type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R
   : never;
 
 export const makeQueryRunner = <
-  TFnIn extends (wrappedRunQuery: typeof runQuery, ...args: any[]) => any,
+  TFnIn extends (runQuery: typeof runSafeQuery, ...args: any[]) => any,
   TArgsOut extends [
     ...Parameters<OmitFirstArg<TFnIn>>,
     options?: BaseQueryOptions,
@@ -33,8 +33,8 @@ export const makeQueryRunner = <
 ) => {
   return (...args: TArgsOut): ReturnType<TFnIn> => {
     const { tags = [] } = args.slice().pop() ?? {};
-    const wrappedRunQuery = (...wArgs: Parameters<typeof runQuery>) => {
-      return runQuery(wArgs[0], wArgs[1], {
+    const runQuery = (...wArgs: Parameters<typeof runSafeQuery>) => {
+      return runSafeQuery(wArgs[0], wArgs[1], {
         ...wArgs[2],
         next: {
           ...wArgs[2]?.next,
@@ -42,6 +42,6 @@ export const makeQueryRunner = <
         },
       });
     };
-    return fn(wrappedRunQuery, ...args);
+    return fn(runQuery, ...args);
   };
 };
