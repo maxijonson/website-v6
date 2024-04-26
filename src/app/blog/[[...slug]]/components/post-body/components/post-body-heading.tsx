@@ -1,7 +1,7 @@
 import { getHeadingId } from "@/utils/getHeadingId";
 import { type PortableTextBlockComponent } from "next-sanity";
 import Link from "next/link";
-import type { PostBody } from "../../../../../../../sanity/selections/post-body";
+import type { PostBody } from "../../../../../../../sanity/groqd/selections/post-body";
 
 const isValidHeading = (
   props: string | undefined,

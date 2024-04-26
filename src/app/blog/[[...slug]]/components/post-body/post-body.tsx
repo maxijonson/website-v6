@@ -1,5 +1,5 @@
 import { PortableText, type PortableTextReactComponents } from "next-sanity";
-import type { PostBody } from "../../../../../../sanity/selections/post-body";
+import type { PostBody } from "../../../../../../sanity/groqd/selections/post-body";
 import PostBodyCode from "./components/post-body-code/post-body-code";
 import PostBodyImage from "./components/post-body-image";
 import PostBodyLink from "./components/post-body-link";

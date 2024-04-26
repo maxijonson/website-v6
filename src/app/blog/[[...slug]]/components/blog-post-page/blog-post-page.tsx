@@ -10,11 +10,12 @@ import PostBody from "../post-body/post-body";
 import TableOfContents from "../table-of-contents/table-of-contents";
 import { cn } from "@/lib/utils";
 import { getPostHeadings } from "@/utils/getPostHeadings";
+import { postDetailsSelection } from "../../../../../../sanity/groqd/selections/post-details";
 
 const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   if (slug.length !== 1) notFound();
 
-  const post = await findPostBySlug(slug[0]);
+  const post = await findPostBySlug(slug[0], postDetailsSelection);
   if (!post) notFound();
 
   const body = await getPostBody(post.id);

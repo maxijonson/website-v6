@@ -4,14 +4,16 @@ import { findTagBySlug } from "../../../../../../sanity/queries/tags/findTagBySl
 import { urlForImage } from "../../../../../../sanity/utils/image";
 import type { BlogPageProps } from "../../page";
 import BlogOverview from "../blog-overview/blog-overview";
+import { tagDetailsSelection } from "../../../../../../sanity/groqd/selections/tag-details";
+import { postDetailsSelection } from "../../../../../../sanity/groqd/selections/post-details";
 
 const BlogTagPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   if (slug.length !== 1) notFound();
 
-  const tag = await findTagBySlug(slug[0]);
+  const tag = await findTagBySlug(slug[0], tagDetailsSelection);
   if (!tag) notFound();
 
-  const latestPosts = await getLatestPostsByTagId(tag.id);
+  const latestPosts = await getLatestPostsByTagId(tag.id, postDetailsSelection);
 
   return (
     <BlogOverview

@@ -1,5 +1,5 @@
 import type { PortableTextTypeComponentProps } from "next-sanity";
-import type { PostBodyImage } from "../../../../../../../sanity/selections/post-body";
+import type { PostBodyImage } from "../../../../../../../sanity/groqd/selections/post-body";
 import { getImageDimensions } from "@sanity/asset-utils";
 import { getImageBuilder } from "../../../../../../../sanity/utils/image";
 import Image from "next/image";

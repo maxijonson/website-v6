@@ -1,3 +1,4 @@
+import { q } from "groqd";
 import type { Metadata, ResolvingMetadata } from "next";
 
 export type RouteParams = Record<string, string | string[]>;
@@ -25,3 +26,9 @@ export type GenerateMetadata<TParams extends RouteParams = RouteParams> = (
   pageProps: PageProps<TParams>,
   parent: ResolvingMetadata,
 ) => Metadata | Promise<Metadata>;
+
+const unknownArrayQuery = q("").filter();
+export type UnknownArrayQuery = typeof unknownArrayQuery;
+
+const entityQuery = q("").filter().slice(0);
+export type EntityQuery = typeof entityQuery;

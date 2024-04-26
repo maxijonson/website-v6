@@ -6,23 +6,28 @@ import { getDefinedParentMetadata } from "@/utils/getDefinedParentMetadata";
 import { getImageDimensions } from "@sanity/asset-utils";
 import type { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
 import { urlForImage } from "../../../../../sanity/utils/image";
+import { pick } from "../../../../../sanity/groqd/selections/pick";
+import { tagDetailsSelection } from "../../../../../sanity/groqd/selections/tag-details";
 
 export const blogTagHandler: BlogRouteHandler = {
   canHandle: async ({ params: { slug = [] } }) => {
     if (slug.length !== 1) return false;
-    const tag = await findTagBySlug(slug[0]);
+    const tag = await findTagBySlug(slug[0], pick(tagDetailsSelection, ["id"]));
     return !!tag;
   },
   render: BlogTagPage,
   generateStaticParams: async () => {
-    const tags = await getTags();
-    return tags.map((tag) => ({ slug: [tag.slug] }));
+    const tags = await getTags(pick(tagDetailsSelection, ["slug"]));
+    return tags.map(({ slug }) => ({ slug: [slug] }));
   },
   generateMetadata: async ({ params: { slug = [] } }, parent) => {
     if (slug.length !== 1) return {};
 
     const [tag, definedParentMetadata] = await Promise.all([
-      findTagBySlug(slug[0]),
+      findTagBySlug(
+        slug[0],
+        pick(tagDetailsSelection, ["name", "description", "image", "keywords"]),
+      ),
       getDefinedParentMetadata(parent),
     ]);
     if (!tag) return {};

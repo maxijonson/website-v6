@@ -1,5 +1,5 @@
 import { isDefined } from "@/utils/isDefined";
-import { qS, type QueryLike } from "./s";
+import { qS, type QueryLike } from "../s";
 
 export const qType = (type: QueryLike) => {
   if (!isDefined(type)) {

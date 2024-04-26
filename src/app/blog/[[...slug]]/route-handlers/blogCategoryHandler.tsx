@@ -7,28 +7,48 @@ import { urlForImage } from "../../../../../sanity/utils/image";
 import { getImageDimensions } from "@sanity/asset-utils";
 import type { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
 import { getTagsByCategoryId } from "../../../../../sanity/queries/tags/getTagsByCategoryId";
+import { pick } from "../../../../../sanity/groqd/selections/pick";
+import { categoryDetailsSelection } from "../../../../../sanity/groqd/selections/category-details";
+import { tagDetailsSelection } from "../../../../../sanity/groqd/selections/tag-details";
 
 export const blogCategoryHandler: BlogRouteHandler = {
   canHandle: async ({ params: { slug = [] } }) => {
     if (slug.length !== 1) return false;
-    const category = await findCategoryBySlug(slug[0]);
+    const category = await findCategoryBySlug(
+      slug[0],
+      pick(categoryDetailsSelection, ["id"]),
+    );
     return !!category;
   },
   render: BlogCategoryPage,
   generateStaticParams: async () => {
-    const categories = await getCategories();
+    const categories = await getCategories(
+      pick(categoryDetailsSelection, ["slug"]),
+    );
     return categories.map((category) => ({ slug: [category.slug] }));
   },
   generateMetadata: async ({ params: { slug = [] } }, parent) => {
     if (slug.length !== 1) return {};
 
     const [category, definedParentMetadata] = await Promise.all([
-      findCategoryBySlug(slug[0]),
+      findCategoryBySlug(
+        slug[0],
+        pick(categoryDetailsSelection, [
+          "id",
+          "name",
+          "description",
+          "image",
+          "keywords",
+        ]),
+      ),
       getDefinedParentMetadata(parent),
     ]);
     if (!category) return {};
 
-    const tags = await getTagsByCategoryId(category.id);
+    const tags = await getTagsByCategoryId(
+      category.id,
+      pick(tagDetailsSelection, ["name"]),
+    );
 
     const title = `${category.name} - Tristan Chin's Blog`;
     const description = category.description;

@@ -1,18 +1,20 @@
-import { qGt } from "../../utils/groqd/gt";
-import { qCount } from "../../utils/groqd/count";
-import { makeQueryRunner } from "../../utils/runQuery";
+import { qGt } from "../../groqd/filters/gt";
+import { qCount } from "../../groqd/count";
+import { runQuery } from "../../groqd/runQuery";
 import postSchema from "../../schemas/documents/post";
 import { makeGetPostsQuery } from "./getPosts";
+import { qAnd } from "../../groqd/filters/and";
+import type { Selection } from "groqd";
 
-export const makeGetPostsByTagIdQuery = () =>
-  makeGetPostsQuery({
-    filter: qGt(qCount("(tags[]->)[_id == $tagId]"), 0),
-  });
+export const makeGetPostsByTagIdQuery = (filter?: string) =>
+  makeGetPostsQuery(qAnd(qGt(qCount("(tags[]->)[_id == $tagId]"), 0), filter));
 
-export const getPostsByTagId = makeQueryRunner((runQuery, tagId: string) => {
-  return runQuery(
-    makeGetPostsByTagIdQuery(),
+export const getPostsByTagId = <S extends Selection>(
+  tagId: string,
+  selection: S,
+) =>
+  runQuery(
+    makeGetPostsByTagIdQuery().grab$(selection),
     { tagId },
     { next: { tags: [tagId, postSchema.name] } },
   );
-});

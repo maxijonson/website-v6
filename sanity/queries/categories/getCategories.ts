@@ -1,43 +1,31 @@
-import { q } from "groqd";
-import { qCount } from "../../utils/groqd/count";
-import { makeGetTagsQuery } from "../tags/getTags";
-import { qAnd } from "../../utils/groqd/and";
-import { qType } from "../../utils/groqd/type";
-import { qGt } from "../../utils/groqd/gt";
-import { categoryDetailsSelection } from "../../selections/category-details";
-import { makeQueryRunner } from "../../utils/runQuery";
+import { q, type Selection } from "groqd";
 import categorySchema from "../../schemas/documents/category";
+import { qAnd } from "../../groqd/filters/and";
+import { qCount } from "../../groqd/count";
+import { qGt } from "../../groqd/filters/gt";
+import { qType } from "../../groqd/filters/type";
+import { runQuery } from "../../groqd/runQuery";
+import { makeGetTagsQuery } from "../tags/getTags";
 
-export interface GetCategoriesQueryOptions {
-  filter?: string;
-}
-
-export const makeGetCategoriesQuery = ({
-  filter,
-}: GetCategoriesQueryOptions = {}) =>
-  q("*")
-    .filter(
-      qAnd(
-        qType("category"),
-        qGt(
-          qCount(
-            makeGetTagsQuery({
-              filter: "references(^._id)",
-            }).grab({
-              _id: q.string(),
-            }),
-          ),
-          0,
+export const makeGetCategoriesQuery = (filter?: string) =>
+  q("*").filter(
+    qAnd(
+      qType("category"),
+      qGt(
+        qCount(
+          makeGetTagsQuery("references(^._id)").grab$({
+            _id: q.string(),
+          }),
         ),
-        filter,
+        0,
       ),
-    )
-    .grab$(categoryDetailsSelection);
+      filter,
+    ),
+  );
 
-export const getCategories = makeQueryRunner(async (runQuery) => {
-  return runQuery(
-    makeGetCategoriesQuery(),
+export const getCategories = async <S extends Selection>(selection: S) =>
+  runQuery(
+    makeGetCategoriesQuery().grab$(selection),
     {},
     { next: { tags: [categorySchema.name] } },
   );
-});

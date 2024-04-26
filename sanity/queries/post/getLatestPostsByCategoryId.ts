@@ -1,20 +1,23 @@
-import { qGt } from "../../utils/groqd/gt";
-import { qCount } from "../../utils/groqd/count";
+import { qGt } from "../../groqd/filters/gt";
+import { qCount } from "../../groqd/count";
 import { makeGetLatestPostsQuery } from "./getLatestPosts";
-import { makeQueryRunner } from "../../utils/runQuery";
 import postSchema from "../../schemas/documents/post";
+import type { Selection } from "groqd";
+import { runQuery } from "../../groqd/runQuery";
+import { qAnd } from "../../groqd/filters/and";
 
-export const makeGetLatestPostsByCategoryIdQuery = () =>
-  makeGetLatestPostsQuery({
-    filter: qGt(qCount("(tags[]->)[references($categoryId)]"), 0),
-  });
+export const makeGetLatestPostsByCategoryIdQuery = (filter?: string) =>
+  makeGetLatestPostsQuery(
+    qAnd(qGt(qCount("(tags[]->)[references($categoryId)]"), 0), filter),
+  );
 
-export const getLatestPostsByCategoryId = makeQueryRunner(
-  (runQuery, categoryId: string) => {
-    return runQuery(
-      makeGetLatestPostsByCategoryIdQuery(),
-      { categoryId },
-      { next: { tags: [categoryId, postSchema.name] } },
-    );
-  },
-);
+export const getLatestPostsByCategoryId = <S extends Selection>(
+  categoryId: string,
+  selection: S,
+) => {
+  return runQuery(
+    makeGetLatestPostsByCategoryIdQuery().grab$(selection),
+    { categoryId },
+    { next: { tags: [categoryId, postSchema.name] } },
+  );
+};

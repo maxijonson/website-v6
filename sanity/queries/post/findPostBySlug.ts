@@ -1,19 +1,17 @@
-import { makeQueryRunner } from "../../utils/runQuery";
+import type { Selection } from "groqd";
+import { qAnd } from "../../groqd/filters/and";
+import { runQuery } from "../../groqd/runQuery";
 import { makeGetPostsQuery } from "./getPosts";
 
-export const makeFindPostBySlugQuery = () =>
-  makeGetPostsQuery({ filter: "slug.current == $slug" });
+export const makeFindPostBySlugQuery = (filter?: string) =>
+  makeGetPostsQuery(qAnd("slug.current == $slug", filter));
 
-export const findPostBySlug = makeQueryRunner(
-  async (runQuery, slug: string) => {
-    const posts = await runQuery(
-      makeFindPostBySlugQuery(),
-      { slug },
-      { next: { tags: [slug] } },
-    );
-    if (posts.length === 0) {
-      return null;
-    }
-    return posts[0];
-  },
-);
+export const findPostBySlug = <S extends Selection>(
+  slug: string,
+  selection: S,
+) =>
+  runQuery(
+    makeFindPostBySlugQuery().grab$(selection).slice(0).nullable(),
+    { slug },
+    { next: { tags: [slug] } },
+  );

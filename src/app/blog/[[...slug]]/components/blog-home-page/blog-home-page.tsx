@@ -1,4 +1,6 @@
 import BlogHomeBanner from "$/image/blog/blog-home-banner.jpg";
+import { categoryDetailsSelection } from "../../../../../../sanity/groqd/selections/category-details";
+import { postDetailsSelection } from "../../../../../../sanity/groqd/selections/post-details";
 import { getCategories } from "../../../../../../sanity/queries/categories/getCategories";
 import { getLatestPosts } from "../../../../../../sanity/queries/post/getLatestPosts";
 import { getLatestPostsByCategoryId } from "../../../../../../sanity/queries/post/getLatestPostsByCategoryId";
@@ -6,15 +8,18 @@ import BlogOverview from "../blog-overview/blog-overview";
 
 const BlogHomePage = async () => {
   const [latestPosts, categories] = await Promise.all([
-    getLatestPosts(),
-    getCategories(),
+    getLatestPosts(postDetailsSelection),
+    getCategories(categoryDetailsSelection),
   ]);
 
   const latestPostsByCategory = await Promise.all(
     categories.map(async (category) => {
       return {
         category,
-        posts: await getLatestPostsByCategoryId(category.id),
+        posts: await getLatestPostsByCategoryId(
+          category.id,
+          postDetailsSelection,
+        ),
       };
     }),
   );

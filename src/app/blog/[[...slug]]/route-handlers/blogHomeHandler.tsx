@@ -6,6 +6,9 @@ import BlogHomeBanner from "$/image/blog/blog-home-banner.jpg";
 import { getBaseURL } from "@/utils/getBaseURL";
 import type { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
 import { getDefinedParentMetadata } from "@/utils/getDefinedParentMetadata";
+import { pick } from "../../../../../sanity/groqd/selections/pick";
+import { categoryDetailsSelection } from "../../../../../sanity/groqd/selections/category-details";
+import { tagDetailsSelection } from "../../../../../sanity/groqd/selections/tag-details";
 
 export const blogHomeHandler: BlogRouteHandler = {
   canHandle: ({ params: { slug = [] } }) => slug.length === 0,
@@ -13,8 +16,8 @@ export const blogHomeHandler: BlogRouteHandler = {
   generateStaticParams: () => [{ slug: [] }],
   generateMetadata: async (_, parent) => {
     const [categories, tags, definedParentMetadata] = await Promise.all([
-      getCategories(),
-      getTags(),
+      getCategories(pick(categoryDetailsSelection, ["name"])),
+      getTags(pick(tagDetailsSelection, ["name"])),
       getDefinedParentMetadata(parent),
     ]);
 

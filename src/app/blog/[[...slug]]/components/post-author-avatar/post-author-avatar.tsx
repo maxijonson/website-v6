@@ -1,8 +1,8 @@
-import { getImageDimensions } from "@sanity/asset-utils";
-import { getImageBuilder } from "../../../../../../sanity/utils/image";
-import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import type { AuthorDetails } from "../../../../../../sanity/selections/author-details";
+import { getImageDimensions } from "@sanity/asset-utils";
+import Image from "next/image";
+import type { AuthorDetails } from "../../../../../../sanity/groqd/selections/author-details";
+import { getImageBuilder } from "../../../../../../sanity/utils/image";
 
 export interface PostAuthorAvatarProps {
   author: Pick<AuthorDetails, "image" | "name">;

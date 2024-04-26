@@ -1,6 +1,6 @@
 import { q, sanityImage, type Selection, type TypeFromSelection } from "groqd";
 import { authorDetailsSelection } from "./author-details";
-import { qCoalesce } from "../utils/groqd/coalesce";
+import { qCoalesce } from "../filters/coalesce";
 import { tagDetailsSelection } from "./tag-details";
 
 const postTagsQuery = q("tags").filter().deref().grab$(tagDetailsSelection);

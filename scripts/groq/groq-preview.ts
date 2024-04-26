@@ -3,8 +3,8 @@ import fs from "fs/promises";
 import { format } from "groqfmt-nodejs";
 import path from "path";
 import { makeGetPostsByCategoryIdQuery } from "../../sanity/queries/post/getPostsByCategoryId";
-import { postDetailsSelection } from "../../sanity/selections/post-details";
-import { reselect } from "../../sanity/utils/groqd/reselect";
+import { postDetailsSelection } from "../../sanity/groqd/selections/post-details";
+import { reselect } from "../../sanity/groqd/selections/reselect";
 
 (async () => {
   try {

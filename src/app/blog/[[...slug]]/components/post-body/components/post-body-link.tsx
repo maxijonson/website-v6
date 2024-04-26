@@ -1,5 +1,5 @@
 import type { PortableTextMarkComponentProps } from "next-sanity";
-import type { PostBodyBlockLink } from "../../../../../../../sanity/selections/post-body";
+import type { PostBodyBlockLink } from "../../../../../../../sanity/groqd/selections/post-body";
 import Link from "next/link";
 
 const PostBodyLink = (

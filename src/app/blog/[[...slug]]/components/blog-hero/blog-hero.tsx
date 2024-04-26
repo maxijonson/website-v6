@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import Image, { type ImageProps } from "next/image";
 import Link from "next/link";
 import { RxCaretRight } from "react-icons/rx";
-import type { PostDetails } from "../../../../../../sanity/selections/post-details";
+import type { PostDetails } from "../../../../../../sanity/groqd/selections/post-details";
 import PostAuthorAvatar from "../post-author-avatar/post-author-avatar";
 
 export interface BlogHeroProps {

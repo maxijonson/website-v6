@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils";
-import PostImage from "../post-image/post-image";
+import Link from "next/link";
+import { type PostDetails } from "../../../../../../sanity/groqd/selections/post-details";
 import PostAuthorAvatar, {
   type PostAuthorAvatarProps,
 } from "../post-author-avatar/post-author-avatar";
-import Link from "next/link";
-import type { PostDetails } from "../../../../../../sanity/selections/post-details";
+import PostImage from "../post-image/post-image";
 
 export interface PostCardProps {
   post: Pick<

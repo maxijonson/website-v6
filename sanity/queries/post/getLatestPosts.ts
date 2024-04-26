@@ -1,20 +1,14 @@
+import type { Selection } from "groqd";
 import postSchema from "../../schemas/documents/post";
-import { makeQueryRunner } from "../../utils/runQuery";
+import { runQuery } from "../../groqd/runQuery";
 import { makeGetPostsQuery } from "./getPosts";
 
-export interface GetLatestPostsQueryOptions {
-  filter?: string;
-}
+export const makeGetLatestPostsQuery = (filter?: string) =>
+  makeGetPostsQuery(filter).order("_createdAt desc").slice(0, 4);
 
-export const makeGetLatestPostsQuery = ({
-  filter,
-}: GetLatestPostsQueryOptions = {}) =>
-  makeGetPostsQuery({ filter }).order("createdAt desc").slice(0, 4);
-
-export const getLatestPosts = makeQueryRunner((runQuery) =>
+export const getLatestPosts = <S extends Selection>(selection: S) =>
   runQuery(
-    makeGetLatestPostsQuery(),
+    makeGetPostsQuery().grab$(selection),
     {},
     { next: { tags: [postSchema.name] } },
-  ),
-);
+  );

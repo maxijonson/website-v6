@@ -1,19 +1,15 @@
-import { q } from "groqd";
-import { qAnd } from "../../utils/groqd/and";
-import { qType } from "../../utils/groqd/type";
-import { postDetailsSelection } from "../../selections/post-details";
-import { makeQueryRunner } from "../../utils/runQuery";
+import { q, type Selection } from "groqd";
+import { qAnd } from "../../groqd/filters/and";
+import { qType } from "../../groqd/filters/type";
+import { runQuery } from "../../groqd/runQuery";
 import postSchema from "../../schemas/documents/post";
 
-export interface GetPostsQueryOptions {
-  filter?: string;
-}
+export const makeGetPostsQuery = (filter?: string) =>
+  q("*").filter(qAnd(qType("post"), filter));
 
-export const makeGetPostsQuery = ({ filter }: GetPostsQueryOptions = {}) =>
-  q("*")
-    .filter(qAnd(qType("post"), filter))
-    .grab$(postDetailsSelection);
-
-export const getPosts = makeQueryRunner((runQuery) =>
-  runQuery(makeGetPostsQuery(), {}, { next: { tags: [postSchema.name] } }),
-);
+export const getPosts = <S extends Selection>(selection: S) =>
+  runQuery(
+    makeGetPostsQuery().grab$(selection),
+    {},
+    { next: { tags: [postSchema.name] } },
+  );

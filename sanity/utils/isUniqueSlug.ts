@@ -1,11 +1,11 @@
 import type { SlugIsUniqueValidator } from "sanity";
 import { apiVersion } from "../env";
-import { qNot } from "./groqd/not";
-import { qDefined } from "./groqd/defined";
+import { qNot } from "../groqd/filters/not";
+import { qDefined } from "../groqd/filters/defined";
 import { q } from "groqd";
-import { qAnd } from "./groqd/and";
-import { qOr } from "./groqd/or";
-import { qType } from "./groqd/type";
+import { qAnd } from "../groqd/filters/and";
+import { qOr } from "../groqd/filters/or";
+import { qType } from "../groqd/filters/type";
 
 export const isUniqueSlug: SlugIsUniqueValidator = async (slug, context) => {
   const { document, getClient } = context;

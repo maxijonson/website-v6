@@ -1,7 +1,7 @@
 import { isDefined } from "@/utils/isDefined";
-import { qS, type QueryLike } from "./s";
+import { qS, type QueryLike } from "../s";
 
-export const qAnd = (...queries: (QueryLike | undefined)[]) => {
+export const qOr = (...queries: (QueryLike | undefined)[]) => {
   const definedQueries = queries.filter(isDefined);
   if (definedQueries.length === 0) {
     return "";
@@ -9,5 +9,5 @@ export const qAnd = (...queries: (QueryLike | undefined)[]) => {
   if (definedQueries.length === 1) {
     return qS(definedQueries[0]);
   }
-  return ["(", qS(definedQueries).join(" && "), ")"].join("");
+  return ["(", qS(definedQueries).join(" || "), ")"].join("");
 };

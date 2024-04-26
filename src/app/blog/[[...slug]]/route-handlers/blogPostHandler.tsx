@@ -6,23 +6,37 @@ import { getPosts } from "../../../../../sanity/queries/post/getPosts";
 import { urlForImage } from "../../../../../sanity/utils/image";
 import BlogPostPage from "../components/blog-post-page/blog-post-page";
 import type { BlogRouteHandler } from "../page";
+import { pick } from "../../../../../sanity/groqd/selections/pick";
+import { postDetailsSelection } from "../../../../../sanity/groqd/selections/post-details";
 
 export const blogPostHandler: BlogRouteHandler = {
   canHandle: async ({ params: { slug = [] } }) => {
     if (slug.length !== 1) return false;
-    const post = await findPostBySlug(slug[0]);
+    const post = await findPostBySlug(
+      slug[0],
+      pick(postDetailsSelection, ["id"]),
+    );
     return !!post;
   },
   render: BlogPostPage,
   generateStaticParams: async () => {
-    const posts = await getPosts();
-    return posts.map((post) => ({ slug: [post.slug] }));
+    const posts = await getPosts(pick(postDetailsSelection, ["slug"]));
+    return posts.map(({ slug }) => ({ slug: [slug] }));
   },
   generateMetadata: async ({ params: { slug = [] } }, parent) => {
     if (slug.length !== 1) return {};
 
     const [post, definedParentMetadata] = await Promise.all([
-      findPostBySlug(slug[0]),
+      findPostBySlug(
+        slug[0],
+        pick(postDetailsSelection, [
+          "title",
+          "summary",
+          "image",
+          "keywords",
+          "tags",
+        ]),
+      ),
       getDefinedParentMetadata(parent),
     ]);
     if (!post) return {};

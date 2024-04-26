@@ -1,5 +1,5 @@
 import { toPlainText } from "next-sanity";
-import type { PostBody } from "../../sanity/selections/post-body";
+import type { PostBody } from "../../sanity/groqd/selections/post-body";
 import { getHeadingId } from "./getHeadingId";
 
 export const getPostHeadings = (body: PostBody) => {

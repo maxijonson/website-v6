@@ -1,19 +1,17 @@
-import { makeQueryRunner } from "../../utils/runQuery";
+import { type Selection } from "groqd";
+import { qAnd } from "../../groqd/filters/and";
+import { runQuery } from "../../groqd/runQuery";
 import { makeGetCategoriesQuery } from "./getCategories";
 
-export const makeFindCategoryBySlugQuery = () =>
-  makeGetCategoriesQuery({ filter: "slug.current == $slug" });
+export const makeFindCategoryBySlugQuery = (filter?: string) =>
+  makeGetCategoriesQuery(qAnd("slug.current == $slug", filter));
 
-export const findCategoryBySlug = makeQueryRunner(
-  async (runQuery, slug: string) => {
-    const categories = await runQuery(
-      makeFindCategoryBySlugQuery(),
-      { slug },
-      { next: { tags: [slug] } },
-    );
-    if (categories.length === 0) {
-      return null;
-    }
-    return categories[0];
-  },
-);
+export const findCategoryBySlug = <S extends Selection>(
+  slug: string,
+  selection: S,
+) =>
+  runQuery(
+    makeFindCategoryBySlugQuery().grab$(selection).slice(0).nullable(),
+    { slug },
+    { next: { tags: [slug] } },
+  );

@@ -1,17 +1,17 @@
-import { makeQueryRunner } from "../../utils/runQuery";
+import type { Selection } from "groqd";
 import { makeGetTagsQuery } from "./getTags";
+import { qAnd } from "../../groqd/filters/and";
+import { runQuery } from "../../groqd/runQuery";
 
-export const makeFindTagBySlugQuery = () =>
-  makeGetTagsQuery({ filter: "slug.current == $slug" });
+export const makeFindTagBySlugQuery = (filter?: string) =>
+  makeGetTagsQuery(qAnd("slug.current == $slug", filter));
 
-export const findTagBySlug = makeQueryRunner(async (runQuery, slug: string) => {
-  const tags = await runQuery(
-    makeFindTagBySlugQuery(),
+export const findTagBySlug = <S extends Selection>(
+  slug: string,
+  selection: S,
+) =>
+  runQuery(
+    makeFindTagBySlugQuery().grab$(selection).slice(0).nullable(),
     { slug },
     { next: { tags: [slug] } },
   );
-  if (tags.length === 0) {
-    return null;
-  }
-  return tags[0];
-});

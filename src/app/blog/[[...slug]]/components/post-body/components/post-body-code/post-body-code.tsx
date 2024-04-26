@@ -1,6 +1,6 @@
 import "./post-body-code.scss";
 import type { PortableTextTypeComponentProps } from "next-sanity";
-import type { PostBodyCode as PostBodyCodeType } from "../../../../../../../../sanity/selections/post-body";
+import type { PostBodyCode as PostBodyCodeType } from "../../../../../../../../sanity/groqd/selections/post-body";
 import { Refractor, registerLanguage } from "react-refractor";
 import tsx from "refractor/lang/tsx";
 import ts from "refractor/lang/typescript";
