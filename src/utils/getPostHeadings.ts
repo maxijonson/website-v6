@@ -9,10 +9,10 @@ export const getPostHeadings = (body: PostBody) => {
         block,
       ): block is PostBody[number] & {
         _type: "block";
-        style: "h1" | "h2" | "h3" | "h4";
+        style: "h1" | "h2" | "h3";
       } =>
         block._type === "block" &&
-        ["h1", "h2", "h3", "h4"].includes(block.style || ""),
+        ["h1", "h2", "h3"].includes(block.style || ""),
     )
     .map((block) => {
       return {
