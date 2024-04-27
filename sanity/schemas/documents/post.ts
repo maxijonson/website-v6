@@ -99,17 +99,18 @@ export default defineType({
       title: "title",
       author: "author.name",
       media: "image",
-      tags0: "tags.0.name",
-      tags1: "tags.1.name",
-      tags2: "tags.2.name",
-      tags3: "tags.3.name",
+      tag0: "tags.0.name",
+      tag1: "tags.1.name",
+      tag2: "tags.2.name",
+      tag3: "tags.3.name",
     },
-    prepare(selection) {
-      const { tags0, tags1, tags2, tags3 } = selection;
-      const tags = [tags0, tags1, tags2, tags3].filter(Boolean);
+    prepare({ title, tag0, tag1, tag2, tag3 }) {
+      const tags = [tag0, tag1, tag2].filter(Boolean);
+      const subtitle = tags.length > 0 ? `by ${tags.join(", ")}` : "";
+      const hasMoreTags = Boolean(tag3);
       return {
-        ...selection,
-        subtitle: tags.slice(0, 3).join(", ") + (tags.length > 3 ? "..." : ""),
+        title,
+        subtitle: hasMoreTags ? `${subtitle}…` : subtitle,
       };
     },
   },
