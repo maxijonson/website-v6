@@ -2,9 +2,7 @@ import { existsSync } from "fs";
 import fs from "fs/promises";
 import { format } from "groqfmt-nodejs";
 import path from "path";
-import { makeGetPostsByCategoryIdQuery } from "../../sanity/queries/post/getPostsByCategoryId";
-import { postDetailsSelection } from "../../sanity/groqd/selections/post-details";
-import { reselect } from "../../sanity/groqd/selections/reselect";
+import { makeGetCategoriesQuery } from "../../sanity/queries/categories/getCategories";
 
 (async () => {
   try {
@@ -18,12 +16,7 @@ import { reselect } from "../../sanity/groqd/selections/reselect";
       console.info("sandbox.groq created");
     }
 
-    const query = makeGetPostsByCategoryIdQuery().grab$(
-      reselect({
-        id: postDetailsSelection.id,
-        slug: postDetailsSelection.slug,
-      }),
-    );
+    const query = makeGetCategoriesQuery();
 
     const queryFormatted = format(query.query);
     await fs.writeFile(queryFile, queryFormatted, "utf-8");

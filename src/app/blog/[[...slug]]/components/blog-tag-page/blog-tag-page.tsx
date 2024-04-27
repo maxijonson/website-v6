@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
-import { getLatestPostsByTagId } from "../../../../../../sanity/queries/post/getLatestPostsByTagId";
 import { findTagBySlug } from "../../../../../../sanity/queries/tags/findTagBySlug";
 import { urlForImage } from "../../../../../../sanity/utils/image";
 import type { BlogPageProps } from "../../page";
 import BlogOverview from "../blog-overview/blog-overview";
 import { tagDetailsSelection } from "../../../../../../sanity/groqd/selections/tag-details";
 import { postDetailsSelection } from "../../../../../../sanity/groqd/selections/post-details";
+import { getRecentPostsByTagId } from "../../../../../../sanity/queries/post/getRecentPosts";
 
 const BlogTagPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   if (slug.length !== 1) notFound();
@@ -13,7 +13,7 @@ const BlogTagPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   const tag = await findTagBySlug(slug[0], tagDetailsSelection);
   if (!tag) notFound();
 
-  const latestPosts = await getLatestPostsByTagId(tag.id, postDetailsSelection);
+  const latestPosts = await getRecentPostsByTagId(tag.id, postDetailsSelection);
 
   return (
     <BlogOverview

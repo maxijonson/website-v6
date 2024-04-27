@@ -4,12 +4,14 @@ import { findCategoryBySlug } from "../../../../../../sanity/queries/categories/
 import BlogOverview from "../blog-overview/blog-overview";
 import { getTagsByCategoryId } from "../../../../../../sanity/queries/tags/getTagsByCategoryId";
 import { urlForImage } from "../../../../../../sanity/utils/image";
-import { getLatestPostsByCategoryId } from "../../../../../../sanity/queries/post/getLatestPostsByCategoryId";
-import { getLatestPostsByTagId } from "../../../../../../sanity/queries/post/getLatestPostsByTagId";
 import { categoryDetailsSelection } from "../../../../../../sanity/groqd/selections/category-details";
 import { pick } from "../../../../../../sanity/groqd/selections/pick";
 import { tagDetailsSelection } from "../../../../../../sanity/groqd/selections/tag-details";
 import { postDetailsSelection } from "../../../../../../sanity/groqd/selections/post-details";
+import {
+  getRecentPostsByCategoryId,
+  getRecentPostsByTagId,
+} from "../../../../../../sanity/queries/post/getRecentPosts";
 
 const BlogCategoryPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   if (slug.length !== 1) notFound();
@@ -22,14 +24,14 @@ const BlogCategoryPage = async ({ params: { slug = [] } }: BlogPageProps) => {
       category.id,
       pick(tagDetailsSelection, ["id", "name", "slug"]),
     ),
-    getLatestPostsByCategoryId(category.id, postDetailsSelection),
+    getRecentPostsByCategoryId(category.id, postDetailsSelection),
   ]);
 
   const latestPostsByTag = await Promise.all(
     tags.map(async (tag) => {
       return {
         tag,
-        posts: await getLatestPostsByTagId(tag.id, postDetailsSelection),
+        posts: await getRecentPostsByTagId(tag.id, postDetailsSelection),
       };
     }),
   );

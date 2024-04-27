@@ -1,15 +1,11 @@
 import type { Selection } from "groqd";
-import postSchema from "../../schemas/documents/post";
 import { qAnd } from "../../groqd/filters/and";
-import { qCount } from "../../groqd/count";
-import { qGt } from "../../groqd/filters/gt";
 import { runQuery } from "../../groqd/runQuery";
+import postSchema from "../../schemas/documents/post";
 import { makeGetPostsQuery } from "./getPosts";
 
 export const makeGetPostsByCategoryIdQuery = (filter?: string) =>
-  makeGetPostsQuery(
-    qAnd(qGt(qCount("(tags[]->)[references($categoryId)]"), 0), filter),
-  );
+  makeGetPostsQuery(qAnd("$categoryId in tags[]->category._ref", filter));
 
 export const getPostsByCategoryId = <S extends Selection>(
   categoryId: string,

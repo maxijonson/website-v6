@@ -1,24 +1,16 @@
 import { q, type Selection } from "groqd";
-import { qCount } from "../../groqd/count";
-import { qGt } from "../../groqd/filters/gt";
 import { qAnd } from "../../groqd/filters/and";
+import { qDefined } from "../../groqd/filters/defined";
 import { qType } from "../../groqd/filters/type";
-import { makeGetPostsQuery } from "../post/getPosts";
-import tagSchema from "../../schemas/documents/tag";
 import { runQuery } from "../../groqd/runQuery";
+import tagSchema from "../../schemas/documents/tag";
+import { makeGetPostsQuery } from "../post/getPosts";
 
 export const makeGetTagsQuery = (filter?: string) =>
   q("*").filter(
     qAnd(
       qType("tag"),
-      qGt(
-        qCount(
-          makeGetPostsQuery("references(^._id)").grab$({
-            _id: q.string(),
-          }),
-        ),
-        0,
-      ),
+      qDefined(makeGetPostsQuery("references(^._id)").slice(0)),
       filter,
     ),
   );
