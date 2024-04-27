@@ -104,12 +104,12 @@ export default defineType({
       tag2: "tags.2.name",
       tag3: "tags.3.name",
     },
-    prepare({ title, tag0, tag1, tag2, tag3 }) {
+    prepare({ tag0, tag1, tag2, tag3, ...selection }) {
       const tags = [tag0, tag1, tag2].filter(Boolean);
       const subtitle = tags.length > 0 ? `by ${tags.join(", ")}` : "";
       const hasMoreTags = Boolean(tag3);
       return {
-        title,
+        ...selection,
         subtitle: hasMoreTags ? `${subtitle}…` : subtitle,
       };
     },
