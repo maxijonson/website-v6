@@ -99,10 +99,18 @@ export default defineType({
       title: "title",
       author: "author.name",
       media: "image",
+      tags0: "tags.0.name",
+      tags1: "tags.1.name",
+      tags2: "tags.2.name",
+      tags3: "tags.3.name",
     },
     prepare(selection) {
-      const { author } = selection;
-      return { ...selection, subtitle: author && `by ${author}` };
+      const { tags0, tags1, tags2, tags3 } = selection;
+      const tags = [tags0, tags1, tags2, tags3].filter(Boolean);
+      return {
+        ...selection,
+        subtitle: tags.slice(0, 3).join(", ") + (tags.length > 3 ? "..." : ""),
+      };
     },
   },
 });
