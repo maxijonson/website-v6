@@ -8,10 +8,12 @@
     "start": "next start",
     "lint": "next lint --max-warnings=0 && prettier --check .",
     "format": "prettier --write .",
+    "dotenvx": "dotenvx run -f .env.local -f .env --overload --quiet --",
     "sanity:typegen": "sanity schema extract --path './sanity/generated/.sanity-generated.schema.json' --enforce-required-fields --workspace=staging && sanity typegen generate && npm run format -- --log-level silent",
+    "sanity:export": "npm run dotenvx -- tsx scripts/sanity/sanity-export.ts",
     "groq:fmt": "tsx scripts/groq/groqfmt.ts",
-    "groq:preview": "dotenvx run -f .env.local -f .env --overload --quiet -- tsx scripts/groq/groq-preview.ts",
-    "tunnel": "dotenvx run -f .env.local -f .env --overload --quiet -- tsx scripts/tunnel.ts --env-file=.env.local"
+    "groq:preview": "npm run dotenvx -- tsx scripts/groq/groq-preview.ts",
+    "tunnel": "npm run dotenvx -- tsx scripts/tunnel.ts --env-file=.env.local"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.1.2",
@@ -65,6 +67,7 @@
     "@typescript-eslint/parser": "^7.7.1",
     "@vanilla-extract/next-plugin": "^2.4.0",
     "autoprefixer": "^10.4.19",
+    "commander": "^12.0.0",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.3",
     "eslint-config-prettier": "^9.1.0",
