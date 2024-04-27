@@ -1,7 +1,7 @@
+import { cacheTag } from "@/utils/cache";
 import type { Selection } from "groqd";
 import { qAnd } from "../../groqd/filters/and";
 import { runQuery } from "../../groqd/runQuery";
-import postSchema from "../../schemas/documents/post";
 import { makeGetPostsQuery } from "./getPosts";
 
 export const makeGetPostsByTagIdQuery = (filter?: string) =>
@@ -14,5 +14,5 @@ export const getPostsByTagId = <S extends Selection>(
   runQuery(
     makeGetPostsByTagIdQuery().grab$(selection),
     { tagId },
-    { next: { tags: [tagId, postSchema.name] } },
+    { next: { tags: [tagId, cacheTag.posts] } },
   );

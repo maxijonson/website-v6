@@ -1,3 +1,4 @@
+import { cacheTag } from "@/utils/cache";
 import type { UnknownArrayQuery } from "@/utils/types";
 import type { Selection } from "groqd";
 import type { RunQueryOptions, RunQueryParams } from "../../groqd/runQuery";
@@ -5,7 +6,6 @@ import { runSlicedQuery } from "../slice";
 import { makeGetPostsQuery } from "./getPosts";
 import { makeGetPostsByCategoryIdQuery } from "./getPostsByCategoryId";
 import { makeGetPostsByTagIdQuery } from "./getPostsByTagId";
-import postSchema from "../../schemas/documents/post";
 
 const runLatestPostsQuery = <S extends Selection>(
   query: UnknownArrayQuery,
@@ -21,7 +21,7 @@ export const getRecentPosts = <S extends Selection>(selection: S, amount = 4) =>
     selection,
     amount,
     {},
-    { next: { tags: [postSchema.name] } },
+    { next: { tags: [cacheTag.posts] } },
   );
 
 export const getRecentPostsByCategoryId = <S extends Selection>(
@@ -34,7 +34,7 @@ export const getRecentPostsByCategoryId = <S extends Selection>(
     selection,
     amount,
     { categoryId },
-    { next: { tags: [categoryId, postSchema.name] } },
+    { next: { tags: [categoryId, cacheTag.posts] } },
   );
 
 export const getRecentPostsByTagId = <S extends Selection>(
@@ -47,5 +47,5 @@ export const getRecentPostsByTagId = <S extends Selection>(
     selection,
     amount,
     { tagId },
-    { next: { tags: [tagId, postSchema.name] } },
+    { next: { tags: [tagId, cacheTag.posts] } },
   );

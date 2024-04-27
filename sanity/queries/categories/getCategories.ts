@@ -1,9 +1,9 @@
+import { cacheTag } from "@/utils/cache";
 import { q, type Selection } from "groqd";
 import { qAnd } from "../../groqd/filters/and";
 import { qDefined } from "../../groqd/filters/defined";
 import { qType } from "../../groqd/filters/type";
 import { runQuery } from "../../groqd/runQuery";
-import categorySchema from "../../schemas/documents/category";
 import { makeGetTagsQuery } from "../tags/getTags";
 
 export const makeGetCategoriesQuery = (filter?: string) =>
@@ -19,5 +19,5 @@ export const getCategories = async <S extends Selection>(selection: S) =>
   runQuery(
     makeGetCategoriesQuery().grab$(selection),
     {},
-    { next: { tags: [categorySchema.name] } },
+    { next: { tags: [cacheTag.categories] } },
   );
