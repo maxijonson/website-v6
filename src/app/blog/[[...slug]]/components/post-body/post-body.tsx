@@ -50,10 +50,8 @@ const components: Partial<PortableTextReactComponents> = {
 
 const PostBody = ({ body }: PostBodyProps) => {
   return (
-    <div className="w-full p-4">
-      <div className="prose mx-auto dark:prose-invert">
-        <PortableText value={body} components={components} />
-      </div>
+    <div className="prose mx-auto dark:prose-invert">
+      <PortableText value={body} components={components} />
     </div>
   );
 };

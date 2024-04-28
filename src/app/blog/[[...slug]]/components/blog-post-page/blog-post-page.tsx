@@ -11,6 +11,8 @@ import BlogHeader from "../blog-header/blog-header";
 import BlogHero from "../blog-hero/blog-hero";
 import PostBody from "../post-body/post-body";
 import TableOfContents from "../table-of-contents/table-of-contents";
+import { Separator } from "@/components/ui/separator";
+import BlogPostShare from "./blog-post-share";
 
 const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   if (slug.length !== 1) notFound();
@@ -44,7 +46,12 @@ const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
             author={post.author}
           />
           <div className={cn("mx-auto flex w-full max-w-5xl pt-8")}>
-            <PostBody body={body} />
+            <div className="w-full p-4">
+              <PostBody body={body} />
+              <div className={cn("flex flex-col pt-8", "md:hidden")}>
+                <BlogPostShare slug={post.slug} title={post.title} />
+              </div>
+            </div>
             {headings.length > 0 && (
               <aside
                 className={cn("hidden w-full max-w-xs flex-col p-4", "lg:flex")}
@@ -52,6 +59,8 @@ const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
                 <div className="sticky top-24 flex flex-col gap-2">
                   <p className="font-bold uppercase">Table of Contents</p>
                   <TableOfContents headings={headings} />
+                  <Separator className="my-3" />
+                  <BlogPostShare slug={post.slug} title={post.title} />
                 </div>
               </aside>
             )}
