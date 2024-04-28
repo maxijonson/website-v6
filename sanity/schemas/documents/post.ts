@@ -36,8 +36,13 @@ const validateGiscusTerm: CustomValidator<string | undefined> = async (
     value,
     pick(postDetailsSelection, ["id"]),
   );
-  if (!post || post.id === ctx.document._id) return true;
-  return "Giscus terms must be unique.";
+  if (
+    !post ||
+    post.id === ctx.document._id ||
+    `drafts.${post.id}` === ctx.document._id
+  )
+    return true;
+  return `Giscus terms must be unique.`;
 };
 
 export default defineType({
