@@ -70,7 +70,10 @@ const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
         </article>
         <Suspense fallback={null}>
           <div
-            className={cn("mx-auto flex w-full max-w-5xl pt-12", "md:pt-20")}
+            className={cn(
+              "mx-auto flex w-full max-w-5xl flex-col px-4 pt-12",
+              "md:pt-20",
+            )}
           >
             <BlogPostComments term={post.giscusTerm} />
           </div>
