@@ -3,6 +3,7 @@
 This is the 6th version of [my personal website](https://www.chintristan.io/) (and hopefully the last one!).
 
 The motivation behind this version was to go all-in and try a whole lot of new technologies and tools that I had never (or barely) used before. This includes:
+
 - [Next.js](https://nextjs.org/) for static site generation.
 - [Vercel](https://vercel.com/) for deployment.
 - [Sanity](https://www.sanity.io/) for content management.
