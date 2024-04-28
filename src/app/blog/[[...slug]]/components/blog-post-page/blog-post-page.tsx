@@ -13,6 +13,8 @@ import PostBody from "../post-body/post-body";
 import TableOfContents from "../table-of-contents/table-of-contents";
 import { Separator } from "@/components/ui/separator";
 import BlogPostShare from "./blog-post-share";
+import BlogPostComments from "./blog-post-comments";
+import { Suspense } from "react";
 
 const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   if (slug.length !== 1) notFound();
@@ -66,6 +68,13 @@ const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
             )}
           </div>
         </article>
+        <Suspense fallback={null}>
+          <div
+            className={cn("mx-auto flex w-full max-w-5xl pt-12", "md:pt-20")}
+          >
+            <BlogPostComments term={post.giscusTerm} />
+          </div>
+        </Suspense>
       </main>
       <Footer />
     </div>

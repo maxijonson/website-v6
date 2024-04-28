@@ -1,9 +1,18 @@
-import { defineField, defineType, type FieldGroupDefinition } from "sanity";
-import author from "./author";
-import tag from "./tag";
-import postContent from "../fields/post-content";
+import {
+  defineField,
+  defineType,
+  type CustomValidator,
+  type CustomValidatorResult,
+  type FieldGroupDefinition,
+} from "sanity";
+import { pick } from "../../groqd/selections/pick";
+import { postDetailsSelection } from "../../groqd/selections/post-details";
+import { findPostByGiscusTerm } from "../../queries/post/findPostByGiscusTerm";
 import { makeImageField } from "../../utils/field-generators/make-image-field";
 import { isUniqueSlug } from "../../utils/isUniqueSlug";
+import postContent from "../fields/post-content";
+import author from "./author";
+import tag from "./tag";
 
 const groupDetails = {
   name: "Details",
@@ -17,6 +26,23 @@ const groupSeo = {
   name: "seo",
   title: "SEO",
 } satisfies FieldGroupDefinition;
+
+const validateGiscusTerm: CustomValidator<string | undefined> = async (
+  value,
+  ctx,
+): Promise<CustomValidatorResult> => {
+  if (!value || !ctx.document) return true;
+  if (ctx.document._createdAt) {
+    return "Giscus term can't be changed after creation.";
+  }
+
+  const post = await findPostByGiscusTerm(
+    value,
+    pick(postDetailsSelection, ["id"]),
+  );
+  if (!post || post.id === ctx.document._id) return true;
+  return "Giscus term must be unique.";
+};
 
 export default defineType({
   name: "post",
@@ -80,6 +106,19 @@ export default defineType({
       type: "array",
       of: [{ type: "string" }],
       group: groupSeo.name,
+    }),
+    defineField({
+      name: "giscusTerm",
+      title: "Giscus Term",
+      type: "string",
+      description:
+        "Unique term used to create discussions on Github with Giscus. Shouldn't be changed after creation, otherwise a new discussion will be created and the old one will be lost.",
+      validation: (rule) => [
+        rule.required().error("Required"),
+        rule.custom(validateGiscusTerm),
+      ],
+      readOnly: (ctx) => Boolean(ctx.document?._createdAt),
+      group: groupDetails.name,
     }),
     makeImageField("image", {
       validation: (rule) => [rule.required().error("Required")],

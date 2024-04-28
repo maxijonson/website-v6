@@ -13,6 +13,7 @@ export const postDetailsSelection = {
   title: q.string(),
   summary: q.string(),
   keywords: ["coalesce(keywords, [])", q.array(q.string())],
+  giscusTerm: q.string().min(1),
   image: sanityImage("image", {
     additionalFields: {
       alt: q.string(),
