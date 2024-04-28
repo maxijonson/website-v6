@@ -5,13 +5,10 @@ import Contact from "./contact/contact";
 const Footer = () => {
   return (
     <footer
-      className={cn(
-        "flex flex-col gap-8 py-12 text-center text-sm",
-        "md:py-20",
-      )}
+      className={cn("flex flex-col gap-8 pb-8 text-center text-sm")}
       suppressHydrationWarning
     >
-      <Separator />
+      <Separator className="mt-20" />
       <Contact />
       <div>{new Date().getFullYear()} &copy; Tristan Chin</div>
     </footer>
