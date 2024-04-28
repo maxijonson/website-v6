@@ -32,16 +32,12 @@ const validateGiscusTerm: CustomValidator<string | undefined> = async (
   ctx,
 ): Promise<CustomValidatorResult> => {
   if (!value || !ctx.document) return true;
-  if (ctx.document._createdAt) {
-    return "Giscus term can't be changed after creation.";
-  }
-
   const post = await findPostByGiscusTerm(
     value,
     pick(postDetailsSelection, ["id"]),
   );
   if (!post || post.id === ctx.document._id) return true;
-  return "Giscus term must be unique.";
+  return "Giscus terms must be unique.";
 };
 
 export default defineType({
