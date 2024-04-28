@@ -8,7 +8,7 @@ interface BlogPostCommentsProps {
 }
 
 const BlogPostComments = (props: BlogPostCommentsProps) => {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   const term = (() => {
     if (process.env.NODE_ENV === "production") {
@@ -32,7 +32,7 @@ const BlogPostComments = (props: BlogPostCommentsProps) => {
       reactionsEnabled="1"
       emitMetadata="1"
       inputPosition="top"
-      theme={theme === "dark" ? "noborder_gray" : "noborder_light"}
+      theme={resolvedTheme === "dark" ? "noborder_gray" : "noborder_light"}
       lang="en"
       loading="lazy"
     />
