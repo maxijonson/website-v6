@@ -11,6 +11,7 @@
     "dotenvx": "dotenvx run -f .env.local -f .env --overload --quiet --",
     "sanity:typegen": "sanity schema extract --path './sanity/generated/.sanity-generated.schema.json' --enforce-required-fields --workspace=staging && sanity typegen generate && npm run format -- --log-level silent",
     "sanity:export": "npm run dotenvx -- tsx scripts/sanity/sanity-export.ts",
+    "sanity:branch": "npm run dotenvx -- tsx scripts/sanity/sanity-branch.ts",
     "groq:fmt": "tsx scripts/groq/groqfmt.ts",
     "groq:preview": "npm run dotenvx -- tsx scripts/groq/groq-preview.ts",
     "tunnel": "npm run dotenvx -- tsx scripts/tunnel.ts --env-file=.env.local"

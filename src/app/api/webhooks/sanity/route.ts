@@ -1,52 +1,15 @@
-import { q } from "groqd";
 import { parseBody } from "next-sanity/webhook";
 import { revalidateTag } from "next/cache";
 import { NextResponse, type NextRequest } from "next/server";
-import { categoryDetailsSelection } from "../../../../../sanity/groqd/selections/category-details";
 import { pick } from "../../../../../sanity/groqd/selections/pick";
 import { postDetailsSelection } from "../../../../../sanity/groqd/selections/post-details";
 import { tagDetailsSelection } from "../../../../../sanity/groqd/selections/tag-details";
 import { getPostsByCategoryId } from "../../../../../sanity/queries/post/getPostsByCategoryId";
 import { getPostsByTagId } from "../../../../../sanity/queries/post/getPostsByTagId";
 import { getTagsByCategoryId } from "../../../../../sanity/queries/tags/getTagsByCategoryId";
+import { webhookBodyQuery } from "./query";
 
-const webhookBodyQuery = q("*")
-  .filter("_type in ['post', 'category', 'tag', 'author']")
-  .select({
-    "_type == 'post'": {
-      type: ["_type", q.literal("post")],
-      id: postDetailsSelection.id,
-      slug: postDetailsSelection.slug,
-      tags: q("tags")
-        .filter()
-        .deref()
-        .grab$({
-          id: tagDetailsSelection.id,
-          slug: tagDetailsSelection.slug,
-          category: q("category").deref().grab$({
-            id: categoryDetailsSelection.id,
-            slug: categoryDetailsSelection.slug,
-          }),
-        }),
-    },
-    "_type == 'category'": {
-      type: ["_type", q.literal("category")],
-      id: postDetailsSelection.id,
-      slug: postDetailsSelection.slug,
-    },
-    "_type == 'tag'": {
-      type: ["_type", q.literal("tag")],
-      id: postDetailsSelection.id,
-      slug: postDetailsSelection.slug,
-      category: q("category").deref().grab$({
-        id: categoryDetailsSelection.id,
-        slug: categoryDetailsSelection.slug,
-      }),
-    },
-  })
-  .slice(0);
-
-const webhookBodySchema = webhookBodyQuery.schema;
+const webhookBodySchema = webhookBodyQuery.slice(0).schema;
 
 export const POST = async (req: NextRequest) => {
   try {

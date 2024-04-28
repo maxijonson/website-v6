@@ -1,6 +1,5 @@
-import { execSync } from "child_process";
 import { Command, Option } from "commander";
-import path from "path";
+import { exportDataset } from "./utils";
 
 const program = new Command("Sanity Export");
 
@@ -22,20 +21,10 @@ const { project, dataset } = program.opts<{
   dataset: string;
 }>();
 
-try {
-  const exportPath = path.join(
-    __dirname,
-    "..",
-    "..",
-    "sanity",
-    "exports",
-    `${project}-${dataset}.tar.gz`,
-  );
-  execSync(`sanity dataset export ${dataset} ${exportPath} --overwrite`, {
-    env: {
-      ...process.env,
-      NEXT_PUBLIC_SANITY_PROJECT_ID: project,
-      NEXT_PUBLIC_SANITY_DATASET: dataset,
-    },
-  });
-} catch {}
+(async () => {
+  try {
+    await exportDataset(project, dataset);
+  } catch (e) {
+    console.error(e instanceof Error ? e.message : e);
+  }
+})();
