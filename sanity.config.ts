@@ -10,12 +10,15 @@ import { structureTool } from "sanity/structure";
 import { apiVersion, projectId } from "./sanity/env";
 import { schema } from "./sanity/schema";
 import { codeInput } from "@sanity/code-input";
+import { structure } from "./sanity/desk/structure";
 
 const configBase = {
   projectId,
   schema,
   plugins: [
-    structureTool(),
+    structureTool({
+      structure,
+    }),
     visionTool({ defaultApiVersion: apiVersion }),
     codeInput(),
   ],

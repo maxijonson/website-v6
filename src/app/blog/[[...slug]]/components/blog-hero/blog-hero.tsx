@@ -9,6 +9,7 @@ import PostAuthorAvatar from "../post-author-avatar/post-author-avatar";
 export interface BlogHeroProps {
   banner: ImageProps["src"];
   bannerAlt: ImageProps["alt"];
+  bannerBlur?: ImageProps["blurDataURL"];
   title: string;
   description: string;
   breadcrumbs: { label: string; href: string }[];
@@ -21,6 +22,7 @@ export interface BlogHeroProps {
 const BlogHero = ({
   banner,
   bannerAlt,
+  bannerBlur,
   title,
   description,
   breadcrumbs,
@@ -59,8 +61,11 @@ const BlogHero = ({
           src={banner}
           className="blog-hero-background object-cover"
           alt={bannerAlt}
+          placeholder={bannerBlur ? "blur" : "empty"}
+          blurDataURL={bannerBlur}
           fill
           priority
+          sizes="100vw"
         />
       </div>
       <div

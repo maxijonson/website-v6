@@ -41,6 +41,7 @@ const BlogCategoryPage = async ({ params: { slug = [] } }: BlogPageProps) => {
       hero={{
         banner: urlForImage(category.image),
         bannerAlt: category.image.alt,
+        bannerBlur: category.image.metadata.lqip,
         title: category.caption,
         description: category.description,
         breadcrumbs: [

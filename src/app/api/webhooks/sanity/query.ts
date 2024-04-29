@@ -3,7 +3,8 @@ import { categoryDetailsSelection } from "../../../../../sanity/groqd/selections
 import { postDetailsSelection } from "../../../../../sanity/groqd/selections/post-details";
 import { tagDetailsSelection } from "../../../../../sanity/groqd/selections/tag-details";
 
-export const webhookFilter = "_type in ['post', 'category', 'tag', 'author']";
+export const webhookFilter =
+  "_type in ['post', 'category', 'tag', 'author', 'blogSettings']";
 
 export const webhookBodyQuery = q("*")
   .filter(webhookFilter)
@@ -37,5 +38,8 @@ export const webhookBodyQuery = q("*")
         id: categoryDetailsSelection.id,
         slug: categoryDetailsSelection.slug,
       }),
+    },
+    "_type == 'blogSettings'": {
+      type: ["_type", q.literal("blogSettings")],
     },
   });

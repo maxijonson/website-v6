@@ -20,6 +20,7 @@ const BlogTagPage = async ({ params: { slug = [] } }: BlogPageProps) => {
       hero={{
         banner: urlForImage(tag.image),
         bannerAlt: tag.image.alt,
+        bannerBlur: tag.image.metadata.lqip,
         title: tag.caption,
         description: tag.description,
         breadcrumbs: [

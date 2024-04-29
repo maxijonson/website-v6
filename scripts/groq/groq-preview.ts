@@ -1,8 +1,8 @@
+import { webhookBodyQuery } from "@/app/api/webhooks/sanity/query";
 import { existsSync } from "fs";
 import fs from "fs/promises";
 import { format } from "groqfmt-nodejs";
 import path from "path";
-import { makeGetCategoriesQuery } from "../../sanity/queries/categories/getCategories";
 
 (async () => {
   try {
@@ -16,7 +16,7 @@ import { makeGetCategoriesQuery } from "../../sanity/queries/categories/getCateg
       console.info("sandbox.groq created");
     }
 
-    const query = makeGetCategoriesQuery();
+    const query = webhookBodyQuery;
 
     const queryFormatted = format(query.query);
     await fs.writeFile(queryFile, queryFormatted, "utf-8");

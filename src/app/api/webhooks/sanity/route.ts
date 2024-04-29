@@ -44,12 +44,12 @@ export const POST = async (req: NextRequest) => {
       revalidateTag(tag);
     };
 
-    revalidate(data.id);
-    revalidate(data.slug);
     revalidate(data.type);
 
     switch (data.type) {
       case "post":
+        revalidate(data.id);
+        revalidate(data.slug);
         data.tags.forEach((tag) => {
           revalidate(tag.id);
           revalidate(tag.slug);
@@ -58,6 +58,8 @@ export const POST = async (req: NextRequest) => {
         });
         break;
       case "category":
+        revalidate(data.id);
+        revalidate(data.slug);
         const [categoryTags, categoryPosts] = await Promise.all([
           getTagsByCategoryId(
             data.id,
@@ -82,6 +84,8 @@ export const POST = async (req: NextRequest) => {
         });
         break;
       case "tag":
+        revalidate(data.id);
+        revalidate(data.slug);
         const tagPosts = await getPostsByTagId(
           data.id,
           pick(postDetailsSelection, ["id", "slug"]),

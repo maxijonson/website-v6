@@ -34,6 +34,7 @@ const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
             asHeader
             banner={urlForImage(post.image)}
             bannerAlt={post.image.alt}
+            bannerBlur={post.image.metadata.lqip}
             title={post.title}
             description={post.summary}
             breadcrumbs={[
