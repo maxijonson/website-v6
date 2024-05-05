@@ -1,4 +1,5 @@
 import {
+  nullToUndefined,
   q,
   type InferType,
   type Selection,
@@ -11,7 +12,7 @@ const contentBlockLinkMarkDefSchema = q.object({
   _key: q.string(),
 });
 
-export const contentBlockDetailsSelection = {
+export const contentBlockDetailsSelection = nullToUndefined({
   _key: q.string(),
   _type: q.literal("block"),
   children: q
@@ -35,10 +36,10 @@ export const contentBlockDetailsSelection = {
       q.literal("blockquote"),
     ])
     .optional(),
-  listItem: q.literal("bullet").optional(),
+  // listItem: q.literal("bullet").optional(),
   markDefs: q.array(contentBlockLinkMarkDefSchema).optional(),
   level: q.number().optional(),
-} satisfies Selection;
+}) satisfies Selection;
 
 export type ContentBlockDetails = TypeFromSelection<
   typeof contentBlockDetailsSelection

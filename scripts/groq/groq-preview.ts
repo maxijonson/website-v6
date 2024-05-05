@@ -1,8 +1,9 @@
-import { webhookBodyQuery } from "@/app/api/webhooks/sanity/query";
 import { existsSync } from "fs";
 import fs from "fs/promises";
 import { format } from "groqfmt-nodejs";
 import path from "path";
+import { homePageDetailsSelection } from "../../sanity/groqd/selections/pages/home-page/home-page-details";
+import { makeGetHomePageQuery } from "../../sanity/queries/pages/home-page/getHomePage";
 
 (async () => {
   try {
@@ -16,7 +17,9 @@ import path from "path";
       console.info("sandbox.groq created");
     }
 
-    const query = webhookBodyQuery;
+    const query = makeGetHomePageQuery()
+      .grab$(homePageDetailsSelection)
+      .slice(0);
 
     const queryFormatted = format(query.query);
     await fs.writeFile(queryFile, queryFormatted, "utf-8");

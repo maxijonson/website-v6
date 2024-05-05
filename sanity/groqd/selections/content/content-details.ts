@@ -12,8 +12,10 @@ export const makeContentDetailsQuery = <F extends string>(fieldName: F) => {
       [qType("image")]: contentImageDetailsSelection,
       [qType("code")]: contentCodeDetailsSelection,
       default: {
-        _type: q.string(),
         _key: q.string(),
+        _type: q
+          .string()
+          .transform((type) => `[ContentDetails] unknown (${type})`),
       },
     });
 };

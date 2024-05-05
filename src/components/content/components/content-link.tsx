@@ -1,8 +1,8 @@
 import type { PortableTextMarkComponentProps } from "next-sanity";
 import Link from "next/link";
-import type { ContentBlockLink } from "../../../../../../../sanity/groqd/selections/content/content-block-details";
+import type { ContentBlockLink } from "../../../../sanity/groqd/selections/content/content-block-details";
 
-const PostBodyLink = (
+const ContentLink = (
   props: PortableTextMarkComponentProps<ContentBlockLink>,
 ) => {
   if (!props.value?.href) return props.children;
@@ -16,4 +16,4 @@ const PostBodyLink = (
   );
 };
 
-export default PostBodyLink;
+export default ContentLink;

@@ -19,11 +19,10 @@ const Home = async () => {
           switch (section._type) {
             case "homeHero":
               return <Hero key={section._key} {...section} />;
+            case "homeIntro":
+              return <Intro key={section._key} {...section} />;
           }
-          return null;
         })}
-        {/* <Hero /> */}
-        <Intro />
         <Skills />
         <Projects />
         <Experience />

@@ -1,13 +1,13 @@
-import "./post-body-code.scss";
+import "./content-code.scss";
 import type { PortableTextTypeComponentProps } from "next-sanity";
 import { Refractor, registerLanguage } from "react-refractor";
 import tsx from "refractor/lang/tsx";
 import ts from "refractor/lang/typescript";
 import sh from "refractor/lang/bash";
 import json from "refractor/lang/json";
-import type { ContentCodeDetails } from "../../../../../../../../sanity/groqd/selections/content/content-code-details";
+import type { ContentCodeDetails } from "../../../../../sanity/groqd/selections/content/content-code-details";
 
-const PostBodyCode = (
+const ContentCode = (
   props: PortableTextTypeComponentProps<ContentCodeDetails>,
 ) => {
   const language = props.value.language ?? "sh";
@@ -34,4 +34,4 @@ const PostBodyCode = (
   );
 };
 
-export default PostBodyCode;
+export default ContentCode;
