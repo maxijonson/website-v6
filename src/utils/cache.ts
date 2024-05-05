@@ -11,4 +11,8 @@ export const cacheTag = {
 
   authors: "author",
   authorSlug: (slug: string) => `author-slug-${slug}`,
+
+  pages: {
+    homePage: "homePage",
+  },
 } as const;

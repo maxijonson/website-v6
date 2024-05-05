@@ -1,7 +1,7 @@
 import { getHeadingId } from "@/utils/getHeadingId";
 import { type PortableTextBlockComponent } from "next-sanity";
 import Link from "next/link";
-import type { PostBody } from "../../../../../../../sanity/groqd/selections/post-body";
+import type { ContentBlockDetails } from "../../../../../../../sanity/groqd/selections/content/content-block-details";
 
 const isValidHeading = (
   props: string | undefined,
@@ -17,7 +17,7 @@ const PostBodyHeading: PortableTextBlockComponent = (props) => {
     console.error("Encountered invalid heading:", Heading, props);
     return <h2>{props.children}</h2>;
   }
-  const id = getHeadingId(block as PostBody[number] & { _type: "block" });
+  const id = getHeadingId(block as ContentBlockDetails);
 
   return (
     <Link href={`#${id}`} className="relative no-underline hover:underline">

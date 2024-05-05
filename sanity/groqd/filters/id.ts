@@ -1,9 +1,9 @@
 import { isDefined } from "@/utils/isDefined";
 import { qS, type QueryLike } from "../s";
 
-export const qType = (type: QueryLike) => {
-  if (!isDefined(type)) {
+export const qId = (id: QueryLike) => {
+  if (!isDefined(id)) {
     return "";
   }
-  return `_type == '${qS(type)}'`;
+  return `_id == ${qS(id)}`;
 };

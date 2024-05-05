@@ -1,12 +1,12 @@
 import { PortableText, type PortableTextReactComponents } from "next-sanity";
-import type { PostBody } from "../../../../../../sanity/groqd/selections/post-body";
 import PostBodyCode from "./components/post-body-code/post-body-code";
 import PostBodyImage from "./components/post-body-image";
 import PostBodyLink from "./components/post-body-link";
 import PostBodyHeading from "./components/post-body-heading";
+import type { ContentDetails } from "../../../../../../sanity/groqd/selections/content/content-details";
 
 export interface PostBodyProps {
-  body: PostBody;
+  body: ContentDetails;
 }
 
 /**

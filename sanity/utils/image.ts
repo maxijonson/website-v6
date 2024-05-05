@@ -15,3 +15,7 @@ export const getImageBuilder = (source: Image) => {
 export const urlForImage = (source: Image) => {
   return getImageBuilder(source).auto("format").fit("max").url();
 };
+
+export const urlForSvg = (source: Image) => {
+  return getImageBuilder(source).url();
+};
