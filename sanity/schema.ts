@@ -5,7 +5,7 @@ import category from "./schemas/documents/category";
 import post from "./schemas/documents/post";
 import tag from "./schemas/documents/tag";
 import blockContent from "./schemas/fields/post-content";
-import { pageSchemas } from "./schemas/pages";
+import { deepPageSchemas } from "./schemas/pages";
 import blogSettings from "./schemas/singletons/blogSettings";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
@@ -16,6 +16,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     tag,
     blockContent,
     blogSettings,
-    ...pageSchemas,
+    ...deepPageSchemas,
   ],
 };

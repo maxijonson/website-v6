@@ -10,7 +10,8 @@ import post from "../schemas/documents/post";
 import author from "../schemas/documents/author";
 import category from "../schemas/documents/category";
 import tag from "../schemas/documents/tag";
-import { pages, pagesStructure } from "./pagesStructure";
+import { pagesStructure } from "./pagesStructure";
+import { pageSchemas } from "../schemas/pages";
 
 // These are the types that are expected to be customized in the `items` array below
 const HANDLED_STRUCTURE_TYPES = [
@@ -19,7 +20,7 @@ const HANDLED_STRUCTURE_TYPES = [
   author,
   category,
   tag,
-  ...pages,
+  ...pageSchemas,
 ] as const;
 
 // Uses the default list item builder for a given type
