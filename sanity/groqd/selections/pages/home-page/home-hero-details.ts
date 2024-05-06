@@ -10,7 +10,7 @@ export const homeHeroDetailsSelection = {
   image: makeImageDetailsQuery("image"),
   logos: makeImageDetailsQuery("logos", {
     additionalFields: {
-      darkShadow: homeHeroSchema.shape.logos.unwrap().element.shape.darkShadow,
+      darkShadow: homeHeroSchema.shape.logos.element.shape.darkShadow,
     },
     isList: true,
   }),

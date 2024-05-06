@@ -36,7 +36,7 @@ export const contentBlockDetailsSelection = nullToUndefined({
       q.literal("blockquote"),
     ])
     .optional(),
-  // listItem: q.literal("bullet").optional(),
+  listItem: q.literal("bullet").optional(),
   markDefs: q.array(contentBlockLinkMarkDefSchema).optional(),
   level: q.number().optional(),
 }) satisfies Selection;

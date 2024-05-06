@@ -1,185 +1,47 @@
-import { InfoCircledIcon } from "@radix-ui/react-icons";
-import {
-  SiMixpanel,
-  SiCloudflare,
-  SiMeta,
-  SiGoogletagmanager,
-} from "react-icons/si";
+import Content from "@/components/content/content";
+import { cn } from "@/lib/utils";
+import type { HomeSkillsDetails } from "../../../../sanity/groqd/selections/pages/home-page/home-skills-details";
 import HomeHeading from "../home-heading/home-heading";
 import HomeSection from "../home-section/home-section";
-import SkillsGroup from "./skills-group/skills-group";
 import Skill from "./skill/skill";
-import { cn } from "@/lib/utils";
-import LogoHtml from "$/svg/logo/logo-html.svg";
-import LogoCss from "$/svg/logo/logo-css.svg";
-import LogoJavaScript from "$/svg/logo/logo-javascript.svg";
-import LogoTypeScript from "$/svg/logo/logo-typescript.svg";
-import LogoReact from "$/svg/logo/logo-react.svg";
-import LogoNext from "$/svg/logo/logo-next.svg";
-import LogoAngular from "$/svg/logo/logo-angular.svg";
-import LogoNode from "$/svg/logo/logo-node.svg";
-import LogoNest from "$/svg/logo/logo-nest.svg";
-import LogoSass from "$/svg/logo/logo-sass.svg";
-import LogoSanity from "$/svg/logo/logo-sanity.svg";
-import LogoJava from "$/svg/logo/logo-java.svg";
-import LogoCSharp from "$/svg/logo/logo-csharp.svg";
-import LogoPython from "$/svg/logo/logo-python.svg";
-import LogoCpp from "$/svg/logo/logo-cpp.svg";
-import LogoRust from "$/svg/logo/logo-rust.svg";
-import LogoFirebase from "$/svg/logo/logo-firebase.svg";
-import LogoMongoDB from "$/svg/logo/logo-mongodb.svg";
-import LogoPrisma from "$/svg/logo/logo-prisma.svg";
-import LogoMySQL from "$/svg/logo/logo-mysql.svg";
-import LogoOracle from "$/svg/logo/logo-oracle.svg";
-import LogoSQLServer from "$/svg/logo/logo-sqlserver.svg";
-import LogoGCP from "$/svg/logo/logo-gcp.svg";
-import LogoAzure from "$/svg/logo/logo-azure.svg";
-import LogoHeroku from "$/svg/logo/logo-heroku.svg";
-import LogoVercel from "$/svg/logo/logo-vercel.svg";
-import LogoBash from "$/svg/logo/logo-bash.svg";
-import LogoAndroid from "$/svg/logo/logo-android.svg";
-import LogoSwift from "$/svg/logo/logo-swift.svg";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { Button } from "@/components/ui/button";
+import SkillsGroup from "./skills-group/skills-group";
 
-const Skills = () => {
+type SkillsProps = HomeSkillsDetails;
+
+const Skills = ({ title, content, skillGroups }: SkillsProps) => {
   return (
     <HomeSection id="skills">
-      <HomeHeading>Skills</HomeHeading>
-      <p className={cn("pb-4 text-lg", "md:text-xl")}>
-        Here's a list of my technical skills. As you can see, while I mostly
-        specialize in Web technologies, I've learned a thing or two in other
-        fields while I was in school and in past job experiences.
-      </p>
-      <Collapsible className="mb-6">
-        <CollapsibleTrigger asChild>
-          <div className={cn("flex justify-center", "md:justify-start")}>
-            <Button variant="outline">
-              <InfoCircledIcon className="mr-2" /> About the ratings
-            </Button>
-          </div>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <p className={cn("pb-4 text-lg", "md:text-xl")}>
-            I'm aware rating skills on a scale of 1 to 5 is subjective and
-            skills are not really measurable that way, but since this isn't a CV
-            and long explanations don't make pretty layouts like this one,
-            here's the general idea of what each rating means (how I
-            subjectively chose them!):
-          </p>
-          <ul className={cn("pb-4 text-lg", "md:text-xl")}>
-            <li>
-              <b>1</b> - I've tried it or haven't used it in at least 3 years.
-            </li>
-            <li>
-              <b>2</b> - I've used it a little or haven't used it in at least a
-              year.
-            </li>
-            <li>
-              <b>3</b> - I've got a good grasp of it and can make something
-              decent with it.
-            </li>
-            <li>
-              <b>4</b> - I've used it multiple times and can get a project done
-              with it by myself.
-            </li>
-            <li>
-              <b>5</b> - I use this almost every day! They're usually my
-              technologies of choice when creating my own projects.
-            </li>
-          </ul>
-        </CollapsibleContent>
-      </Collapsible>
+      <HomeHeading>{title}</HomeHeading>
+      <Content
+        className={cn(
+          "prose prose-lg prose-stone max-w-none text-stone-950",
+          "prose-p:leading-snug",
+          "prose-ul:list-none prose-ul:p-0",
+          "prose-li:p-0 prose-li:leading-snug",
+          "md:prose-xl",
+          "dark:prose-invert dark:text-stone-50",
+        )}
+        value={content}
+      />
       <div
         className={cn(
-          "grid grid-cols-1 gap-4",
+          "grid grid-cols-1 gap-4 pt-4",
           "sm:grid-cols-2",
           "lg:grid-cols-3",
         )}
       >
-        <SkillsGroup name="Web">
-          <Skill name="HTML" icon={<LogoHtml />} proficiency={5} />
-          <Skill name="CSS" icon={<LogoCss />} proficiency={5} />
-          <Skill name="SCSS" icon={<LogoSass />} proficiency={4} />
-          <Skill name="JavaScript" icon={<LogoJavaScript />} proficiency={5} />
-          <Skill name="TypeScript" icon={<LogoTypeScript />} proficiency={5} />
-          <Skill name="React" icon={<LogoReact />} proficiency={5} />
-          <Skill
-            name="NextJS"
-            icon={<LogoNext className="dark:drop-shadow-[0_0_1px_#FFFFFF]" />}
-            proficiency={4}
-          />
-          <Skill name="Angular" icon={<LogoAngular />} proficiency={3} />
-          <Skill name="Node" icon={<LogoNode />} proficiency={4} />
-          <Skill name="NestJS" icon={<LogoNest />} proficiency={4} />
-        </SkillsGroup>
-        <SkillsGroup name="Application">
-          <Skill name="Java" icon={<LogoJava />} proficiency={2} />
-          <Skill name="C#" icon={<LogoCSharp />} proficiency={3} />
-          <Skill name="Python" icon={<LogoPython />} proficiency={3} />
-          <Skill name="C++" icon={<LogoCpp />} proficiency={1} />
-          <Skill
-            name="Rust"
-            icon={<LogoRust className="dark:drop-shadow-[0_0_1px_#FFFFFF]" />}
-            proficiency={1}
-          />
-        </SkillsGroup>
-        <SkillsGroup name="Database">
-          <Skill name="Firebase" icon={<LogoFirebase />} proficiency={4} />
-          <Skill name="MongoDB" icon={<LogoMongoDB />} proficiency={3} />
-          <Skill name="Prisma" icon={<LogoPrisma />} proficiency={3} />
-          <Skill name="MySQL" icon={<LogoMySQL />} proficiency={3} />
-          <Skill name="Oracle SQL" icon={<LogoOracle />} proficiency={2} />
-          <Skill name="SQL Server" icon={<LogoSQLServer />} proficiency={2} />
-        </SkillsGroup>
-        <SkillsGroup name="Cloud">
-          <Skill
-            name="GCP"
-            icon={<LogoGCP />}
-            proficiency={3}
-            title="Google Cloud Platform"
-          />
-          <Skill name="Azure" icon={<LogoAzure />} proficiency={3} />
-          <Skill name="Heroku" icon={<LogoHeroku />} proficiency={4} />
-          <Skill
-            name="Vercel"
-            icon={<LogoVercel className="dark:drop-shadow-[0_0_1px_#FFFFFF]" />}
-            proficiency={3}
-          />
-        </SkillsGroup>
-        <SkillsGroup name="Analytics">
-          <Skill
-            name="Mixpanel"
-            icon={<SiMixpanel color="#a086d3" />}
-            proficiency={3}
-          />
-          <Skill
-            name="Zaraz"
-            icon={<SiCloudflare color="#f38020" />}
-            proficiency={2}
-          />
-          <Skill
-            name="Meta Pixel"
-            icon={<SiMeta color="#0082fb" />}
-            proficiency={2}
-          />
-          <Skill
-            name="GTM"
-            icon={<SiGoogletagmanager color="#4285f4" />}
-            proficiency={2}
-            title="Google Tag Manager"
-          />
-        </SkillsGroup>
-        <SkillsGroup name="Other">
-          <Skill name="Sanity" icon={<LogoSanity />} proficiency={3} />
-          <Skill name="Bash" icon={<LogoBash />} proficiency={4} />
-          <Skill name="Android" icon={<LogoAndroid />} proficiency={1} />
-          <Skill name="Swift" icon={<LogoSwift />} proficiency={1} />
-        </SkillsGroup>
+        {skillGroups.map((group) => (
+          <SkillsGroup key={group._key} name={group.name}>
+            {group.skills.map((skill) => (
+              <Skill
+                key={skill._key}
+                name={skill.name}
+                proficiency={skill.level}
+                icon={skill.image}
+              />
+            ))}
+          </SkillsGroup>
+        ))}
       </div>
     </HomeSection>
   );

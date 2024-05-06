@@ -65,6 +65,83 @@ export const codeSchema = z.object({
   highlightedLines: z.array(z.number()).optional(),
 });
 
+export const homeIntroSchema = z.object({
+  _type: z.literal("homeIntro"),
+  title: z.string(),
+  content: z.array(
+    z.union([
+      z.object({
+        children: z
+          .array(
+            z.object({
+              marks: z.array(z.string()).optional(),
+              text: z.string().optional(),
+              _type: z.literal("span"),
+              _key: z.string(),
+            }),
+          )
+          .optional(),
+        style: z
+          .union([
+            z.literal("normal"),
+            z.literal("h2"),
+            z.literal("h3"),
+            z.literal("h4"),
+            z.literal("h5"),
+            z.literal("h6"),
+            z.literal("blockquote"),
+          ])
+          .optional(),
+        listItem: z.literal("bullet").optional(),
+        markDefs: z
+          .array(
+            z.object({
+              href: z.string().optional(),
+              _type: z.literal("link"),
+              _key: z.string(),
+            }),
+          )
+          .optional(),
+        level: z.number().optional(),
+        _type: z.literal("block"),
+        _key: z.string(),
+      }),
+      z.object({
+        asset: z
+          .object({
+            _ref: z.string(),
+            _type: z.literal("reference"),
+            _weak: z.boolean().optional(),
+          })
+          .optional(),
+        hotspot: sanityImageHotspotSchema.optional(),
+        crop: sanityImageCropSchema.optional(),
+        alt: z.string(),
+        _type: z.literal("image"),
+        _key: z.string(),
+      }),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(codeSchema),
+    ]),
+  ),
+  image: z.object({
+    asset: z
+      .object({
+        _ref: z.string(),
+        _type: z.literal("reference"),
+        _weak: z.boolean().optional(),
+      })
+      .optional(),
+    hotspot: sanityImageHotspotSchema.optional(),
+    crop: sanityImageCropSchema.optional(),
+    alt: z.string(),
+    _type: z.literal("image"),
+  }),
+});
+
 export const blogSettingsSchema = z.object({
   _id: z.string(),
   _type: z.literal("blogSettings"),
@@ -301,8 +378,8 @@ export const sanityFileAssetSchema = z.object({
   source: sanityAssetSourceDataSchema.optional(),
 });
 
-export const homeIntroSchema = z.object({
-  _type: z.literal("homeIntro"),
+export const homeSkillsSchema = z.object({
+  _type: z.literal("homeSkills"),
   title: z.string(),
   content: z.array(
     z.union([
@@ -363,19 +440,40 @@ export const homeIntroSchema = z.object({
         .and(codeSchema),
     ]),
   ),
-  image: z.object({
-    asset: z
-      .object({
-        _ref: z.string(),
-        _type: z.literal("reference"),
-        _weak: z.boolean().optional(),
-      })
-      .optional(),
-    hotspot: sanityImageHotspotSchema.optional(),
-    crop: sanityImageCropSchema.optional(),
-    alt: z.string(),
-    _type: z.literal("image"),
-  }),
+  skillGroups: z.array(
+    z.object({
+      name: z.string(),
+      skills: z.array(
+        z.object({
+          name: z.string(),
+          level: z.union([
+            z.literal(1),
+            z.literal(2),
+            z.literal(3),
+            z.literal(4),
+            z.literal(5),
+          ]),
+          image: z
+            .object({
+              asset: z
+                .object({
+                  _ref: z.string(),
+                  _type: z.literal("reference"),
+                  _weak: z.boolean().optional(),
+                })
+                .optional(),
+              hotspot: sanityImageHotspotSchema.optional(),
+              crop: sanityImageCropSchema.optional(),
+              alt: z.string(),
+              _type: z.literal("image"),
+            })
+            .optional(),
+          _key: z.string(),
+        }),
+      ),
+      _key: z.string(),
+    }),
+  ),
 });
 
 export const colorSchema = z.object({
@@ -458,25 +556,23 @@ export const homeHeroSchema = z.object({
     alt: z.string(),
     _type: z.literal("image"),
   }),
-  logos: z
-    .array(
-      z.object({
-        asset: z
-          .object({
-            _ref: z.string(),
-            _type: z.literal("reference"),
-            _weak: z.boolean().optional(),
-          })
-          .optional(),
-        hotspot: sanityImageHotspotSchema.optional(),
-        crop: sanityImageCropSchema.optional(),
-        alt: z.string(),
-        darkShadow: colorSchema,
-        _type: z.literal("logo"),
-        _key: z.string(),
-      }),
-    )
-    .optional(),
+  logos: z.array(
+    z.object({
+      asset: z
+        .object({
+          _ref: z.string(),
+          _type: z.literal("reference"),
+          _weak: z.boolean().optional(),
+        })
+        .optional(),
+      hotspot: sanityImageHotspotSchema.optional(),
+      crop: sanityImageCropSchema.optional(),
+      alt: z.string(),
+      darkShadow: colorSchema,
+      _type: z.literal("logo"),
+      _key: z.string(),
+    }),
+  ),
 });
 
 export const homePageSchema = z.object({
@@ -498,6 +594,11 @@ export const homePageSchema = z.object({
             _key: z.string(),
           })
           .and(homeIntroSchema),
+        z
+          .object({
+            _key: z.string(),
+          })
+          .and(homeSkillsSchema),
       ]),
     )
     .optional(),

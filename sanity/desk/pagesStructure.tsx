@@ -1,7 +1,7 @@
-import type { ListItemBuilder } from "sanity/structure";
-import defineStructure from "../utils/defineStructure";
 import { DocumentIcon, DocumentsIcon } from "@sanity/icons";
+import type { ListItemBuilder } from "sanity/structure";
 import { pageSchemas } from "../schemas/pages";
+import defineStructure from "../utils/defineStructure";
 
 export const pagesStructure = defineStructure<ListItemBuilder>((S) =>
   S.listItem()
@@ -13,7 +13,7 @@ export const pagesStructure = defineStructure<ListItemBuilder>((S) =>
         .items(
           pageSchemas.map((schema) =>
             S.documentTypeListItem(schema.name)
-              .icon(DocumentIcon)
+              .icon(schema.icon ?? DocumentIcon)
               .title(
                 schema.title ??
                   schema.name[0].toUpperCase() + schema.name.slice(1),
