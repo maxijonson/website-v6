@@ -1,3 +1,4 @@
+import IconifyIcon from "@/components/iconify-icon/iconify-icon";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
@@ -7,17 +8,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { getImageDimensions } from "@sanity/asset-utils";
 import Image from "next/image";
 import Link from "next/link";
-import type React from "react";
 import type { ImageDetails } from "../../../../../sanity/groqd/selections/image-details";
 import { getImageBuilder } from "../../../../../sanity/utils/image";
-import { getImageDimensions } from "@sanity/asset-utils";
 
 export interface ProjectLink {
   url: string;
   title: string;
-  icon: React.ReactNode;
+  icon: string;
 }
 
 export interface ProjectProps {
@@ -67,7 +67,7 @@ const Project = ({ name, description, links = [], image }: ProjectProps) => {
                 className="flex items-center gap-1"
                 title={link.title}
               >
-                {link.icon}
+                <IconifyIcon icon={link.icon} className="size-5" />
               </Link>
             ))}
           </div>

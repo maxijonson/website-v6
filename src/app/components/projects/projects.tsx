@@ -1,4 +1,3 @@
-"use client";
 import Content from "@/components/content/content";
 import {
   Carousel,
@@ -8,7 +7,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
-import { Icon } from "@iconify/react";
 import type { HomeProjectsDetails } from "../../../../sanity/groqd/selections/pages/home-page/home-projects-details";
 import HomeHeading from "../home-heading/home-heading";
 import HomeSection from "../home-section/home-section";
@@ -47,7 +45,7 @@ const Projects = ({ title, content, projects }: ProjectsProps) => {
                   links={project.links.map((link) => ({
                     title: link.title,
                     url: link.url,
-                    icon: <Icon icon={link.icon.name!} className="size-5" />,
+                    icon: link.icon.name!,
                   }))}
                 />
               </CarouselItem>
