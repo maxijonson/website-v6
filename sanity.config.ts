@@ -12,6 +12,7 @@ import { schema } from "./sanity/schema";
 import { codeInput } from "@sanity/code-input";
 import { structure } from "./sanity/desk/structure";
 import { colorInput } from "@sanity/color-input";
+import { iconify } from "sanity-plugin-iconify";
 
 const configBase = {
   projectId,
@@ -23,6 +24,7 @@ const configBase = {
     visionTool({ defaultApiVersion: apiVersion }),
     codeInput(),
     colorInput(),
+    iconify(),
   ],
 } satisfies Partial<Config>;
 

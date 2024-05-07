@@ -3,6 +3,7 @@ import { qType } from "../../../filters/type";
 import { homeHeroDetailsSelection } from "./home-hero-details";
 import { homeIntroDetailsSelection } from "./home-intro-details";
 import { homeSkillsDetailsSelection } from "./home-skills-details";
+import { homeProjectsDetailsSelection } from "./home-projects-details";
 
 export const homePageDetailsSelection = {
   sections: q("sections")
@@ -11,6 +12,7 @@ export const homePageDetailsSelection = {
       [qType("homeHero")]: homeHeroDetailsSelection,
       [qType("homeIntro")]: homeIntroDetailsSelection,
       [qType("homeSkills")]: homeSkillsDetailsSelection,
+      [qType("homeProjects")]: homeProjectsDetailsSelection,
     }),
 } satisfies Selection;
 

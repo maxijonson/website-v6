@@ -68,7 +68,9 @@ export default defineType({
                         rule.min(1).max(5).integer().error("Required"),
                       ],
                     }),
-                    makeImageField("image"),
+                    makeImageField("image", {
+                      validation: (rule) => [rule.required().error("Required")],
+                    }),
                   ],
                   preview: {
                     select: {

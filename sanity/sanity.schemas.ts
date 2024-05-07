@@ -65,6 +65,107 @@ export const codeSchema = z.object({
   highlightedLines: z.array(z.number()).optional(),
 });
 
+export const iconSchema = z.object({
+  _type: z.literal("icon"),
+  name: z.string().optional(),
+});
+
+export const homeSkillsSchema = z.object({
+  _type: z.literal("homeSkills"),
+  title: z.string(),
+  content: z.array(
+    z.union([
+      z.object({
+        children: z
+          .array(
+            z.object({
+              marks: z.array(z.string()).optional(),
+              text: z.string().optional(),
+              _type: z.literal("span"),
+              _key: z.string(),
+            }),
+          )
+          .optional(),
+        style: z
+          .union([
+            z.literal("normal"),
+            z.literal("h2"),
+            z.literal("h3"),
+            z.literal("h4"),
+            z.literal("h5"),
+            z.literal("h6"),
+            z.literal("blockquote"),
+          ])
+          .optional(),
+        listItem: z.literal("bullet").optional(),
+        markDefs: z
+          .array(
+            z.object({
+              href: z.string().optional(),
+              _type: z.literal("link"),
+              _key: z.string(),
+            }),
+          )
+          .optional(),
+        level: z.number().optional(),
+        _type: z.literal("block"),
+        _key: z.string(),
+      }),
+      z.object({
+        asset: z
+          .object({
+            _ref: z.string(),
+            _type: z.literal("reference"),
+            _weak: z.boolean().optional(),
+          })
+          .optional(),
+        hotspot: sanityImageHotspotSchema.optional(),
+        crop: sanityImageCropSchema.optional(),
+        alt: z.string(),
+        _type: z.literal("image"),
+        _key: z.string(),
+      }),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(codeSchema),
+    ]),
+  ),
+  skillGroups: z.array(
+    z.object({
+      name: z.string(),
+      skills: z.array(
+        z.object({
+          name: z.string(),
+          level: z.union([
+            z.literal(1),
+            z.literal(2),
+            z.literal(3),
+            z.literal(4),
+            z.literal(5),
+          ]),
+          image: z.object({
+            asset: z
+              .object({
+                _ref: z.string(),
+                _type: z.literal("reference"),
+                _weak: z.boolean().optional(),
+              })
+              .optional(),
+            hotspot: sanityImageHotspotSchema.optional(),
+            crop: sanityImageCropSchema.optional(),
+            alt: z.string(),
+            _type: z.literal("image"),
+          }),
+          _key: z.string(),
+        }),
+      ),
+      _key: z.string(),
+    }),
+  ),
+});
+
 export const homeIntroSchema = z.object({
   _type: z.literal("homeIntro"),
   title: z.string(),
@@ -378,8 +479,8 @@ export const sanityFileAssetSchema = z.object({
   source: sanityAssetSourceDataSchema.optional(),
 });
 
-export const homeSkillsSchema = z.object({
-  _type: z.literal("homeSkills"),
+export const homeProjectsSchema = z.object({
+  _type: z.literal("homeProjects"),
   title: z.string(),
   content: z.array(
     z.union([
@@ -440,34 +541,28 @@ export const homeSkillsSchema = z.object({
         .and(codeSchema),
     ]),
   ),
-  skillGroups: z.array(
+  projects: z.array(
     z.object({
-      name: z.string(),
-      skills: z.array(
+      title: z.string(),
+      description: z.string(),
+      image: z.object({
+        asset: z
+          .object({
+            _ref: z.string(),
+            _type: z.literal("reference"),
+            _weak: z.boolean().optional(),
+          })
+          .optional(),
+        hotspot: sanityImageHotspotSchema.optional(),
+        crop: sanityImageCropSchema.optional(),
+        alt: z.string(),
+        _type: z.literal("image"),
+      }),
+      links: z.array(
         z.object({
-          name: z.string(),
-          level: z.union([
-            z.literal(1),
-            z.literal(2),
-            z.literal(3),
-            z.literal(4),
-            z.literal(5),
-          ]),
-          image: z
-            .object({
-              asset: z
-                .object({
-                  _ref: z.string(),
-                  _type: z.literal("reference"),
-                  _weak: z.boolean().optional(),
-                })
-                .optional(),
-              hotspot: sanityImageHotspotSchema.optional(),
-              crop: sanityImageCropSchema.optional(),
-              alt: z.string(),
-              _type: z.literal("image"),
-            })
-            .optional(),
+          title: z.string(),
+          url: z.string(),
+          icon: iconSchema,
           _key: z.string(),
         }),
       ),
@@ -599,6 +694,11 @@ export const homePageSchema = z.object({
             _key: z.string(),
           })
           .and(homeSkillsSchema),
+        z
+          .object({
+            _key: z.string(),
+          })
+          .and(homeProjectsSchema),
       ]),
     )
     .optional(),

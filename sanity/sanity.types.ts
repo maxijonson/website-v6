@@ -68,6 +68,70 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type HomeProjects = {
+  _type: "homeProjects";
+  title: string;
+  content: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "normal" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+        listItem?: "bullet";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string;
+        _type: "image";
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & Code)
+  >;
+  projects: Array<{
+    title: string;
+    description: string;
+    image: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+    links: Array<{
+      title: string;
+      url: string;
+      icon: Icon;
+      _key: string;
+    }>;
+    _key: string;
+  }>;
+};
+
 export type HomeSkills = {
   _type: "homeSkills";
   title: string;
@@ -112,7 +176,7 @@ export type HomeSkills = {
     skills: Array<{
       name: string;
       level: 1 | 2 | 3 | 4 | 5;
-      image?: {
+      image: {
         asset?: {
           _ref: string;
           _type: "reference";
@@ -231,6 +295,9 @@ export type HomePage = {
     | ({
         _key: string;
       } & HomeSkills)
+    | ({
+        _key: string;
+      } & HomeProjects)
   >;
 };
 
@@ -472,6 +539,11 @@ export type Slug = {
   _type: "slug";
   current: string;
   source?: string;
+};
+
+export type Icon = {
+  _type: "icon";
+  name?: string;
 };
 
 export type Color = {
