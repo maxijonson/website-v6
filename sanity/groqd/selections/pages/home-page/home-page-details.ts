@@ -5,6 +5,7 @@ import { homeIntroDetailsSelection } from "./home-intro-details";
 import { homeSkillsDetailsSelection } from "./home-skills-details";
 import { homeProjectsDetailsSelection } from "./home-projects-details";
 import { homeExperienceDetailsSelection } from "./home-experience-details";
+import { homeCredentialsDetailsSelection } from "./home-credentials-details";
 
 export const homePageDetailsSelection = {
   sections: q("sections")
@@ -15,6 +16,7 @@ export const homePageDetailsSelection = {
       [qType("homeSkills")]: homeSkillsDetailsSelection,
       [qType("homeProjects")]: homeProjectsDetailsSelection,
       [qType("homeExperience")]: homeExperienceDetailsSelection,
+      [qType("homeCredentials")]: homeCredentialsDetailsSelection,
     }),
 } satisfies Selection;
 

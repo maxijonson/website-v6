@@ -27,9 +27,10 @@ const Home = async () => {
               return <Projects key={section._key} {...section} />;
             case "homeExperience":
               return <Experience key={section._key} {...section} />;
+            case "homeCredentials":
+              return <Education key={section._key} {...section} />;
           }
         })}
-        <Education />
       </main>
       <Footer />
     </div>

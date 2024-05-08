@@ -1,9 +1,12 @@
-import Image, { type StaticImageData } from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import * as classes from "./credential.css";
 import { Breakpoint } from "@/utils/breakpoint";
+import { getImageDimensions } from "@sanity/asset-utils";
+import Image from "next/image";
+import type { ImageDetails } from "../../../../../sanity/groqd/selections/image-details";
+import { getImageBuilder } from "../../../../../sanity/utils/image";
+import * as classes from "./credential.css";
 
 export interface CredentialProps {
   name: string;
@@ -11,7 +14,7 @@ export interface CredentialProps {
   location?: string;
   type: string;
   date: string;
-  image: StaticImageData;
+  image: ImageDetails;
 }
 
 const Credential = ({
@@ -22,6 +25,9 @@ const Credential = ({
   date,
   image,
 }: CredentialProps) => {
+  const imageUrl = getImageBuilder(image).width(800).url();
+  const { aspectRatio, ...imageDimensions } = getImageDimensions(image);
+
   return (
     <Card className="relative overflow-hidden">
       <div
@@ -32,10 +38,10 @@ const Credential = ({
         )}
       >
         <Image
-          src={image}
+          {...imageDimensions}
+          src={imageUrl}
           alt={name}
-          fill
-          className="object-cover"
+          className="size-full object-cover"
           sizes={`(max-width: ${Breakpoint.mdpx}) 100vw, 50vw`}
         />
       </div>

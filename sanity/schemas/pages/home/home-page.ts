@@ -5,6 +5,7 @@ import homeSkills from "./home-skills";
 import { HomeIcon } from "@sanity/icons";
 import homeProjects from "./home-projects";
 import homeExperience from "./home-experience";
+import homeCredentials from "./home-credentials";
 
 export const homePageSchemas = [
   homeHero,
@@ -12,6 +13,7 @@ export const homePageSchemas = [
   homeSkills,
   homeProjects,
   homeExperience,
+  homeCredentials,
 ] as const;
 
 export default defineType({

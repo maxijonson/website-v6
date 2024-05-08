@@ -3,20 +3,19 @@ import { makeContentDetailsQuery } from "../../content/content-details";
 import { homeExperienceSchema } from "../../../../sanity.schemas";
 import { makeImageDetailsQuery } from "../../image-details";
 
+const homeExperiencePositionSchema =
+  homeExperienceSchema.shape.positions.element;
+
 export const homeExperiencePositionDetailsSelection = {
   _key: q.string(),
-  company: q.string(),
-  position: q.string(),
-  description: q.string().optional(),
-  startDate: q.string(),
-  endDate: q.string().optional(),
-  type: q.union([
-    q.literal("full-time"),
-    q.literal("part-time"),
-    q.literal("internship"),
-  ]),
+  company: homeExperiencePositionSchema.shape.company,
+  position: homeExperiencePositionSchema.shape.position,
+  description: homeExperiencePositionSchema.shape.description,
+  startDate: homeExperiencePositionSchema.shape.startDate,
+  endDate: homeExperiencePositionSchema.shape.endDate,
+  type: homeExperiencePositionSchema.shape.type,
   logo: makeImageDetailsQuery("logo"),
-  highlights: q.array(q.string()),
+  highlights: homeExperiencePositionSchema.shape.highlights,
 } satisfies Selection;
 
 export type HomeExperiencePositionDetails = TypeFromSelection<

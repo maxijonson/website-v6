@@ -22,7 +22,7 @@ const Experience = ({ title, content, positions }: ExperienceProps) => {
         )}
         value={content}
       />
-      <div className={cn("flex flex-col", "md:mx-auto md:max-w-xl")}>
+      <div className={cn("mt-6 flex flex-col", "md:mx-auto md:max-w-xl")}>
         {positions.map((position) => {
           const from = new Date(position.startDate).toLocaleDateString(
             "en-US",

@@ -68,6 +68,68 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type HomeCredentials = {
+  _type: "homeCredentials";
+  title: string;
+  content: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "normal" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+        listItem?: "bullet";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string;
+        _type: "image";
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & Code)
+  >;
+  credentials: Array<{
+    title: string;
+    type: string;
+    issuer: string;
+    issueDate: string;
+    startDate?: string;
+    location?: string;
+    image?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+    _key: string;
+  }>;
+};
+
 export type HomeExperience = {
   _type: "homeExperience";
   title: string;
@@ -364,6 +426,9 @@ export type HomePage = {
     | ({
         _key: string;
       } & HomeExperience)
+    | ({
+        _key: string;
+      } & HomeCredentials)
   >;
 };
 
