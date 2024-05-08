@@ -4,12 +4,14 @@ import homeIntro from "./home-intro";
 import homeSkills from "./home-skills";
 import { HomeIcon } from "@sanity/icons";
 import homeProjects from "./home-projects";
+import homeExperience from "./home-experience";
 
 export const homePageSchemas = [
   homeHero,
   homeIntro,
   homeSkills,
   homeProjects,
+  homeExperience,
 ] as const;
 
 export default defineType({

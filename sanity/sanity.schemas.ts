@@ -479,6 +479,101 @@ export const sanityFileAssetSchema = z.object({
   source: sanityAssetSourceDataSchema.optional(),
 });
 
+export const homeExperienceSchema = z.object({
+  _type: z.literal("homeExperience"),
+  title: z.string(),
+  content: z.array(
+    z.union([
+      z.object({
+        children: z
+          .array(
+            z.object({
+              marks: z.array(z.string()).optional(),
+              text: z.string().optional(),
+              _type: z.literal("span"),
+              _key: z.string(),
+            }),
+          )
+          .optional(),
+        style: z
+          .union([
+            z.literal("normal"),
+            z.literal("h2"),
+            z.literal("h3"),
+            z.literal("h4"),
+            z.literal("h5"),
+            z.literal("h6"),
+            z.literal("blockquote"),
+          ])
+          .optional(),
+        listItem: z.literal("bullet").optional(),
+        markDefs: z
+          .array(
+            z.object({
+              href: z.string().optional(),
+              _type: z.literal("link"),
+              _key: z.string(),
+            }),
+          )
+          .optional(),
+        level: z.number().optional(),
+        _type: z.literal("block"),
+        _key: z.string(),
+      }),
+      z.object({
+        asset: z
+          .object({
+            _ref: z.string(),
+            _type: z.literal("reference"),
+            _weak: z.boolean().optional(),
+          })
+          .optional(),
+        hotspot: sanityImageHotspotSchema.optional(),
+        crop: sanityImageCropSchema.optional(),
+        alt: z.string(),
+        _type: z.literal("image"),
+        _key: z.string(),
+      }),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(codeSchema),
+    ]),
+  ),
+  positions: z.array(
+    z.object({
+      company: z.string(),
+      position: z.string(),
+      description: z.string().optional(),
+      startDate: z.string(),
+      endDate: z.string().optional(),
+      type: z.union([
+        z.literal("full-time"),
+        z.literal("part-time"),
+        z.literal("internship"),
+      ]),
+      logo: z
+        .object({
+          asset: z
+            .object({
+              _ref: z.string(),
+              _type: z.literal("reference"),
+              _weak: z.boolean().optional(),
+            })
+            .optional(),
+          hotspot: sanityImageHotspotSchema.optional(),
+          crop: sanityImageCropSchema.optional(),
+          alt: z.string(),
+          _type: z.literal("image"),
+        })
+        .optional(),
+      highlights: z.array(z.string()),
+      _key: z.string(),
+    }),
+  ),
+});
+
 export const homeProjectsSchema = z.object({
   _type: z.literal("homeProjects"),
   title: z.string(),
@@ -699,6 +794,11 @@ export const homePageSchema = z.object({
             _key: z.string(),
           })
           .and(homeProjectsSchema),
+        z
+          .object({
+            _key: z.string(),
+          })
+          .and(homeExperienceSchema),
       ]),
     )
     .optional(),

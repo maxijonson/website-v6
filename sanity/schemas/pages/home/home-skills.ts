@@ -13,13 +13,13 @@ export default defineType({
       name: "title",
       title: "Title",
       type: "string",
-      validation: (rule) => [rule.required().error("Required")],
+      validation: (rule) => [rule.required()],
     }),
     defineField({
       name: "content",
       title: "Content",
       type: postContent.name,
-      validation: (rule) => [rule.required().error("Required")],
+      validation: (rule) => [rule.required()],
     }),
     defineField({
       name: "skillGroups",
@@ -34,7 +34,7 @@ export default defineType({
               name: "name",
               title: "Group Name",
               type: "string",
-              validation: (rule) => [rule.required().error("Required")],
+              validation: (rule) => [rule.required()],
             }),
             defineField({
               name: "skills",
@@ -48,7 +48,7 @@ export default defineType({
                       name: "name",
                       title: "Name",
                       type: "string",
-                      validation: (rule) => [rule.required().error("Required")],
+                      validation: (rule) => [rule.required()],
                     }),
                     defineField({
                       name: "level",
@@ -64,12 +64,12 @@ export default defineType({
                         ],
                       },
                       validation: (rule) => [
-                        rule.required().error("Required"),
-                        rule.min(1).max(5).integer().error("Required"),
+                        rule.required(),
+                        rule.min(1).max(5).integer(),
                       ],
                     }),
                     makeImageField("image", {
-                      validation: (rule) => [rule.required().error("Required")],
+                      validation: (rule) => [rule.required()],
                     }),
                   ],
                   preview: {
@@ -87,7 +87,7 @@ export default defineType({
                   },
                 }),
               ],
-              validation: (rule) => [rule.required().min(1).error("Required")],
+              validation: (rule) => [rule.required().min(1)],
             }),
           ],
           preview: {
@@ -106,7 +106,7 @@ export default defineType({
           },
         }),
       ],
-      validation: (rule) => [rule.required().min(1).error("Required")],
+      validation: (rule) => [rule.required().min(1)],
     }),
   ],
   preview: {

@@ -27,7 +27,7 @@ export default defineType({
       title: "Name",
       type: "string",
       validation: (rule) => [
-        rule.required().error("Required"),
+        rule.required(),
         rule.min(3).max(80).error("Must be between 3 and 80 characters"),
       ],
       group: groupDetails.name,
@@ -41,7 +41,7 @@ export default defineType({
         maxLength: 96,
         isUnique: isUniqueSlug,
       },
-      validation: (rule) => [rule.required().error("Required")],
+      validation: (rule) => [rule.required()],
       group: groupDetails.name,
     }),
     defineField({
@@ -49,7 +49,7 @@ export default defineType({
       title: "Category",
       type: "reference",
       to: { type: category.name },
-      validation: (rule) => [rule.required().error("Required")],
+      validation: (rule) => [rule.required()],
       group: groupDetails.name,
     }),
     defineField({
@@ -57,7 +57,7 @@ export default defineType({
       title: "Caption",
       type: "text",
       validation: (rule) => [
-        rule.required().error("Required"),
+        rule.required(),
         rule.min(3).max(250).error("Must be between 3 and 250 characters"),
       ],
       group: groupDetails.name,
@@ -67,7 +67,7 @@ export default defineType({
       title: "Description",
       type: "text",
       validation: (rule) => [
-        rule.required().error("Required"),
+        rule.required(),
         rule.min(3).max(250).error("Must be between 3 and 250 characters"),
       ],
       group: groupDetails.name,
@@ -80,7 +80,7 @@ export default defineType({
       group: groupSeo.name,
     }),
     makeImageField("image", {
-      validation: (rule) => [rule.required().error("Required")],
+      validation: (rule) => [rule.required()],
       group: groupMedia.name,
     }),
   ],
