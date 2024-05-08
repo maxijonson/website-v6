@@ -1,12 +1,15 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import Image, { type StaticImageData } from "next/image";
+import Image from "next/image";
 import { FiCheckCircle } from "react-icons/fi";
+import type { ImageDetails } from "../../../../../sanity/groqd/selections/image-details";
+import { getImageBuilder } from "../../../../../sanity/utils/image";
+import { getImageDimensions } from "@sanity/asset-utils";
 
 export interface CompanyProps {
   name: string;
-  image: StaticImageData;
+  image: ImageDetails;
   position: string;
   type: string;
   description?: string;
@@ -25,6 +28,9 @@ const Company = ({
   description,
   feats,
 }: CompanyProps) => {
+  const imageUrl = getImageBuilder(image).size(64, 64).url();
+  const { aspectRatio, ...imageDimensions } = getImageDimensions(image);
+
   return (
     <div className={cn("flex gap-6", "md:gap-8")}>
       <div className="flex justify-center">
@@ -35,8 +41,8 @@ const Company = ({
           )}
         >
           <Avatar className={cn("sticky top-20 size-8", "md:top-24")}>
-            <AvatarImage asChild src={image.src}>
-              <Image src={image} alt={name} />
+            <AvatarImage asChild src={imageUrl}>
+              <Image {...imageDimensions} src={imageUrl} alt={name} />
             </AvatarImage>
             <AvatarFallback
               className={cn("bg-stone-400 font-bold", "dark:bg-stone-800")}

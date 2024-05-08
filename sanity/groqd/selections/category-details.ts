@@ -1,22 +1,17 @@
-import { q, sanityImage, type Selection, type TypeFromSelection } from "groqd";
+import { q, type Selection, type TypeFromSelection } from "groqd";
+import { categorySchema } from "../../sanity.schemas";
+import { makeImageDetailsQuery } from "./image-details";
 
 export const categoryDetailsSelection = {
-  id: ["_id", q.string()],
-  createdAt: ["_createdAt", q.string()],
-  updatedAt: ["_updatedAt", q.string()],
+  id: ["_id", categorySchema.shape._id],
+  createdAt: ["_createdAt", categorySchema.shape._createdAt],
+  updatedAt: ["_updatedAt", categorySchema.shape._updatedAt],
   slug: q.slug("slug"),
-  name: q.string(),
-  caption: q.string(),
-  description: q.string(),
-  keywords: ["coalesce(keywords, [])", q.array(q.string())],
-  image: sanityImage("image", {
-    additionalFields: {
-      alt: q.string(),
-      metadata: q("asset->metadata").grab$({
-        lqip: q.string(),
-      }),
-    },
-  }),
+  name: categorySchema.shape.name,
+  caption: categorySchema.shape.caption,
+  description: categorySchema.shape.description,
+  keywords: ["coalesce(keywords, [])", categorySchema.shape.keywords.unwrap()],
+  image: makeImageDetailsQuery("image"),
 } satisfies Selection;
 
 export type CategoryDetails = TypeFromSelection<

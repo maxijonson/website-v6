@@ -32,20 +32,18 @@ type MakeImageFieldOpts<TName extends string> = Omit<
   "name" | "type"
 >;
 
-export const makeImageFieldDefaultOptions: MakeImageFieldOpts<string>["options"] =
-  {
-    metadata: ["blurhash", "lqip", "palette"],
-  };
+export const makeImageFieldDefaultOptions = {
+  metadata: ["blurhash", "lqip", "palette"],
+} satisfies MakeImageFieldOpts<string>["options"];
 
-export const makeImageFieldDefaultFields: MakeImageFieldOpts<string>["fields"] =
-  [
-    {
-      name: "alt",
-      type: "string",
-      title: "Alternative Text",
-      validation: (rule) => [rule.required().error("Required")],
-    },
-  ];
+export const makeImageFieldDefaultFields = [
+  {
+    name: "alt",
+    type: "string",
+    title: "Alternative Text",
+    validation: (rule) => [rule.required()],
+  },
+] satisfies MakeImageFieldOpts<string>["fields"];
 
 export const makeImageField = <TName extends string>(
   name: TName,

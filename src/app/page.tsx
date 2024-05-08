@@ -6,18 +6,31 @@ import HomeHeader from "./components/home-header/home-header";
 import Intro from "./components/intro/intro";
 import Projects from "./components/projects/projects";
 import Skills from "./components/skills/skills";
+import { getHomePage } from "../../sanity/queries/pages/home-page/getHomePage";
 
-const Home = () => {
+const Home = async () => {
+  const { sections } = await getHomePage();
+
   return (
     <div>
       <HomeHeader />
       <main>
-        <Hero />
-        <Intro />
-        <Skills />
-        <Projects />
-        <Experience />
-        <Education />
+        {sections.map((section) => {
+          switch (section._type) {
+            case "homeHero":
+              return <Hero key={section._key} {...section} />;
+            case "homeIntro":
+              return <Intro key={section._key} {...section} />;
+            case "homeSkills":
+              return <Skills key={section._key} {...section} />;
+            case "homeProjects":
+              return <Projects key={section._key} {...section} />;
+            case "homeExperience":
+              return <Experience key={section._key} {...section} />;
+            case "homeCredentials":
+              return <Education key={section._key} {...section} />;
+          }
+        })}
       </main>
       <Footer />
     </div>

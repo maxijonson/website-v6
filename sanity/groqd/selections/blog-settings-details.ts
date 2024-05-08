@@ -1,19 +1,14 @@
-import { q, sanityImage, type Selection, type TypeFromSelection } from "groqd";
+import { type Selection, type TypeFromSelection } from "groqd";
+import { blogSettingsSchema } from "../../sanity.schemas";
+import { makeImageDetailsQuery } from "./image-details";
 
 export const blogSettingsDetailsSelection = {
-  id: ["_id", q.string()],
-  createdAt: ["_createdAt", q.string()],
-  updatedAt: ["_updatedAt", q.string()],
-  caption: q.string(),
-  description: q.string(),
-  image: sanityImage("image", {
-    additionalFields: {
-      alt: q.string(),
-      metadata: q("asset->metadata").grab$({
-        lqip: q.string(),
-      }),
-    },
-  }),
+  id: ["_id", blogSettingsSchema.shape._id],
+  createdAt: ["_createdAt", blogSettingsSchema.shape._createdAt],
+  updatedAt: ["_updatedAt", blogSettingsSchema.shape._updatedAt],
+  caption: blogSettingsSchema.shape.caption,
+  description: blogSettingsSchema.shape.description,
+  image: makeImageDetailsQuery("image"),
 } satisfies Selection;
 
 export type BlogSettingsDetails = TypeFromSelection<

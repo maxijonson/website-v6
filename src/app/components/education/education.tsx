@@ -1,67 +1,55 @@
+import Content from "@/components/content/content";
+import { cn } from "@/lib/utils";
+import type { HomeCredentialsDetails } from "../../../../sanity/groqd/selections/pages/home-page/home-credentials-details";
 import HomeHeading from "../home-heading/home-heading";
 import HomeSection from "../home-section/home-section";
 import Credential from "./credential/credential";
-import imageEts from "$/image/credential/ets.png";
-import imageClg from "$/image/credential/clg.png";
-import imageAngular from "$/image/credential/angular.jpg";
-import imageReact from "$/image/credential/react.jpg";
-import imagePython from "$/image/credential/python.jpg";
-import imageNode from "$/image/credential/node.jpg";
-import { cn } from "@/lib/utils";
 
-const Education = () => {
+export type EducationProps = HomeCredentialsDetails;
+
+const Education = ({ title, content, credentials }: EducationProps) => {
   return (
     <HomeSection id="education">
-      <HomeHeading>Education</HomeHeading>
-      <p className="pb-4 text-lg md:text-xl">
-        The following shows all the schools and courses I've taken relevant to
-        my software developement career.
-      </p>
-      <div className={cn("grid grid-cols-1 gap-5", "md:grid-cols-2")}>
-        <Credential
-          name="Bachelor of Engineering, Software Engineering"
-          issuer="École de Technologie Supérieure"
-          location="Montreal, QC"
-          type="University Degree"
-          date="September 2019 - August 2023"
-          image={imageEts}
-        />
-        <Credential
-          name="Computer Science"
-          issuer="Collège Lionel-Groulx"
-          location="Sainte-Thérèse, QC"
-          type="College Degree"
-          date="August 2016 - June 2019"
-          image={imageClg}
-        />
-        <Credential
-          name="Angular - The Complete Guide"
-          issuer="Udemy"
-          type="Online Course"
-          date="May 2021"
-          image={imageAngular}
-        />
-        <Credential
-          name="Complete Python 3 Bootcamp"
-          issuer="Udemy"
-          type="Online Course"
-          date="February 2020"
-          image={imagePython}
-        />
-        <Credential
-          name="The Complete React Web Developer Course"
-          issuer="Udemy"
-          type="Online Course"
-          date="January 2019"
-          image={imageReact}
-        />
-        <Credential
-          name="The Complete Node.js Developer Course"
-          issuer="Udemy"
-          type="Online Course"
-          date="June 2018"
-          image={imageNode}
-        />
+      <HomeHeading>{title}</HomeHeading>
+      <Content
+        className={cn(
+          "prose prose-lg prose-stone max-w-none text-stone-950",
+          "prose-p:leading-snug",
+          "prose-ul:list-none prose-ul:p-0",
+          "prose-li:p-0 prose-li:leading-snug",
+          "md:prose-xl",
+          "dark:prose-invert dark:text-stone-50",
+        )}
+        value={content}
+      />
+      <div className={cn("mt-6 grid grid-cols-1 gap-5", "md:grid-cols-2")}>
+        {credentials.map((credential) => {
+          const startDate = credential.startDate
+            ? new Date(credential.startDate).toLocaleDateString("en-US", {
+                month: "long",
+                year: "numeric",
+              })
+            : undefined;
+          const issueDate = new Date(credential.issueDate).toLocaleDateString(
+            "en-US",
+            {
+              month: "long",
+              year: "numeric",
+            },
+          );
+
+          return (
+            <Credential
+              key={credential._key}
+              name={credential.title}
+              issuer={credential.issuer}
+              location={credential.location}
+              type={credential.type}
+              date={[startDate, issueDate].filter(Boolean).join(" - ")}
+              image={credential.image}
+            />
+          );
+        })}
       </div>
     </HomeSection>
   );

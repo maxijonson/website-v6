@@ -5,5 +5,5 @@ export const qType = (type: QueryLike) => {
   if (!isDefined(type)) {
     return "";
   }
-  return `_type == "${qS(type)}"`;
+  return `_type == '${qS(type)}'`;
 };

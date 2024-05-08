@@ -20,7 +20,7 @@ const Header = ({
   return (
     <header
       className={cn(
-        "opacity-1 fixed left-0 right-0 top-0 z-40 flex flex-col items-center px-2 pt-2 transition-[opacity]",
+        "fixed left-0 right-0 top-0 z-40 flex flex-col items-center px-2 pt-2 opacity-100 transition-[opacity]",
         "md:px-5 md:pt-3",
         className,
         classNames.root,

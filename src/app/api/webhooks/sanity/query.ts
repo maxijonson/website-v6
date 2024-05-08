@@ -4,7 +4,7 @@ import { postDetailsSelection } from "../../../../../sanity/groqd/selections/pos
 import { tagDetailsSelection } from "../../../../../sanity/groqd/selections/tag-details";
 
 export const webhookFilter =
-  "_type in ['post', 'category', 'tag', 'author', 'blogSettings']";
+  "_type in ['post', 'category', 'tag', 'author', 'blogSettings', 'homePage']";
 
 export const webhookBodyQuery = q("*")
   .filter(webhookFilter)
@@ -39,7 +39,13 @@ export const webhookBodyQuery = q("*")
         slug: categoryDetailsSelection.slug,
       }),
     },
+    "_type == 'author'": {
+      type: ["_type", q.literal("author")],
+    },
     "_type == 'blogSettings'": {
       type: ["_type", q.literal("blogSettings")],
+    },
+    "_type == 'homePage'": {
+      type: ["_type", q.literal("homePage")],
     },
   });

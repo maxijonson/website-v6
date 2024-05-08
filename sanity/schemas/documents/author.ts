@@ -15,7 +15,7 @@ export default defineType({
       title: "Name",
       type: "string",
       validation: (rule) => [
-        rule.required().error("Required"),
+        rule.required(),
         rule.min(3).max(80).error("Must be between 3 and 80 characters"),
       ],
     }),
@@ -28,21 +28,21 @@ export default defineType({
         maxLength: 96,
         isUnique: isUniqueSlug,
       },
-      validation: (rule) => [rule.required().error("Required")],
+      validation: (rule) => [rule.required()],
     }),
     makeImageField("image", {
       options: {
         ...makeImageFieldDefaultOptions,
         hotspot: true,
       },
-      validation: (rule) => [rule.required().error("Required")],
+      validation: (rule) => [rule.required()],
     }),
     defineField({
       name: "bio",
       title: "Bio",
       type: "string",
       validation: (rule) => [
-        rule.required().error("Required"),
+        rule.required(),
         rule.min(3).max(250).error("Must be between 3 and 250 characters"),
       ],
     }),

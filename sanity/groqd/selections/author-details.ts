@@ -1,20 +1,15 @@
-import { q, sanityImage, type Selection, type TypeFromSelection } from "groqd";
+import { q, type Selection, type TypeFromSelection } from "groqd";
+import { authorSchema } from "../../sanity.schemas";
+import { makeImageDetailsQuery } from "./image-details";
 
 export const authorDetailsSelection = {
-  id: ["_id", q.string()],
-  createdAt: ["_createdAt", q.string()],
-  updatedAt: ["_updatedAt", q.string()],
+  id: ["_id", authorSchema.shape._id],
+  createdAt: ["_createdAt", authorSchema.shape._createdAt],
+  updatedAt: ["_updatedAt", authorSchema.shape._updatedAt],
   slug: q.slug("slug"),
-  name: q.string(),
-  bio: q.string(),
-  image: sanityImage("image", {
-    additionalFields: {
-      alt: q.string(),
-      metadata: q("asset->metadata").grab$({
-        lqip: q.string(),
-      }),
-    },
-  }),
+  name: authorSchema.shape.name,
+  bio: authorSchema.shape.bio,
+  image: makeImageDetailsQuery("image"),
 } satisfies Selection;
 
 export type AuthorDetails = TypeFromSelection<typeof authorDetailsSelection>;

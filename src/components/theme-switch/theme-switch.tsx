@@ -21,7 +21,7 @@ const ThemeSwitch = ({ variant = "ghost" }: ThemeSwitchProps) => {
   const iconBaseClassName =
     "absolute left-1/2 top-1/2 size-5 -translate-x-1/2 -translate-y-1/2 transition-all";
   const deactivatedIconClassName = "opacity-0 rotate-0";
-  const activatedIconClassName = "opacity-1 rotate-[360deg]";
+  const activatedIconClassName = "opacity-100 rotate-[360deg]";
 
   useEffect(() => {
     setIsThemeResolved(resolvedTheme !== undefined);

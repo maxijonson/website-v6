@@ -56,7 +56,7 @@ export default defineType({
       title: "Title",
       type: "string",
       validation: (rule) => [
-        rule.required().error("Required"),
+        rule.required(),
         rule.min(3).max(80).error("Must be between 3 and 80 characters"),
       ],
       group: groupDetails.name,
@@ -66,7 +66,7 @@ export default defineType({
       title: "Summary",
       type: "string",
       validation: (rule) => [
-        rule.required().error("Required"),
+        rule.required(),
         rule.min(3).max(250).error("Must be between 3 and 250 characters"),
       ],
       group: groupDetails.name,
@@ -80,7 +80,7 @@ export default defineType({
         maxLength: 96,
         isUnique: isUniqueSlug,
       },
-      validation: (rule) => [rule.required().error("Required")],
+      validation: (rule) => [rule.required()],
       group: groupDetails.name,
     }),
     defineField({
@@ -88,7 +88,7 @@ export default defineType({
       title: "Author",
       type: "reference",
       to: { type: author.name },
-      validation: (rule) => [rule.required().error("Required")],
+      validation: (rule) => [rule.required()],
       group: groupDetails.name,
     }),
     defineField({
@@ -96,7 +96,7 @@ export default defineType({
       title: "Tags",
       type: "array",
       of: [{ type: "reference", to: { type: tag.name } }],
-      validation: (rule) => [rule.required().error("Required")],
+      validation: (rule) => [rule.required()],
       group: groupDetails.name,
     }),
     defineField({
@@ -114,22 +114,19 @@ export default defineType({
       type: "string",
       description:
         "Unique term used to create discussions on Github with Giscus. Shouldn't be changed after creation, otherwise a new discussion will be created and the old one will be lost.",
-      validation: (rule) => [
-        rule.required().error("Required"),
-        rule.custom(validateGiscusTerm),
-      ],
+      validation: (rule) => [rule.required(), rule.custom(validateGiscusTerm)],
       readOnly: (ctx) => Boolean(ctx.document?._createdAt),
       group: groupDetails.name,
     }),
     makeImageField("image", {
-      validation: (rule) => [rule.required().error("Required")],
+      validation: (rule) => [rule.required()],
       group: groupMedia.name,
     }),
     defineField({
       name: "body",
       title: "Body",
       type: postContent.name,
-      validation: (rule) => [rule.required().error("Required")],
+      validation: (rule) => [rule.required()],
       group: groupDetails.name,
     }),
   ],

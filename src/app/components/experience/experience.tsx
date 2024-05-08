@@ -1,23 +1,69 @@
+import Content from "@/components/content/content";
 import { cn } from "@/lib/utils";
+import type { HomeExperienceDetails } from "../../../../sanity/groqd/selections/pages/home-page/home-experience-details";
 import HomeHeading from "../home-heading/home-heading";
 import HomeSection from "../home-section/home-section";
 import Company from "./company/company";
-import imageIpnos from "$/image/company/ipnos.jpg";
-import imageDesjardins from "$/image/company/desjardins.jpg";
-import imageComact from "$/image/company/comact.jpg";
 
-const Experience = () => {
+export type ExperienceProps = HomeExperienceDetails;
+
+const Experience = ({ title, content, positions }: ExperienceProps) => {
   return (
     <HomeSection id="experience">
-      <HomeHeading>Experience</HomeHeading>
-      <p className={cn("pb-4 text-lg", "md:text-xl")}>
-        Here's an overview of my past experiences as a developer. Before
-        starting to work in this field, while I was just starting as a student,
-        I worked two and a half years as a cashier at Canada's renowned coffee
-        shop, Tim Horton's.
-      </p>
-      <div className={cn("flex flex-col", "md:mx-auto md:max-w-xl")}>
-        <Company
+      <HomeHeading>{title}</HomeHeading>
+      <Content
+        className={cn(
+          "prose prose-lg prose-stone max-w-none text-stone-950",
+          "prose-p:leading-snug",
+          "prose-ul:list-none prose-ul:p-0",
+          "prose-li:p-0 prose-li:leading-snug",
+          "md:prose-xl",
+          "dark:prose-invert dark:text-stone-50",
+        )}
+        value={content}
+      />
+      <div className={cn("mt-6 flex flex-col", "md:mx-auto md:max-w-xl")}>
+        {positions.map((position) => {
+          const from = new Date(position.startDate).toLocaleDateString(
+            "en-US",
+            {
+              month: "long",
+              year: "numeric",
+            },
+          );
+          const to = position.endDate
+            ? new Date(position.endDate).toLocaleDateString("en-US", {
+                month: "long",
+                year: "numeric",
+              })
+            : undefined;
+          const type = (() => {
+            switch (position.type) {
+              case "full-time":
+                return "Full-Time";
+              case "part-time":
+                return "Part-Time";
+              case "internship":
+                return "Internship";
+            }
+            return position.type;
+          })();
+
+          return (
+            <Company
+              key={position._key}
+              name={position.company}
+              image={position.logo}
+              from={from}
+              to={to}
+              position={position.position}
+              type={type}
+              description={position.description}
+              feats={position.highlights}
+            />
+          );
+        })}
+        {/* <Company
           name="Ipnos"
           image={imageIpnos}
           from="September 2023"
@@ -104,7 +150,7 @@ const Experience = () => {
             "Create new web applications using React.",
             "Apply Agile development practices.",
           ]}
-        />
+        /> */}
       </div>
     </HomeSection>
   );

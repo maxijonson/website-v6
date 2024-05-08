@@ -1,23 +1,24 @@
 import { toPlainText } from "next-sanity";
-import type { PostBody } from "../../sanity/groqd/selections/post-body";
 import { getHeadingId } from "./getHeadingId";
+import { blockHasChildren } from "./blockHasChildren";
+import type { ContentDetails } from "../../sanity/groqd/selections/content/content-details";
+import type { ContentBlockDetails } from "../../sanity/groqd/selections/content/content-block-details";
 
-export const getPostHeadings = (body: PostBody) => {
+export const getPostHeadings = (body: ContentDetails) => {
   return body
     .filter(
       (
         block,
-      ): block is PostBody[number] & {
-        _type: "block";
-        style: "h1" | "h2" | "h3";
+      ): block is ContentBlockDetails & {
+        style: "h2" | "h3";
       } =>
         block._type === "block" &&
-        ["h1", "h2", "h3"].includes(block.style || ""),
+        ["h2", "h3"].includes((block as ContentBlockDetails).style || ""),
     )
     .map((block) => {
       return {
         level: Number(block.style.replace("h", "")),
-        text: toPlainText(block),
+        text: blockHasChildren(block) ? toPlainText(block) : block._key,
         id: getHeadingId(block),
       };
     });

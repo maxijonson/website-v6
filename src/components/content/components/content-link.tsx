@@ -1,11 +1,11 @@
 import type { PortableTextMarkComponentProps } from "next-sanity";
-import type { PostBodyBlockLink } from "../../../../../../../sanity/groqd/selections/post-body";
 import Link from "next/link";
+import type { ContentBlockLink } from "../../../../sanity/groqd/selections/content/content-block-details";
 
-const PostBodyLink = (
-  props: PortableTextMarkComponentProps<PostBodyBlockLink>,
+const ContentLink = (
+  props: PortableTextMarkComponentProps<ContentBlockLink>,
 ) => {
-  if (!props.value) return props.children;
+  if (!props.value?.href) return props.children;
   const rel = !props.value.href.startsWith("/")
     ? "noreferrer noopener"
     : undefined;
@@ -16,4 +16,4 @@ const PostBodyLink = (
   );
 };
 
-export default PostBodyLink;
+export default ContentLink;

@@ -1,15 +1,15 @@
 import type { PortableTextTypeComponentProps } from "next-sanity";
-import type { PostBodyImage } from "../../../../../../../sanity/groqd/selections/post-body";
 import { getImageDimensions } from "@sanity/asset-utils";
 import { getImageBuilder } from "../../../../../../../sanity/utils/image";
 import Image from "next/image";
-import type { PortableClientComponentProps } from "../post-body";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import type { ContentImageDetails } from "../../../../../../../sanity/groqd/selections/content/content-image-details";
+import type { PortableClientComponentProps } from "@/utils/stripPortableTextFunctions";
 
 const PostBodyImage = (
   props: PortableClientComponentProps<
-    PortableTextTypeComponentProps<PostBodyImage>
+    PortableTextTypeComponentProps<ContentImageDetails>
   >,
 ) => {
   const { value, isInline } = props;

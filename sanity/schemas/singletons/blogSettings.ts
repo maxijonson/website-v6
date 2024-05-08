@@ -11,7 +11,7 @@ export default defineType({
       title: "Caption",
       type: "string",
       validation: (rule) => [
-        rule.required().error("Required"),
+        rule.required(),
         rule.min(3).max(100).error("Must be between 3 and 100 characters"),
       ],
     }),
@@ -20,12 +20,12 @@ export default defineType({
       title: "Description",
       type: "string",
       validation: (rule) => [
-        rule.required().error("Required"),
+        rule.required(),
         rule.min(3).max(250).error("Must be between 3 and 250 characters"),
       ],
     }),
     makeImageField("image", {
-      validation: (rule) => [rule.required().error("Required")],
+      validation: (rule) => [rule.required()],
     }),
   ],
 });
