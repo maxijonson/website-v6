@@ -12,6 +12,9 @@ import {
   getRecentPostsByCategoryId,
   getRecentPostsByTagId,
 } from "../../../../../../sanity/queries/post/getRecentPosts";
+import { getBaseURL } from "@/utils/getBaseURL";
+import StructuredData from "@/components/structured-data/structured-data";
+import { capitalize } from "@/utils/capitalize";
 
 const BlogCategoryPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   if (slug.length !== 1) notFound();
@@ -37,35 +40,62 @@ const BlogCategoryPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   );
 
   return (
-    <BlogOverview
-      hero={{
-        banner: urlForImage(category.image),
-        bannerAlt: category.image.alt,
-        bannerBlur: category.image.metadata.lqip,
-        title: category.caption,
-        description: category.description,
-        breadcrumbs: [
-          { label: "Blog", href: "/blog" },
-          { label: category.name, href: `/blog/${category.slug}` },
-        ],
-        categories: tags.map((tag) => ({
-          label: tag.name,
-          href: `/blog/${tag.slug}`,
-        })),
-      }}
-      sections={[
-        {
-          title: "Latest Posts",
-          posts: latestPosts,
-          variant: "featured",
-        },
-        ...latestPostsByTag.map(({ tag, posts }) => ({
-          title: tag.name,
-          posts,
-          url: `/blog/${tag.slug}`,
-        })),
-      ]}
-    />
+    <>
+      <BlogOverview
+        hero={{
+          banner: urlForImage(category.image),
+          bannerAlt: category.image.alt,
+          bannerBlur: category.image.metadata.lqip,
+          title: category.caption,
+          description: category.description,
+          breadcrumbs: [
+            { label: "Blog", href: "/blog" },
+            { label: category.name, href: `/blog/${category.slug}` },
+          ],
+          categories: tags.map((tag) => ({
+            label: tag.name,
+            href: `/blog/${tag.slug}`,
+          })),
+        }}
+        sections={[
+          {
+            title: "Latest Posts",
+            posts: latestPosts,
+            variant: "featured",
+          },
+          ...latestPostsByTag.map(({ tag, posts }) => ({
+            title: tag.name,
+            posts,
+            url: `/blog/${tag.slug}`,
+          })),
+        ]}
+      />
+      <StructuredData
+        data={{
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Home",
+              item: new URL(getBaseURL()).toString(),
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: "Blog",
+              item: new URL("/blog", getBaseURL()).toString(),
+            },
+            {
+              "@type": "ListItem",
+              position: 3,
+              name: capitalize(category.name),
+              item: new URL(`/blog/${category.slug}`, getBaseURL()).toString(),
+            },
+          ],
+        }}
+      />
+    </>
   );
 };
 

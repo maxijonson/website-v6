@@ -7,6 +7,8 @@ import Intro from "./components/intro/intro";
 import Projects from "./components/projects/projects";
 import Skills from "./components/skills/skills";
 import { getHomePage } from "../../sanity/queries/pages/home-page/getHomePage";
+import TristanStructuredData from "@/components/structured-data/tristan-structured-data";
+import StructuredData from "@/components/structured-data/structured-data";
 
 const Home = async () => {
   const { sections } = await getHomePage();
@@ -33,6 +35,14 @@ const Home = async () => {
         })}
       </main>
       <Footer />
+      <StructuredData
+        data={{
+          "@type": "WebSite",
+          url: "https://www.chintristan.io/",
+          name: "Tristan Chin's Personal Website",
+        }}
+      />
+      <TristanStructuredData />
     </div>
   );
 };

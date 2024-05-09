@@ -15,6 +15,11 @@ import { Separator } from "@/components/ui/separator";
 import BlogPostShare from "./blog-post-share";
 import BlogPostComments from "./blog-post-comments";
 import { Suspense } from "react";
+import TristanStructuredData, {
+  tristanSchema,
+} from "@/components/structured-data/tristan-structured-data";
+import StructuredData from "@/components/structured-data/structured-data";
+import { getBaseURL } from "@/utils/getBaseURL";
 
 const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   if (slug.length !== 1) notFound();
@@ -81,6 +86,50 @@ const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
         </Suspense>
       </main>
       <Footer />
+      <TristanStructuredData />
+      <StructuredData
+        data={{
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Home",
+              item: new URL(getBaseURL()).toString(),
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: "Blog",
+              item: new URL("/blog", getBaseURL()).toString(),
+            },
+            {
+              "@type": "ListItem",
+              position: 3,
+              name: post.title,
+              item: new URL(`/blog/${post.slug}`, getBaseURL()).toString(),
+            },
+          ],
+        }}
+      />
+      <StructuredData
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.title,
+          image: urlForImage(post.image),
+          thumbnailUrl: urlForImage(post.image),
+          datePublished: post.createdAt,
+          dateModified: post.updatedAt,
+          description: post.summary,
+          url: new URL(`/blog/${post.slug}`, getBaseURL()).toString(),
+          author: [tristanSchema],
+          mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": new URL(`/blog/${post.slug}`, getBaseURL()).toString(),
+          },
+        }}
+      />
     </div>
   );
 };
