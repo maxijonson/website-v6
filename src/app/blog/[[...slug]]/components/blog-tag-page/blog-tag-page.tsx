@@ -59,7 +59,7 @@ const BlogTagPage = async ({ params: { slug = [] } }: BlogPageProps) => {
             {
               "@type": "ListItem",
               position: 3,
-              name: capitalize(tag.category.name),
+              name: tag.category.name,
               item: new URL(
                 `/blog/${tag.category.slug}`,
                 getBaseURL(),
