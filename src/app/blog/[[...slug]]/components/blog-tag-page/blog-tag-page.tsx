@@ -1,5 +1,4 @@
 import StructuredData from "@/components/structured-data/structured-data";
-import { capitalize } from "@/utils/capitalize";
 import { getBaseURL } from "@/utils/getBaseURL";
 import { notFound } from "next/navigation";
 import { postDetailsSelection } from "../../../../../../sanity/groqd/selections/post-details";
@@ -69,7 +68,7 @@ const BlogTagPage = async ({ params: { slug = [] } }: BlogPageProps) => {
             {
               "@type": "ListItem",
               position: 4,
-              name: capitalize(tag.name),
+              name: tag.name,
               item: new URL(`/blog/${tag.slug}`, getBaseURL()).toString(),
             },
           ],

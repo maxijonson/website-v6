@@ -14,7 +14,6 @@ import {
 } from "../../../../../../sanity/queries/post/getRecentPosts";
 import { getBaseURL } from "@/utils/getBaseURL";
 import StructuredData from "@/components/structured-data/structured-data";
-import { capitalize } from "@/utils/capitalize";
 
 const BlogCategoryPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   if (slug.length !== 1) notFound();
@@ -89,7 +88,7 @@ const BlogCategoryPage = async ({ params: { slug = [] } }: BlogPageProps) => {
             {
               "@type": "ListItem",
               position: 3,
-              name: capitalize(category.name),
+              name: category.name,
               item: new URL(`/blog/${category.slug}`, getBaseURL()).toString(),
             },
           ],
