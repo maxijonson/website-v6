@@ -4,17 +4,18 @@ import { promisify } from "util";
 
 export const asyncExec = promisify(exec);
 
+export const sanityExportsDir = path.join(
+  __dirname,
+  "..",
+  "..",
+  "sanity",
+  "exports",
+);
+
 export const exportDataset = async (
   project = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "",
   dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "",
-  exportPath = path.join(
-    __dirname,
-    "..",
-    "..",
-    "sanity",
-    "exports",
-    `${project}-${dataset}.tar.gz`,
-  ),
+  exportPath = path.join(sanityExportsDir, `${project}-${dataset}.tar.gz`),
 ) => {
   if (!project || !dataset) {
     throw new Error("[exportDataset]: Missing project or dataset.");

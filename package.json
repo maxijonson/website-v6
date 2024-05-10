@@ -13,6 +13,7 @@
     "sanity:schemas": "npm run sanity:typegen && ts-to-zod sanity/sanity.types.ts sanity/sanity.schemas.ts && prettier --write sanity/sanity.schemas.ts --log-level silent && tsx scripts/sanity/sanity-schemas.ts",
     "sanity:export": "npm run dotenvx -- tsx scripts/sanity/sanity-export.ts",
     "sanity:branch": "npm run dotenvx -- tsx scripts/sanity/sanity-branch.ts",
+    "sanity:merge": "npm run dotenvx -- tsx scripts/sanity/sanity-merge.ts",
     "groq:fmt": "tsx scripts/groq/groqfmt.ts",
     "groq:preview": "npm run dotenvx -- tsx scripts/groq/groq-preview.ts",
     "tunnel": "npm run dotenvx -- tsx scripts/tunnel.ts --env-file=.env.local"
@@ -67,6 +68,7 @@
     "@ngrok/ngrok": "^1.2.0",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/typography": "^0.5.13",
+    "@types/inquirer": "^9.0.7",
     "@types/node": "^20.12.7",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
@@ -80,6 +82,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "groqfmt-nodejs": "^1.0.0",
+    "inquirer": "^9.2.20",
     "postcss": "^8.4.38",
     "prettier": "3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.14",
