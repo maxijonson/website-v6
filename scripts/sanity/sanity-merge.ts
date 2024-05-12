@@ -1,10 +1,9 @@
 import { Command, Option } from "commander";
-import inquirer from "inquirer";
-import { exportDataset, sanityExportsDir } from "./utils";
 import path from "path";
 import slugify from "slugify";
+import { exportDataset, promptConfirm, sanityExportsDir } from "./utils";
 
-const program = new Command("Sanity Export");
+const program = new Command("Sanity Merge");
 
 program
   .addOption(
@@ -44,18 +43,9 @@ const { fromProject, fromDataset, toProject, toDataset } = program.opts<{
 
 (async () => {
   // Confirm the merge operation
-  const { confirm } = await inquirer.prompt([
-    {
-      type: "confirm",
-      name: "confirm",
-      message: `Merge ${fromProject}/${fromDataset} dataset into ${toProject}/${toDataset} dataset?`,
-    },
-  ]);
-
-  if (!confirm) {
-    console.info("Merge operation cancelled.");
-    return;
-  }
+  await promptConfirm(
+    `Are you sure you want to merge ${fromProject}/${fromDataset} dataset into ${toProject}/${toDataset} dataset?`,
+  );
 
   console.info(`Exporting ${fromProject}/${fromDataset} dataset...`);
   const source = await exportDataset(fromProject, fromDataset);

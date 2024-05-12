@@ -1,4 +1,5 @@
 import { exec } from "child_process";
+import inquirer from "inquirer";
 import path from "path";
 import { promisify } from "util";
 
@@ -55,11 +56,36 @@ export const importDataset = async (
   );
 };
 
-export const createDevProject = async (projectName: string) => {
+export const createProject = async (
+  projectName: string,
+  datasetName = "production",
+) => {
   const result = await asyncExec(
-    `sanity init --create-project "${projectName}" --dataset "dev" --visibility public --bare`,
+    `sanity init --create-project "${projectName}" --dataset "${datasetName}" --visibility public --bare`,
   );
   const projectId = result.stdout.match(/Project ID: (\w+)/)?.[1];
 
-  return { name: projectName, id: projectId, dataset: "dev" };
+  return { name: projectName, id: projectId, dataset: datasetName };
+};
+
+export const getGitBranch = async () => {
+  const { stdout } = await asyncExec("git branch --show-current");
+  return stdout.trim();
+};
+
+export const promptConfirm = async (message: string, abortOnFalse = true) => {
+  const { confirm } = await inquirer.prompt([
+    {
+      type: "confirm",
+      name: "confirm",
+      message,
+    },
+  ]);
+
+  if (abortOnFalse && !confirm) {
+    console.info("Operation cancelled.");
+    process.exit(0);
+  }
+
+  return confirm;
 };
