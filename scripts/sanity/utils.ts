@@ -34,18 +34,38 @@ export const exportDataset = async (
   return { exportPath, dataset, project };
 };
 
+export const createDataset = async (project: string, dataset: string) => {
+  await asyncExec(`sanity dataset create ${dataset} --visibility public`, {
+    env: {
+      ...process.env,
+      NEXT_PUBLIC_SANITY_PROJECT_ID: project,
+    },
+  });
+};
+
 export const importDataset = async (
   importPath: string,
   project = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "",
   dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "",
+  options: { replace?: boolean | "force" } = {},
 ) => {
+  const { replace = true } = options;
   if (!project || !dataset) {
     throw new Error("[importDataset]: Missing project or dataset.");
   }
-  const replace = dataset === "production" ? "" : "--replace";
+  const replaceOption = (() => {
+    if (!replace) return "";
+    if (replace === "force") return "--replace";
+    return dataset === "production" ? "" : "--replace";
+  })();
+
+  const projectDatasets = await getProjectDatasets(project);
+  if (!projectDatasets.includes(dataset)) {
+    await createDataset(project, dataset);
+  }
 
   await asyncExec(
-    `sanity dataset import "${importPath}" ${dataset} ${replace}`,
+    `sanity dataset import "${importPath}" ${dataset} ${replaceOption}`,
     {
       env: {
         ...process.env,
@@ -54,6 +74,39 @@ export const importDataset = async (
       },
     },
   );
+};
+
+export const getProjectDatasets = async (project: string) => {
+  const { stdout } = await asyncExec(`sanity dataset list`, {
+    env: {
+      ...process.env,
+      NEXT_PUBLIC_SANITY_PROJECT_ID: project,
+    },
+  });
+
+  return stdout
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+};
+
+export const deleteDataset = async (
+  project: string,
+  dataset: string,
+  confirm = true,
+) => {
+  if (confirm) {
+    await promptConfirm(
+      `Are you sure you want to delete ${project}/${dataset} dataset?`,
+    );
+  }
+
+  await asyncExec(`sanity dataset delete ${dataset} --force`, {
+    env: {
+      ...process.env,
+      NEXT_PUBLIC_SANITY_PROJECT_ID: project,
+    },
+  });
 };
 
 export const createProject = async (

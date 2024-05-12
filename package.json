@@ -13,7 +13,8 @@
     "sanity:schemas": "npm run sanity:typegen && ts-to-zod sanity/sanity.types.ts sanity/sanity.schemas.ts && prettier --write sanity/sanity.schemas.ts --log-level silent && tsx scripts/sanity/sanity-schemas.ts",
     "sanity:export": "npm run dotenvx -- tsx scripts/sanity/sanity-export.ts",
     "sanity:branch": "npm run dotenvx -- tsx scripts/sanity/sanity-branch.ts",
-    "sanity:merge": "npm run dotenvx -- tsx scripts/sanity/sanity-merge.ts",
+    "sanity:copy": "npm run dotenvx -- tsx scripts/sanity/sanity-copy.ts",
+    "sanity:copy:production-to-staging": "npm run dotenvx -- tsx scripts/sanity/sanity-copy.ts --from-dataset production --to-dataset staging",
     "groq:fmt": "tsx scripts/groq/groqfmt.ts",
     "groq:preview": "npm run dotenvx -- tsx scripts/groq/groq-preview.ts",
     "tunnel": "npm run dotenvx -- tsx scripts/tunnel.ts --env-file=.env.local"
