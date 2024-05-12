@@ -12,7 +12,7 @@ import { getImageDimensions } from "@sanity/asset-utils";
 type HeroProps = HomeHeroDetails;
 
 const Hero = ({ title, subtitle, image, logos }: HeroProps) => {
-  const profileImage = getImageBuilder(image).size(160, 160).quality(100);
+  const profileImage = getImageBuilder(image).size(480, 480).quality(100);
   const { aspectRatio, ...profileImageDimensions } = getImageDimensions(image);
 
   return (
