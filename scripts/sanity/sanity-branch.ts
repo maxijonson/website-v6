@@ -114,6 +114,6 @@ import {
   console.info(webhookProjection);
 
   console.info("\n\nChange your environment variables to the following:");
-  console.info(`NEXT_PUBLIC_SANITY_PROJECT_ID=${project.id}`);
-  console.info(`NEXT_PUBLIC_SANITY_DATASET=${project.dataset}`);
+  console.info(`NEXT_PUBLIC_SANITY_PROJECT_ID="${project.id}"`);
+  console.info(`NEXT_PUBLIC_SANITY_DATASET="${project.dataset}"`);
 })();

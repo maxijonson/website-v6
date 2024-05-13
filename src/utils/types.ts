@@ -13,8 +13,8 @@ export interface RouteCatchAllHandler<
 > {
   canHandle: (pageProps: PageProps<TParams>) => boolean | Promise<boolean>;
   render: (pageProps: PageProps<TParams>) => JSX.Element | Promise<JSX.Element>;
-  generateStaticParams: GenerateStaticParams<TParentParams, TParams>;
-  generateMetadata: GenerateMetadata<TParams>;
+  generateStaticParams?: GenerateStaticParams<TParentParams, TParams>;
+  generateMetadata?: GenerateMetadata<TParams>;
 }
 
 export type GenerateStaticParams<

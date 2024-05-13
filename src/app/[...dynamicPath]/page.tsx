@@ -5,29 +5,21 @@ import type {
   RouteCatchAllHandler,
 } from "@/utils/types";
 import { notFound } from "next/navigation";
-import { blogHomeHandler } from "./route-handlers/blogHomeHandler";
-import { blogCategoryHandler } from "./route-handlers/blogCategoryHandler";
-import { blogTagHandler } from "./route-handlers/blogTagHandler";
-import { blogPostHandler } from "./route-handlers/blogPostHandler";
+import { studioHandler } from "./route-handlers/studioHandler";
 
-export type BlogPageParams = {
-  slug?: string[];
+export type DynamicPageParams = {
+  dynamicPath: [string, ...string[]];
 };
 
-export type BlogPageProps = PageProps<BlogPageParams>;
+export type DynamicPageProps = PageProps<DynamicPageParams>;
 
-export type BlogRouteHandler = RouteCatchAllHandler<BlogPageParams>;
+export type DynamicRouteHandler = RouteCatchAllHandler<DynamicPageParams>;
 
-const handlers: BlogRouteHandler[] = [
-  blogHomeHandler,
-  blogPostHandler,
-  blogCategoryHandler,
-  blogTagHandler,
-];
+const handlers: DynamicRouteHandler[] = [studioHandler];
 
 export const generateStaticParams: GenerateStaticParams<
   Record<string, never>,
-  BlogPageParams
+  DynamicPageParams
 > = async (parentProps) => {
   const generatedParams = await Promise.all(
     handlers.map(
@@ -37,7 +29,7 @@ export const generateStaticParams: GenerateStaticParams<
   return generatedParams.flat();
 };
 
-export const generateMetadata: GenerateMetadata<BlogPageParams> = async (
+export const generateMetadata: GenerateMetadata<DynamicPageParams> = async (
   pageProps,
   parent,
 ) => {
@@ -49,7 +41,7 @@ export const generateMetadata: GenerateMetadata<BlogPageParams> = async (
   return {};
 };
 
-const BlogPage = async (props: BlogPageProps) => {
+const DynamicPage = async (props: DynamicPageProps) => {
   for (const handler of handlers) {
     if (await handler.canHandle(props)) {
       return handler.render(props);
@@ -58,4 +50,4 @@ const BlogPage = async (props: BlogPageProps) => {
   notFound();
 };
 
-export default BlogPage;
+export default DynamicPage;

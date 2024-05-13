@@ -3,18 +3,17 @@
  */
 
 import { visionTool } from "@sanity/vision";
-import { defineConfig, type Config } from "sanity";
-import { RobotIcon, RocketIcon } from "@sanity/icons";
+import { type Config } from "sanity";
 import { structureTool } from "sanity/structure";
 
-import { apiVersion, projectId } from "./sanity/env";
-import { schema } from "./sanity/schema";
 import { codeInput } from "@sanity/code-input";
-import { structure } from "./sanity/desk/structure";
 import { colorInput } from "@sanity/color-input";
 import { iconify } from "sanity-plugin-iconify";
+import { structure } from "./sanity/desk/structure";
+import { apiVersion, projectId } from "./sanity/env";
+import { schema } from "./sanity/schema";
 
-const configBase = {
+export const configBase = {
   projectId,
   schema,
   plugins: [
@@ -27,22 +26,3 @@ const configBase = {
     iconify(),
   ],
 } satisfies Partial<Config>;
-
-export default defineConfig([
-  {
-    ...configBase,
-    dataset: "production",
-    basePath: "/studio",
-    name: "production",
-    title: "Production",
-    icon: RocketIcon,
-  },
-  {
-    ...configBase,
-    dataset: "staging",
-    basePath: "/studio-staging",
-    name: "staging",
-    title: "Staging",
-    icon: RobotIcon,
-  },
-]);
