@@ -10,7 +10,7 @@ import { postDetailsSelection } from "../../groqd/selections/post-details";
 import { findPostByGiscusTerm } from "../../queries/post/findPostByGiscusTerm";
 import { makeImageField } from "../../utils/field-generators/make-image-field";
 import { isUniqueSlug } from "../../utils/isUniqueSlug";
-import postContent from "../fields/post-content";
+import content from "../fields/content";
 import author from "./author";
 import tag from "./tag";
 
@@ -125,7 +125,7 @@ export default defineType({
     defineField({
       name: "body",
       title: "Body",
-      type: postContent.name,
+      type: content.name,
       validation: (rule) => [rule.required()],
       group: groupDetails.name,
     }),

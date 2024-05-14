@@ -111,10 +111,10 @@ export type HomeCredentials = {
     title: string;
     type: string;
     issuer: string;
-    issueDate: string;
     startDate?: string;
+    issueDate: string;
     location?: string;
-    image?: {
+    image: {
       asset?: {
         _ref: string;
         _type: "reference";
@@ -176,7 +176,7 @@ export type HomeExperience = {
     startDate: string;
     endDate?: string;
     type: "full-time" | "part-time" | "internship";
-    logo?: {
+    logo: {
       asset?: {
         _ref: string;
         _type: "reference";
@@ -454,7 +454,7 @@ export type BlogSettings = {
   };
 };
 
-export type PostContent = Array<
+export type Content = Array<
   | {
       children?: Array<{
         marks?: Array<string>;
@@ -583,7 +583,7 @@ export type Post = {
     alt: string;
     _type: "image";
   };
-  body: PostContent;
+  body: Content;
 };
 
 export type Author = {

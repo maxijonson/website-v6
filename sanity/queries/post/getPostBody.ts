@@ -6,7 +6,7 @@ export const getPostBody = async (postId: string) =>
   runQuery(
     makeGetPostByIdQuery()
       .slice(0)
-      .grabOne$("body", makeContentDetailsQuery("body").schema),
+      .grabOne$("body", makeContentDetailsQuery("").schema),
     { postId },
     { next: { tags: [postId] } },
   );

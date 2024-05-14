@@ -3,14 +3,14 @@
  */
 
 import { visionTool } from "@sanity/vision";
-import { type Config } from "sanity";
+import { defineConfig, type Config } from "sanity";
 import { structureTool } from "sanity/structure";
 
 import { codeInput } from "@sanity/code-input";
 import { colorInput } from "@sanity/color-input";
 import { iconify } from "sanity-plugin-iconify";
 import { structure } from "./sanity/desk/structure";
-import { apiVersion, projectId } from "./sanity/env";
+import { apiVersion, dataset, projectId } from "./sanity/env";
 import { schema } from "./sanity/schema";
 
 export const configBase = {
@@ -26,3 +26,9 @@ export const configBase = {
     iconify(),
   ],
 } satisfies Partial<Config>;
+
+// Note: This is only used for CLI commands. It isn't configured with the intent of being used in the app.
+export default defineConfig({
+  ...configBase,
+  dataset,
+});

@@ -1,5 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import postContent from "../../fields/post-content";
+import content from "../../fields/content";
 import { makeImageField } from "../../../utils/field-generators/make-image-field";
 import { StarIcon } from "@sanity/icons";
 
@@ -18,7 +18,7 @@ export default defineType({
     defineField({
       name: "content",
       title: "Content",
-      type: postContent.name,
+      type: content.name,
       validation: (rule) => [rule.required()],
     }),
     defineField({

@@ -2,7 +2,7 @@ import { defineType, defineArrayMember } from "sanity";
 
 export default defineType({
   title: "Post Content",
-  name: "postContent",
+  name: "content",
   type: "array",
   of: [
     defineArrayMember({

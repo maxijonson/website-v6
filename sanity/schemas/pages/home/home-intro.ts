@@ -1,6 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { makeImageField } from "../../../utils/field-generators/make-image-field";
-import postContent from "../../fields/post-content";
+import content from "../../fields/content";
 import { InfoOutlineIcon } from "@sanity/icons";
 
 export default defineType({
@@ -18,7 +18,7 @@ export default defineType({
     defineField({
       name: "content",
       title: "Content",
-      type: postContent.name,
+      type: content.name,
       validation: (rule) => [rule.required()],
     }),
     makeImageField("image", {
