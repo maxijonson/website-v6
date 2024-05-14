@@ -116,4 +116,8 @@ import {
   console.info("\n\nChange your environment variables to the following:");
   console.info(`NEXT_PUBLIC_SANITY_PROJECT_ID="${project.id}"`);
   console.info(`NEXT_PUBLIC_SANITY_DATASET="${project.dataset}"`);
+
+  console.info(
+    `\n\nTo access the Studio, create a new Developer token here and set your SANITY_API_WRITE_TOKEN to it: https://www.sanity.io/manage/personal/project/${project.id}/api`,
+  );
 })();
