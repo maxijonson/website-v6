@@ -12,6 +12,7 @@ import { iconify } from "sanity-plugin-iconify";
 import { structure } from "./sanity/desk/structure";
 import { apiVersion, dataset, projectId } from "./sanity/env";
 import { schema } from "./sanity/schema";
+import { presentationTool } from "sanity/presentation";
 
 export const configBase = {
   projectId,
@@ -21,6 +22,13 @@ export const configBase = {
       structure,
     }),
     visionTool({ defaultApiVersion: apiVersion }),
+    presentationTool({
+      previewUrl: {
+        draftMode: {
+          enable: "/api/sanity/draft",
+        },
+      },
+    }),
     codeInput(),
     colorInput(),
     iconify(),
