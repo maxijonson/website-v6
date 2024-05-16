@@ -1,9 +1,12 @@
-import { studioClient } from "../../../../sanity/utils/studio-client";
+import { client } from "../../../../sanity/client";
+import { readToken } from "../../../../sanity/token";
 import StudioPage from "../components/studio-page/studio-page";
 import type { DynamicRouteHandler } from "../page";
 
+const clientWithToken = client.withConfig({ token: readToken });
+
 const findDatasetByPath = async (path: string) => {
-  const datasets = await studioClient.datasets.list();
+  const datasets = await clientWithToken.datasets.list();
   return datasets.find((dataset) => {
     if (dataset.name === "production") {
       return path === "studio";

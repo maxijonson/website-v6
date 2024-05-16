@@ -115,7 +115,6 @@ export default defineType({
       description:
         "Unique term used to create discussions on Github with Giscus. Shouldn't be changed after creation, otherwise a new discussion will be created and the old one will be lost.",
       validation: (rule) => [rule.required(), rule.custom(validateGiscusTerm)],
-      readOnly: (ctx) => Boolean(ctx.document?._createdAt),
       group: groupDetails.name,
     }),
     makeImageField("image", {
