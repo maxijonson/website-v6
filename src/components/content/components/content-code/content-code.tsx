@@ -42,16 +42,16 @@ const ContentCode = (
   return (
     <div className="relative">
       {props.value.filename ? (
-        <div
+        <ul
           className={clsx(
             scrollbarClassName,
-            "relative -mb-2 flex gap-[1px] overflow-x-auto overflow-y-hidden rounded-t bg-stone-200",
+            "relative -mb-2 flex gap-[1px] overflow-x-auto overflow-y-hidden rounded-t bg-stone-200 p-0",
             "dark:bg-stone-800 dark:text-stone-200",
           )}
         >
-          <div
+          <li
             className={clsx(
-              "flex min-w-48 max-w-48 items-center gap-1 truncate text-ellipsis text-nowrap bg-stone-100 p-2 text-xs text-stone-950",
+              "m-0 flex min-w-48 max-w-48 items-center gap-1 truncate text-ellipsis text-nowrap bg-stone-100 p-2 text-xs text-stone-950",
               "dark:bg-stone-900 dark:text-stone-50",
             )}
             title={props.value.filename}
@@ -63,8 +63,8 @@ const ContentCode = (
               {props.value.filename}
             </div>
             <ContentCodeCopy code={props.value.code} />
-          </div>
-        </div>
+          </li>
+        </ul>
       ) : (
         <div className="absolute right-0 top-0 z-10 p-1">
           <ContentCodeCopy code={props.value.code} />
