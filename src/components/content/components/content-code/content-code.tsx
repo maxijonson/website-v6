@@ -1,18 +1,18 @@
 "use client";
-import "./content-code.scss";
+import { scrollbarClassName } from "@/tailwind/classes";
+import type { PortableClientComponentProps } from "@/utils/stripPortableTextFunctions";
+import clsx from "clsx";
 import type { PortableTextTypeComponentProps } from "next-sanity";
+import { BsFileEarmark } from "react-icons/bs";
+import { SiGnubash, SiJson, SiReact, SiTypescript } from "react-icons/si";
 import { Refractor, registerLanguage } from "react-refractor";
-import tsx from "refractor/lang/tsx";
-import ts from "refractor/lang/typescript";
 import sh from "refractor/lang/bash";
 import json from "refractor/lang/json";
+import tsx from "refractor/lang/tsx";
+import ts from "refractor/lang/typescript";
 import type { ContentCodeDetails } from "../../../../../sanity/groqd/selections/content/content-code-details";
-import { scrollbarClassName } from "@/tailwind/classes";
-import { SiReact, SiTypescript, SiGnubash, SiJson } from "react-icons/si";
-import { BsFileEarmark, BsCopy } from "react-icons/bs";
-import clsx from "clsx";
-import { Button } from "@/components/ui/button";
-import type { PortableClientComponentProps } from "@/utils/stripPortableTextFunctions";
+import ContentCodeCopy from "./content-code-copy";
+import "./content-code.scss";
 
 const ContentCode = (
   props: PortableClientComponentProps<
@@ -41,7 +41,7 @@ const ContentCode = (
   }
   return (
     <div className="relative">
-      {props.value.filename && (
+      {props.value.filename ? (
         <div
           className={clsx(
             scrollbarClassName,
@@ -62,19 +62,12 @@ const ContentCode = (
             <div className="grow truncate text-ellipsis">
               {props.value.filename}
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="flex size-6 items-center justify-center p-0"
-              title="Copy Code"
-              onClick={() => {
-                if (!navigator.clipboard || !props.value.code) return;
-                navigator.clipboard.writeText(props.value.code);
-              }}
-            >
-              <BsCopy className="size-4" />
-            </Button>
+            <ContentCodeCopy code={props.value.code} />
           </div>
+        </div>
+      ) : (
+        <div className="absolute right-0 top-0 z-10 p-1">
+          <ContentCodeCopy code={props.value.code} />
         </div>
       )}
       <Refractor
