@@ -114,9 +114,6 @@ export type HomeCredentials = {
       }
     | ({
         _key: string;
-      } & Code)
-    | ({
-        _key: string;
       } & CodeGroup)
   >;
   credentials: Array<{
@@ -177,9 +174,6 @@ export type HomeExperience = {
         _type: "image";
         _key: string;
       }
-    | ({
-        _key: string;
-      } & Code)
     | ({
         _key: string;
       } & CodeGroup)
@@ -243,9 +237,6 @@ export type HomeProjects = {
         _type: "image";
         _key: string;
       }
-    | ({
-        _key: string;
-      } & Code)
     | ({
         _key: string;
       } & CodeGroup)
@@ -312,9 +303,6 @@ export type HomeSkills = {
       }
     | ({
         _key: string;
-      } & Code)
-    | ({
-        _key: string;
       } & CodeGroup)
   >;
   skillGroups: Array<{
@@ -375,9 +363,6 @@ export type HomeIntro = {
         _type: "image";
         _key: string;
       }
-    | ({
-        _key: string;
-      } & Code)
     | ({
         _key: string;
       } & CodeGroup)
@@ -510,9 +495,6 @@ export type Content = Array<
       _type: "image";
       _key: string;
     }
-  | ({
-      _key: string;
-    } & Code)
   | ({
       _key: string;
     } & CodeGroup)

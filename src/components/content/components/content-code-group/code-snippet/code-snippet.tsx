@@ -1,13 +1,12 @@
+"use client";
 import { scrollbarClassName } from "@/tailwind/classes";
 import clsx from "clsx";
-import { Refractor, registerLanguage } from "react-refractor";
-import "./code-snippet.module.scss";
-import tsx from "refractor/lang/tsx";
-import ts from "refractor/lang/typescript";
-import sh from "refractor/lang/bash";
-import json from "refractor/lang/json";
-import CodeCopyButton from "../code-copy-button";
+import { useEffect, useState } from "react";
+import { Refractor, hasLanguage, registerLanguage } from "react-refractor";
 import type { ContentCodeGroupDetails } from "../../../../../../sanity/groqd/selections/content/content-code-group-details";
+import CodeCopyButton from "../code-copy-button";
+import "./code-snippet.scss";
+import type { Syntax } from "refractor";
 
 export type CodeSnippetProps = NonNullable<
   ContentCodeGroupDetails["snippets"]
@@ -25,20 +24,49 @@ const CodeSnippet = ({
   codeClassName,
   allowCopy = true,
 }: CodeSnippetProps) => {
-  switch (language) {
-    case "tsx":
-      registerLanguage(tsx);
-      break;
-    case "typescript":
-      registerLanguage(ts);
-      break;
-    case "sh":
-      registerLanguage(sh);
-      break;
-    case "json":
-      registerLanguage(json);
-      break;
-  }
+  const [finalLanguage, setFinalLanguage] = useState(
+    hasLanguage(language) ? language : "text",
+  );
+
+  useEffect(() => {
+    if (language === "text" || hasLanguage(language)) return;
+    (async () => {
+      try {
+        let syntax: Syntax | null = null;
+        switch (language) {
+          case "tsx":
+            const { default: tsx } = await import("refractor/lang/tsx");
+            syntax = tsx;
+            break;
+          case "typescript":
+            const { default: typescript } = await import(
+              "refractor/lang/typescript"
+            );
+            syntax = typescript;
+            break;
+          case "sh":
+            const { default: shell } = await import(
+              "refractor/lang/shell-session"
+            );
+            syntax = shell;
+            break;
+          case "json":
+            const { default: json } = await import("refractor/lang/json");
+            syntax = json;
+            break;
+        }
+        if (syntax) {
+          registerLanguage(syntax);
+          setFinalLanguage(language);
+        } else {
+          console.error("[CodeSnippet] Language not supported:", language);
+        }
+      } catch (error) {
+        console.error("[CodeSnippet] Failed to load language:", language);
+        console.error(error);
+      }
+    })();
+  }, [language]);
 
   return (
     <div className={clsx("relative", className)}>
@@ -49,10 +77,10 @@ const CodeSnippet = ({
       )}
       <Refractor
         className={clsx(scrollbarClassName, codeClassName)}
-        language={language}
+        language={finalLanguage}
         value={code ?? ""}
         markers={highlightedLines}
-        plainText={language === "text"}
+        plainText={finalLanguage === "text"}
       />
     </div>
   );

@@ -1,5 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import codeGroup, { codeOptions } from "./code-group";
+import codeGroup from "./code-group";
 
 export default defineType({
   title: "Post Content",
@@ -54,10 +54,6 @@ export default defineType({
           validation: (rule) => [rule.required()],
         }),
       ],
-    }),
-    defineArrayMember({
-      type: "code",
-      options: codeOptions,
     }),
     defineArrayMember({
       type: codeGroup.name,

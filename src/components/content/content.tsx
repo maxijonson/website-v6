@@ -3,11 +3,9 @@ import {
   type PortableTextProps,
   type PortableTextReactComponents,
 } from "@portabletext/react";
+import ContentCodeGroup from "./components/content-code-group/content-code-group";
 import ContentImage from "./components/content-image";
 import ContentLink from "./components/content-link";
-import ContentCode from "./components/content-code/content-code";
-import { stripPortableTextFunctions } from "@/utils/stripPortableTextFunctions";
-import ContentCodeGroup from "./components/content-code-group/content-code-group";
 
 export interface ContentProps extends PortableTextProps {
   className?: string;
@@ -15,7 +13,6 @@ export interface ContentProps extends PortableTextProps {
 
 const defaultContentComponents: Partial<PortableTextReactComponents> = {
   types: {
-    code: stripPortableTextFunctions(ContentCode),
     codeGroup: ContentCodeGroup,
     image: ContentImage,
   },

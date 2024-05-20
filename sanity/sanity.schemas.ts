@@ -278,11 +278,6 @@ export const homeCredentialsSchema = z.object({
         .object({
           _key: z.string(),
         })
-        .and(codeSchema),
-      z
-        .object({
-          _key: z.string(),
-        })
         .and(codeGroupSchema),
     ]),
   ),
@@ -367,11 +362,6 @@ export const homeExperienceSchema = z.object({
         _type: z.literal("image"),
         _key: z.string(),
       }),
-      z
-        .object({
-          _key: z.string(),
-        })
-        .and(codeSchema),
       z
         .object({
           _key: z.string(),
@@ -469,11 +459,6 @@ export const homeProjectsSchema = z.object({
         .object({
           _key: z.string(),
         })
-        .and(codeSchema),
-      z
-        .object({
-          _key: z.string(),
-        })
         .and(codeGroupSchema),
     ]),
   ),
@@ -562,11 +547,6 @@ export const homeSkillsSchema = z.object({
         _type: z.literal("image"),
         _key: z.string(),
       }),
-      z
-        .object({
-          _key: z.string(),
-        })
-        .and(codeSchema),
       z
         .object({
           _key: z.string(),
@@ -667,11 +647,6 @@ export const homeIntroSchema = z.object({
         .object({
           _key: z.string(),
         })
-        .and(codeSchema),
-      z
-        .object({
-          _key: z.string(),
-        })
         .and(codeGroupSchema),
     ]),
   ),
@@ -751,11 +726,6 @@ export const contentSchema = z.array(
       _type: z.literal("image"),
       _key: z.string(),
     }),
-    z
-      .object({
-        _key: z.string(),
-      })
-      .and(codeSchema),
     z
       .object({
         _key: z.string(),
