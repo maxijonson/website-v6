@@ -19,7 +19,7 @@ const ContentCode = (
     PortableTextTypeComponentProps<ContentCodeDetails>
   >,
 ) => {
-  const language = props.value.language ?? "sh";
+  const language = props.value.language ?? "text";
   let Icon = BsFileEarmark;
   switch (props.value.language) {
     case "tsx":

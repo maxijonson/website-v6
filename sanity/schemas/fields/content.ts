@@ -1,4 +1,5 @@
-import { defineType, defineArrayMember } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
+import codeGroup, { codeOptions } from "./code-group";
 
 export default defineType({
   title: "Post Content",
@@ -46,32 +47,20 @@ export default defineType({
       type: "image",
       options: { hotspot: true },
       fields: [
-        {
+        defineField({
           name: "alt",
           type: "string",
           title: "Alternative Text",
           validation: (rule) => [rule.required()],
-        },
+        }),
       ],
     }),
     defineArrayMember({
       type: "code",
-      options: {
-        language: "typescript",
-        withFilename: true,
-        languageAlternatives: [
-          /**
-           * If you add more languages, you'll need to:
-           * 1. Add the language below
-           * 2. Update the post-body-code.tsx to register the language
-           */
-          { title: "TypeScript", value: "typescript" },
-          { title: "TSX", value: "tsx" },
-          { title: "Shell", value: "sh" },
-          { title: "JSON", value: "json" },
-          { title: "Text", value: "text" },
-        ],
-      },
+      options: codeOptions,
+    }),
+    defineArrayMember({
+      type: codeGroup.name,
     }),
   ],
 });

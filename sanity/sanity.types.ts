@@ -68,6 +68,15 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type CodeGroup = {
+  _type: "codeGroup";
+  snippets?: Array<
+    {
+      _key: string;
+    } & Code
+  >;
+};
+
 export type HomeCredentials = {
   _type: "homeCredentials";
   title: string;
@@ -106,6 +115,9 @@ export type HomeCredentials = {
     | ({
         _key: string;
       } & Code)
+    | ({
+        _key: string;
+      } & CodeGroup)
   >;
   credentials: Array<{
     title: string;
@@ -168,6 +180,9 @@ export type HomeExperience = {
     | ({
         _key: string;
       } & Code)
+    | ({
+        _key: string;
+      } & CodeGroup)
   >;
   positions: Array<{
     company: string;
@@ -231,6 +246,9 @@ export type HomeProjects = {
     | ({
         _key: string;
       } & Code)
+    | ({
+        _key: string;
+      } & CodeGroup)
   >;
   projects: Array<{
     title: string;
@@ -295,6 +313,9 @@ export type HomeSkills = {
     | ({
         _key: string;
       } & Code)
+    | ({
+        _key: string;
+      } & CodeGroup)
   >;
   skillGroups: Array<{
     name: string;
@@ -357,6 +378,9 @@ export type HomeIntro = {
     | ({
         _key: string;
       } & Code)
+    | ({
+        _key: string;
+      } & CodeGroup)
   >;
   image: {
     asset?: {
@@ -489,6 +513,9 @@ export type Content = Array<
   | ({
       _key: string;
     } & Code)
+  | ({
+      _key: string;
+    } & CodeGroup)
 >;
 
 export type Tag = {
