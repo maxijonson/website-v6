@@ -15,11 +15,18 @@ export const getPostHeadings = (body: ContentDetails) => {
         block._type === "block" &&
         ["h2", "h3"].includes((block as ContentBlockDetails).style || ""),
     )
-    .map((block) => {
-      return {
+    .reduce<{ level: number; text: string; id: string }[]>((acc, block) => {
+      const heading = {
         level: Number(block.style.replace("h", "")),
         text: blockHasChildren(block) ? toPlainText(block) : block._key,
         id: getHeadingId(block),
       };
-    });
+
+      const idExists = acc.some((h) => h.id === heading.id);
+      if (idExists) {
+        heading.id = `${heading.id}-${block._key}`;
+      }
+
+      return [...acc, heading];
+    }, []);
 };
