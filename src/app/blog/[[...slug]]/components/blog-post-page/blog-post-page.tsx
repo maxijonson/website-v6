@@ -20,6 +20,7 @@ import TristanStructuredData, {
 } from "@/components/structured-data/tristan-structured-data";
 import StructuredData from "@/components/structured-data/structured-data";
 import { getBaseURL } from "@/utils/getBaseURL";
+import BlogPostCoffee from "./blog-post-coffee";
 
 const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   if (slug.length !== 1) notFound();
@@ -57,6 +58,9 @@ const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
             <div className="w-full p-4">
               <PostBody body={body} />
               <div className={cn("flex flex-col pt-8", "md:hidden")}>
+                <div className="mx-auto mb-3">
+                  <BlogPostCoffee />
+                </div>
                 <BlogPostShare slug={post.slug} title={post.title} />
               </div>
             </div>
@@ -68,6 +72,9 @@ const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
                   <p className="font-bold uppercase">Table of Contents</p>
                   <TableOfContents headings={headings} />
                   <Separator className="my-3" />
+                  <div className="mx-auto mb-3">
+                    <BlogPostCoffee />
+                  </div>
                   <BlogPostShare slug={post.slug} title={post.title} />
                 </div>
               </aside>
