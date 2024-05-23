@@ -1,7 +1,6 @@
+import { getCodeIcon } from "@/utils/getCodeIcon";
 import clsx from "clsx";
 import type React from "react";
-import { BsBraces, BsFileEarmark, BsTerminal } from "react-icons/bs";
-import { SiReact, SiTypescript } from "react-icons/si";
 import type { ContentCodeGroupDetails } from "../../../../../sanity/groqd/selections/content/content-code-group-details";
 
 export type CodeTabProps = React.ComponentPropsWithoutRef<"li"> & {
@@ -11,22 +10,7 @@ export type CodeTabProps = React.ComponentPropsWithoutRef<"li"> & {
 };
 
 const CodeTab = ({ language = "text", ...props }: CodeTabProps) => {
-  let Icon = BsFileEarmark;
-
-  switch (language) {
-    case "tsx":
-      Icon = SiReact;
-      break;
-    case "typescript":
-      Icon = SiTypescript;
-      break;
-    case "sh":
-      Icon = BsTerminal;
-      break;
-    case "json":
-      Icon = BsBraces;
-      break;
-  }
+  const Icon = getCodeIcon(language);
 
   return (
     <li

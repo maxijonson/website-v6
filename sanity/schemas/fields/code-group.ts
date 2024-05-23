@@ -1,5 +1,9 @@
+import { codeSchema } from "@sanity/code-input";
 import { CodeIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import CodeGroupPreview, {
+  CodeGroupListItemPreview,
+} from "../../desk/components/code-group-preview/code-group-preview";
 
 export default defineType({
   type: "object",
@@ -13,6 +17,22 @@ export default defineType({
       of: [
         defineArrayMember({
           type: "code",
+          components: {
+            ...codeSchema.components,
+            preview: CodeGroupListItemPreview,
+          },
+          preview: {
+            select: codeSchema.preview?.select,
+            prepare: (value) => {
+              return {
+                ...codeSchema.preview?.prepare?.(value),
+                media: undefined,
+                title:
+                  value.filename || (value.language || "unknown").toUpperCase(),
+                selection: value,
+              };
+            },
+          },
           options: {
             language: "text",
             withFilename: true,
@@ -33,4 +53,12 @@ export default defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      snippets: "snippets",
+    },
+  },
+  components: {
+    preview: CodeGroupPreview,
+  },
 });

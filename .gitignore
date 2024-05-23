@@ -43,3 +43,5 @@ sandbox.groq
 
 sanity/exports/*
 !sanity/exports/.gitkeep
+
+**/*.swp
