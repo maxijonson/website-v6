@@ -8,7 +8,7 @@ export const makeContentDetailsQuery = <F extends string>(fieldName: F) => {
   return q(fieldName)
     .filter()
     .select({
-      [qType("block")]: contentBlockDetailsSelection,
+      [qType("contentBlock")]: contentBlockDetailsSelection,
       [qType("image")]: contentImageDetailsSelection,
       [qType("codeGroup")]: contentCodeGroupDetailsSelection,
       default: {

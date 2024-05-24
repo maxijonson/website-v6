@@ -5,44 +5,19 @@ import {
   type Selection,
   type TypeFromSelection,
 } from "groqd";
+import { contentBlockSchema } from "../../../sanity.schemas";
 
-const contentBlockLinkMarkDefSchema = q.object({
-  href: q.string().optional(),
-  _type: q.literal("link"),
-  _key: q.string(),
-});
+const contentBlockLinkSchema = contentBlockSchema.shape.markDefs
+  .unwrap()
+  .element.and(q.object({ _type: q.literal("link") }));
 
 export const contentBlockDetailsSelection = nullToUndefined({
   _key: q.string(),
-  _type: q.literal("block"),
-  children: q
-    .array(
-      q.object({
-        marks: q.array(q.string()).optional(),
-        text: q.string().optional(),
-        _type: q.literal("span"),
-        _key: q.string(),
-      }),
-    )
-    .optional(),
-  style: q
-    .union([
-      q.literal("normal"),
-      q.literal("h2"),
-      q.literal("h3"),
-      q.literal("h4"),
-      q.literal("h5"),
-      q.literal("h6"),
-      q.literal("blockquote"),
-    ])
-    .optional(),
-  listItem: q.literal("bullet").optional(),
-  markDefs: q.array(contentBlockLinkMarkDefSchema).optional(),
-  level: q.number().optional(),
+  ...contentBlockSchema.shape,
 }) satisfies Selection;
 
 export type ContentBlockDetails = TypeFromSelection<
   typeof contentBlockDetailsSelection
 >;
 
-export type ContentBlockLink = InferType<typeof contentBlockLinkMarkDefSchema>;
+export type ContentBlockLink = InferType<typeof contentBlockLinkSchema>;

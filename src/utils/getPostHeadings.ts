@@ -12,7 +12,7 @@ export const getPostHeadings = (body: ContentDetails) => {
       ): block is ContentBlockDetails & {
         style: "h2" | "h3";
       } =>
-        block._type === "block" &&
+        block._type === "contentBlock" &&
         ["h2", "h3"].includes((block as ContentBlockDetails).style || ""),
     )
     .reduce<{ level: number; text: string; id: string }[]>((acc, block) => {

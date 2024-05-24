@@ -13,7 +13,7 @@ const PostBodyHeading: PortableTextBlockComponent = (props) => {
   const block = props.value;
   const Heading = block.style || "h2";
   const isValid = isValidHeading(Heading);
-  if (!isValid || block._type !== "block") {
+  if (!isValid || block._type !== "contentBlock") {
     console.error("Encountered invalid heading:", Heading, props);
     return <h2>{props.children}</h2>;
   }

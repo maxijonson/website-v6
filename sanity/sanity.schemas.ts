@@ -41,6 +41,49 @@ export const geopointSchema = z.object({
   alt: z.number().optional(),
 });
 
+export const contentBlockSchema = z.object({
+  _type: z.literal("contentBlock"),
+  children: z
+    .array(
+      z.object({
+        marks: z.array(z.string()).optional(),
+        text: z.string().optional(),
+        _type: z.literal("span"),
+        _key: z.string(),
+      }),
+    )
+    .optional(),
+  style: z
+    .union([
+      z.literal("normal"),
+      z.literal("h2"),
+      z.literal("h3"),
+      z.literal("h4"),
+      z.literal("h5"),
+      z.literal("h6"),
+      z.literal("blockquote"),
+    ])
+    .optional(),
+  listItem: z.literal("bullet").optional(),
+  markDefs: z
+    .array(
+      z.union([
+        z.object({
+          href: z.string().optional(),
+          _type: z.literal("link"),
+          _key: z.string(),
+        }),
+        z.object({
+          stub: z.string().optional(),
+          _type: z.literal("stub"),
+          _key: z.string(),
+        }),
+      ]),
+    )
+    .optional(),
+  level: z.number().optional(),
+});
+
 export const codeSchema = z.object({
   _type: z.literal("code"),
   language: z.string().optional(),
@@ -224,42 +267,11 @@ export const homeCredentialsSchema = z.object({
   title: z.string(),
   content: z.array(
     z.union([
-      z.object({
-        children: z
-          .array(
-            z.object({
-              marks: z.array(z.string()).optional(),
-              text: z.string().optional(),
-              _type: z.literal("span"),
-              _key: z.string(),
-            }),
-          )
-          .optional(),
-        style: z
-          .union([
-            z.literal("normal"),
-            z.literal("h2"),
-            z.literal("h3"),
-            z.literal("h4"),
-            z.literal("h5"),
-            z.literal("h6"),
-            z.literal("blockquote"),
-          ])
-          .optional(),
-        listItem: z.literal("bullet").optional(),
-        markDefs: z
-          .array(
-            z.object({
-              href: z.string().optional(),
-              _type: z.literal("link"),
-              _key: z.string(),
-            }),
-          )
-          .optional(),
-        level: z.number().optional(),
-        _type: z.literal("block"),
-        _key: z.string(),
-      }),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(contentBlockSchema),
       z.object({
         asset: z
           .object({
@@ -312,42 +324,11 @@ export const homeExperienceSchema = z.object({
   title: z.string(),
   content: z.array(
     z.union([
-      z.object({
-        children: z
-          .array(
-            z.object({
-              marks: z.array(z.string()).optional(),
-              text: z.string().optional(),
-              _type: z.literal("span"),
-              _key: z.string(),
-            }),
-          )
-          .optional(),
-        style: z
-          .union([
-            z.literal("normal"),
-            z.literal("h2"),
-            z.literal("h3"),
-            z.literal("h4"),
-            z.literal("h5"),
-            z.literal("h6"),
-            z.literal("blockquote"),
-          ])
-          .optional(),
-        listItem: z.literal("bullet").optional(),
-        markDefs: z
-          .array(
-            z.object({
-              href: z.string().optional(),
-              _type: z.literal("link"),
-              _key: z.string(),
-            }),
-          )
-          .optional(),
-        level: z.number().optional(),
-        _type: z.literal("block"),
-        _key: z.string(),
-      }),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(contentBlockSchema),
       z.object({
         asset: z
           .object({
@@ -405,42 +386,11 @@ export const homeProjectsSchema = z.object({
   title: z.string(),
   content: z.array(
     z.union([
-      z.object({
-        children: z
-          .array(
-            z.object({
-              marks: z.array(z.string()).optional(),
-              text: z.string().optional(),
-              _type: z.literal("span"),
-              _key: z.string(),
-            }),
-          )
-          .optional(),
-        style: z
-          .union([
-            z.literal("normal"),
-            z.literal("h2"),
-            z.literal("h3"),
-            z.literal("h4"),
-            z.literal("h5"),
-            z.literal("h6"),
-            z.literal("blockquote"),
-          ])
-          .optional(),
-        listItem: z.literal("bullet").optional(),
-        markDefs: z
-          .array(
-            z.object({
-              href: z.string().optional(),
-              _type: z.literal("link"),
-              _key: z.string(),
-            }),
-          )
-          .optional(),
-        level: z.number().optional(),
-        _type: z.literal("block"),
-        _key: z.string(),
-      }),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(contentBlockSchema),
       z.object({
         asset: z
           .object({
@@ -497,42 +447,11 @@ export const homeSkillsSchema = z.object({
   title: z.string(),
   content: z.array(
     z.union([
-      z.object({
-        children: z
-          .array(
-            z.object({
-              marks: z.array(z.string()).optional(),
-              text: z.string().optional(),
-              _type: z.literal("span"),
-              _key: z.string(),
-            }),
-          )
-          .optional(),
-        style: z
-          .union([
-            z.literal("normal"),
-            z.literal("h2"),
-            z.literal("h3"),
-            z.literal("h4"),
-            z.literal("h5"),
-            z.literal("h6"),
-            z.literal("blockquote"),
-          ])
-          .optional(),
-        listItem: z.literal("bullet").optional(),
-        markDefs: z
-          .array(
-            z.object({
-              href: z.string().optional(),
-              _type: z.literal("link"),
-              _key: z.string(),
-            }),
-          )
-          .optional(),
-        level: z.number().optional(),
-        _type: z.literal("block"),
-        _key: z.string(),
-      }),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(contentBlockSchema),
       z.object({
         asset: z
           .object({
@@ -593,42 +512,11 @@ export const homeIntroSchema = z.object({
   title: z.string(),
   content: z.array(
     z.union([
-      z.object({
-        children: z
-          .array(
-            z.object({
-              marks: z.array(z.string()).optional(),
-              text: z.string().optional(),
-              _type: z.literal("span"),
-              _key: z.string(),
-            }),
-          )
-          .optional(),
-        style: z
-          .union([
-            z.literal("normal"),
-            z.literal("h2"),
-            z.literal("h3"),
-            z.literal("h4"),
-            z.literal("h5"),
-            z.literal("h6"),
-            z.literal("blockquote"),
-          ])
-          .optional(),
-        listItem: z.literal("bullet").optional(),
-        markDefs: z
-          .array(
-            z.object({
-              href: z.string().optional(),
-              _type: z.literal("link"),
-              _key: z.string(),
-            }),
-          )
-          .optional(),
-        level: z.number().optional(),
-        _type: z.literal("block"),
-        _key: z.string(),
-      }),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(contentBlockSchema),
       z.object({
         asset: z
           .object({
@@ -676,42 +564,11 @@ export const colorSchema = z.object({
 
 export const contentSchema = z.array(
   z.union([
-    z.object({
-      children: z
-        .array(
-          z.object({
-            marks: z.array(z.string()).optional(),
-            text: z.string().optional(),
-            _type: z.literal("span"),
-            _key: z.string(),
-          }),
-        )
-        .optional(),
-      style: z
-        .union([
-          z.literal("normal"),
-          z.literal("h2"),
-          z.literal("h3"),
-          z.literal("h4"),
-          z.literal("h5"),
-          z.literal("h6"),
-          z.literal("blockquote"),
-        ])
-        .optional(),
-      listItem: z.literal("bullet").optional(),
-      markDefs: z
-        .array(
-          z.object({
-            href: z.string().optional(),
-            _type: z.literal("link"),
-            _key: z.string(),
-          }),
-        )
-        .optional(),
-      level: z.number().optional(),
-      _type: z.literal("block"),
-      _key: z.string(),
-    }),
+    z
+      .object({
+        _key: z.string(),
+      })
+      .and(contentBlockSchema),
     z.object({
       asset: z
         .object({

@@ -23,7 +23,10 @@ const { project, dataset } = program.opts<{
 
 (async () => {
   try {
-    await exportDataset(project, dataset);
+    const exported = await exportDataset(project, dataset);
+    console.info(
+      `Exported ${exported.project}/${exported.dataset} to ${exported.exportPath}`,
+    );
   } catch (e) {
     console.error(e instanceof Error ? e.message : e);
   }

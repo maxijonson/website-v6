@@ -68,6 +68,31 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type ContentBlock = {
+  _type: "contentBlock";
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+  listItem?: "bullet";
+  markDefs?: Array<
+    | {
+        href?: string;
+        _type: "link";
+        _key: string;
+      }
+    | {
+        stub?: string;
+        _type: "stub";
+        _key: string;
+      }
+  >;
+  level?: number;
+};
+
 export type CodeGroup = {
   _type: "codeGroup";
   snippets?: Array<
@@ -81,24 +106,9 @@ export type HomeCredentials = {
   _type: "homeCredentials";
   title: string;
   content: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?: "normal" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-        listItem?: "bullet";
-        markDefs?: Array<{
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
+    | ({
         _key: string;
-      }
+      } & ContentBlock)
     | {
         asset?: {
           _ref: string;
@@ -143,24 +153,9 @@ export type HomeExperience = {
   _type: "homeExperience";
   title: string;
   content: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?: "normal" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-        listItem?: "bullet";
-        markDefs?: Array<{
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
+    | ({
         _key: string;
-      }
+      } & ContentBlock)
     | {
         asset?: {
           _ref: string;
@@ -206,24 +201,9 @@ export type HomeProjects = {
   _type: "homeProjects";
   title: string;
   content: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?: "normal" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-        listItem?: "bullet";
-        markDefs?: Array<{
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
+    | ({
         _key: string;
-      }
+      } & ContentBlock)
     | {
         asset?: {
           _ref: string;
@@ -270,24 +250,9 @@ export type HomeSkills = {
   _type: "homeSkills";
   title: string;
   content: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?: "normal" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-        listItem?: "bullet";
-        markDefs?: Array<{
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
+    | ({
         _key: string;
-      }
+      } & ContentBlock)
     | {
         asset?: {
           _ref: string;
@@ -332,24 +297,9 @@ export type HomeIntro = {
   _type: "homeIntro";
   title: string;
   content: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?: "normal" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-        listItem?: "bullet";
-        markDefs?: Array<{
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
+    | ({
         _key: string;
-      }
+      } & ContentBlock)
     | {
         asset?: {
           _ref: string;
@@ -464,24 +414,9 @@ export type BlogSettings = {
 };
 
 export type Content = Array<
-  | {
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "normal" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet";
-      markDefs?: Array<{
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
+  | ({
       _key: string;
-    }
+    } & ContentBlock)
   | {
       asset?: {
         _ref: string;

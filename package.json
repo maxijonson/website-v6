@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "npm run lint && next build",
     "start": "next start",
-    "lint": "next lint --max-warnings=0 && prettier --check .",
+    "lint": "next lint --max-warnings=0 && prettier --check . && tsc --noEmit",
     "format": "prettier --write .",
     "dotenvx": "dotenvx run -f .env.local -f .env --overload --quiet --",
     "sanity:typegen": "sanity schema extract --path './sanity/generated/.sanity-generated.schema.json' --enforce-required-fields --workspace=staging && sanity typegen generate && prettier --write sanity/sanity.types.ts --log-level silent",
