@@ -8,6 +8,8 @@ const ContentImage = (
   props: PortableTextTypeComponentProps<ContentImageDetails>,
 ) => {
   const { value, isInline } = props;
+  if (!value?.asset) return null;
+
   const { aspectRatio, ...imageDimensions } = getImageDimensions(value);
   const imageBuilder = getImageBuilder(value);
 
@@ -16,8 +18,8 @@ const ContentImage = (
       {...imageDimensions}
       src={imageBuilder.auto("format").url()}
       alt={value.alt || "Content Image"}
-      placeholder="blur"
-      blurDataURL={value.metadata.lqip}
+      placeholder={value.metadata?.lqip ? "blur" : "empty"}
+      blurDataURL={value.metadata?.lqip || undefined}
       sizes="
               (max-width: 768px) 100vw,
               (max-width: 1200px) 50vw,

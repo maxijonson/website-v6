@@ -1,11 +1,11 @@
 "use client";
 import { useCodeLanguage } from "@/hooks/use-code-language";
 import { scrollbarClassName } from "@/tailwind/classes";
-import clsx from "clsx";
 import { Refractor } from "react-refractor";
 import type { ContentCodeGroupDetails } from "../../../../../../sanity/groqd/selections/content/content-code-group-details";
 import CodeCopyButton from "../code-copy-button";
 import "./code-snippet.scss";
+import { cn } from "@/lib/utils";
 
 export type CodeSnippetProps = NonNullable<
   ContentCodeGroupDetails["snippets"]
@@ -26,14 +26,14 @@ const CodeSnippet = ({
   const finalLanguage = useCodeLanguage(language);
 
   return (
-    <div className={clsx("relative", className)}>
+    <div className={cn("relative", className)}>
       {allowCopy && (
         <div className="absolute right-0 top-0 z-10 p-1">
           <CodeCopyButton code={code} />
         </div>
       )}
       <Refractor
-        className={clsx(scrollbarClassName, codeClassName)}
+        className={cn(scrollbarClassName, codeClassName)}
         language={finalLanguage}
         value={code ?? ""}
         markers={highlightedLines}

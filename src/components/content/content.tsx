@@ -6,6 +6,7 @@ import {
 import ContentCodeGroup from "./components/content-code-group/content-code-group";
 import ContentImage from "./components/content-image";
 import ContentLink from "./components/content-link";
+import ContentAlert from "./components/content-alert";
 
 export interface ContentProps extends PortableTextProps {
   className?: string;
@@ -15,6 +16,7 @@ const defaultContentComponents: Partial<PortableTextReactComponents> = {
   types: {
     codeGroup: ContentCodeGroup,
     contentImage: ContentImage,
+    contentAlert: ContentAlert,
   },
   marks: {
     link: ContentLink,

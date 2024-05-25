@@ -1,15 +1,16 @@
 import Content from "@/components/content/content";
+import { cn } from "@/lib/utils";
 import { type PortableTextReactComponents } from "next-sanity";
 import type { ContentDetails } from "../../../../../../sanity/groqd/selections/content/content-details";
 import PostBodyHeading from "./components/post-body-heading";
 import PostBodyImage from "./components/post-body-image";
-import { stripPortableTextFunctions } from "@/utils/stripPortableTextFunctions";
 
 export interface PostBodyProps {
   body: ContentDetails;
+  className?: string;
 }
 
-const components: Partial<PortableTextReactComponents> = {
+export const postBodyComponents: Partial<PortableTextReactComponents> = {
   block: {
     h1: PostBodyHeading,
     h2: PostBodyHeading,
@@ -19,16 +20,16 @@ const components: Partial<PortableTextReactComponents> = {
     h6: PostBodyHeading,
   },
   types: {
-    image: stripPortableTextFunctions(PostBodyImage),
+    contentImage: PostBodyImage,
   },
 };
 
-const PostBody = ({ body }: PostBodyProps) => {
+const PostBody = ({ body, className }: PostBodyProps) => {
   return (
     <Content
-      className="prose prose-stone mx-auto dark:prose-invert"
+      className={cn("prose prose-stone mx-auto dark:prose-invert", className)}
       value={body}
-      components={components}
+      components={postBodyComponents}
     />
   );
 };

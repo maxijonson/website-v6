@@ -1,9 +1,8 @@
 import { codeSchema } from "@sanity/code-input";
 import { CodeIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
-import CodeGroupPreview, {
-  CodeGroupListItemPreview,
-} from "../../desk/components/code-group-preview/code-group-preview";
+import CodeGroupPreview from "../../desk/components/code-group-preview/code-group-preview";
+import { CodeGroupListItemPreview } from "../../desk/components/code-group-preview/code-group-list-item-preview";
 
 export default defineType({
   type: "object",

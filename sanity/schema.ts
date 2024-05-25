@@ -1,5 +1,4 @@
 import { type SchemaTypeDefinition } from "sanity";
-
 import author from "./schemas/documents/author";
 import category from "./schemas/documents/category";
 import post from "./schemas/documents/post";
@@ -10,6 +9,7 @@ import blogSettings from "./schemas/singletons/blogSettings";
 import codeGroup from "./schemas/fields/code-group";
 import contentBlock from "./schemas/fields/content-block";
 import contentImage from "./schemas/fields/content-image";
+import contentAlert from "./schemas/fields/content-alert";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -23,5 +23,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     codeGroup,
     contentBlock,
     contentImage,
+    contentAlert,
   ],
 };

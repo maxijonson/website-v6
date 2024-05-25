@@ -68,6 +68,56 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type ContentAlert = {
+  _type: "contentAlert";
+  variant: "default" | "info" | "success" | "warning" | "error";
+  title?: string;
+  icon?: Icon;
+  message: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "normal" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+        listItem?: "bullet";
+        markDefs?: Array<
+          | {
+              href?: string;
+              _type: "link";
+              _key: string;
+            }
+          | {
+              stub?: string;
+              _type: "stub";
+              _key: string;
+            }
+        >;
+        level?: number;
+        _type: "contentBlock";
+        _key: string;
+      }
+    | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string;
+        _type: "contentImage";
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & CodeGroup)
+  >;
+};
+
 export type ContentImage = {
   _type: "contentImage";
   asset?: {
@@ -128,6 +178,9 @@ export type HomeCredentials = {
     | ({
         _key: string;
       } & CodeGroup)
+    | ({
+        _key: string;
+      } & ContentAlert)
   >;
   credentials: Array<{
     title: string;
@@ -165,6 +218,9 @@ export type HomeExperience = {
     | ({
         _key: string;
       } & CodeGroup)
+    | ({
+        _key: string;
+      } & ContentAlert)
   >;
   positions: Array<{
     company: string;
@@ -203,6 +259,9 @@ export type HomeProjects = {
     | ({
         _key: string;
       } & CodeGroup)
+    | ({
+        _key: string;
+      } & ContentAlert)
   >;
   projects: Array<{
     title: string;
@@ -242,6 +301,9 @@ export type HomeSkills = {
     | ({
         _key: string;
       } & CodeGroup)
+    | ({
+        _key: string;
+      } & ContentAlert)
   >;
   skillGroups: Array<{
     name: string;
@@ -279,6 +341,9 @@ export type HomeIntro = {
     | ({
         _key: string;
       } & CodeGroup)
+    | ({
+        _key: string;
+      } & ContentAlert)
   >;
   image: {
     asset: {
@@ -386,6 +451,9 @@ export type Content = Array<
   | ({
       _key: string;
     } & CodeGroup)
+  | ({
+      _key: string;
+    } & ContentAlert)
 >;
 
 export type Tag = {

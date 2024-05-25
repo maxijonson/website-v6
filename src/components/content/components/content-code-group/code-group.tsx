@@ -4,8 +4,8 @@ import type { ContentCodeGroupDetails } from "../../../../../sanity/groqd/select
 import CodeSnippet from "./code-snippet/code-snippet";
 import CodeTab from "./code-tab";
 import CodeTabs from "./code-tabs";
-import clsx from "clsx";
 import CodeCopyButton from "./code-copy-button";
+import { cn } from "@/lib/utils";
 
 export interface CodeGroupProps {
   snippets: ContentCodeGroupDetails["snippets"];
@@ -23,10 +23,10 @@ const CodeGroup = ({ snippets = [] }: CodeGroupProps) => {
             title={snippet.filename}
             language={snippet.language}
             onClick={() => setActiveTab(i)}
-            className={clsx({
+            className={cn({
               "cursor-pointer": snippets.length > 1,
               "relative w-full max-w-none": snippets.length === 1,
-              [clsx("!bg-[#f5f2f0]", "dark:!bg-[#2d2d2d]")]: i === activeTab,
+              [cn("!bg-[#f5f2f0]", "dark:!bg-[#2d2d2d]")]: i === activeTab,
             })}
           >
             {snippet.filename || snippets.length === 1 ? (
@@ -51,7 +51,7 @@ const CodeGroup = ({ snippets = [] }: CodeGroupProps) => {
               key={i}
               {...snippet}
               codeClassName="rounded-none rounded-b"
-              className={clsx({
+              className={cn({
                 hidden: i !== activeTab,
               })}
               allowCopy={snippets.length > 1}

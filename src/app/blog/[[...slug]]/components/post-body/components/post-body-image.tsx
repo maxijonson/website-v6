@@ -1,18 +1,17 @@
-import type { PortableTextTypeComponentProps } from "next-sanity";
-import { getImageDimensions } from "@sanity/asset-utils";
-import { getImageBuilder } from "../../../../../../../sanity/utils/image";
-import Image from "next/image";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { getImageDimensions } from "@sanity/asset-utils";
+import type { PortableTextTypeComponentProps } from "next-sanity";
+import Image from "next/image";
 import type { ContentImageDetails } from "../../../../../../../sanity/groqd/selections/content/content-image-details";
-import type { PortableClientComponentProps } from "@/utils/stripPortableTextFunctions";
+import { getImageBuilder } from "../../../../../../../sanity/utils/image";
 
 const PostBodyImage = (
-  props: PortableClientComponentProps<
-    PortableTextTypeComponentProps<ContentImageDetails>
-  >,
+  props: PortableTextTypeComponentProps<ContentImageDetails>,
 ) => {
   const { value, isInline } = props;
+  if (!value?.asset) return null;
+
   const { width, height } = getImageDimensions(value);
   const imageBuilder = getImageBuilder(value);
 
@@ -24,8 +23,8 @@ const PostBodyImage = (
           alt={value.alt || "Post Body Image"}
           width={width}
           height={height}
-          placeholder="blur"
-          blurDataURL={value.metadata.lqip}
+          placeholder={value.metadata?.lqip ? "blur" : "empty"}
+          blurDataURL={value.metadata?.lqip || undefined}
           sizes="
               (max-width: 768px) 100vw,
               (max-width: 1200px) 50vw,
@@ -48,8 +47,8 @@ const PostBodyImage = (
               alt={value.alt || "Post Body Image"}
               width={width}
               height={height}
-              placeholder="blur"
-              blurDataURL={value.metadata.lqip}
+              placeholder={value.metadata?.lqip ? "blur" : "empty"}
+              blurDataURL={value.metadata?.lqip || undefined}
               sizes="
               (max-width: 768px) 100vw,
               80vw

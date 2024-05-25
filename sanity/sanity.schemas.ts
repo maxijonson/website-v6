@@ -41,6 +41,11 @@ export const geopointSchema = z.object({
   alt: z.number().optional(),
 });
 
+export const iconSchema = z.object({
+  _type: z.literal("icon"),
+  name: z.string().optional(),
+});
+
 export const sanityImageHotspotSchema = z.object({
   _type: z.literal("sanity.imageHotspot"),
   x: z.number().optional(),
@@ -55,6 +60,20 @@ export const sanityImageCropSchema = z.object({
   bottom: z.number().optional(),
   left: z.number().optional(),
   right: z.number().optional(),
+});
+
+export const contentImageSchema = z.object({
+  _type: z.literal("contentImage"),
+  asset: z
+    .object({
+      _ref: z.string(),
+      _type: z.literal("reference"),
+      _weak: z.boolean().optional(),
+    })
+    .optional(),
+  hotspot: sanityImageHotspotSchema.optional(),
+  crop: sanityImageCropSchema.optional(),
+  alt: z.string(),
 });
 
 export const contentBlockSchema = z.object({
@@ -106,11 +125,6 @@ export const codeSchema = z.object({
   filename: z.string().optional(),
   code: z.string().optional(),
   highlightedLines: z.array(z.number()).optional(),
-});
-
-export const iconSchema = z.object({
-  _type: z.literal("icon"),
-  name: z.string().optional(),
 });
 
 export const blogSettingsSchema = z.object({
@@ -243,20 +257,6 @@ export const sanityFileAssetSchema = z.object({
   source: sanityAssetSourceDataSchema.optional(),
 });
 
-export const contentImageSchema = z.object({
-  _type: z.literal("contentImage"),
-  asset: z
-    .object({
-      _ref: z.string(),
-      _type: z.literal("reference"),
-      _weak: z.boolean().optional(),
-    })
-    .optional(),
-  hotspot: sanityImageHotspotSchema.optional(),
-  crop: sanityImageCropSchema.optional(),
-  alt: z.string(),
-});
-
 export const codeGroupSchema = z.object({
   _type: z.literal("codeGroup"),
   snippets: z
@@ -268,6 +268,146 @@ export const codeGroupSchema = z.object({
         .and(codeSchema),
     )
     .optional(),
+});
+
+export const colorSchema = z.object({
+  _type: z.literal("color"),
+  hex: z.string().optional(),
+  alpha: z.number().optional(),
+  hsl: hslaColorSchema.optional(),
+  hsv: hsvaColorSchema.optional(),
+  rgb: rgbaColorSchema.optional(),
+});
+
+export const tagSchema = z.object({
+  _id: z.string(),
+  _type: z.literal("tag"),
+  _createdAt: z.string(),
+  _updatedAt: z.string(),
+  _rev: z.string(),
+  name: z.string(),
+  slug: slugSchema,
+  category: z.object({
+    _ref: z.string(),
+    _type: z.literal("reference"),
+    _weak: z.boolean().optional(),
+  }),
+  caption: z.string(),
+  description: z.string(),
+  keywords: z.array(z.string()).optional(),
+  image: z.object({
+    asset: z.object({
+      _ref: z.string(),
+      _type: z.literal("reference"),
+      _weak: z.boolean().optional(),
+    }),
+    hotspot: sanityImageHotspotSchema.optional(),
+    crop: sanityImageCropSchema.optional(),
+    alt: z.string(),
+    _type: z.literal("image"),
+  }),
+});
+
+export const sanityImageAssetSchema = z.object({
+  _id: z.string(),
+  _type: z.literal("sanity.imageAsset"),
+  _createdAt: z.string(),
+  _updatedAt: z.string(),
+  _rev: z.string(),
+  originalFilename: z.string().optional(),
+  label: z.string().optional(),
+  title: z.string().optional(),
+  description: z.string().optional(),
+  altText: z.string().optional(),
+  sha1hash: z.string().optional(),
+  extension: z.string().optional(),
+  mimeType: z.string().optional(),
+  size: z.number().optional(),
+  assetId: z.string().optional(),
+  uploadId: z.string().optional(),
+  path: z.string().optional(),
+  url: z.string().optional(),
+  metadata: sanityImageMetadataSchema.optional(),
+  source: sanityAssetSourceDataSchema.optional(),
+});
+
+export const contentAlertSchema = z.object({
+  _type: z.literal("contentAlert"),
+  variant: z.union([
+    z.literal("default"),
+    z.literal("info"),
+    z.literal("success"),
+    z.literal("warning"),
+    z.literal("error"),
+  ]),
+  title: z.string().optional(),
+  icon: iconSchema.optional(),
+  message: z.array(
+    z.union([
+      z.object({
+        children: z
+          .array(
+            z.object({
+              marks: z.array(z.string()).optional(),
+              text: z.string().optional(),
+              _type: z.literal("span"),
+              _key: z.string(),
+            }),
+          )
+          .optional(),
+        style: z
+          .union([
+            z.literal("normal"),
+            z.literal("h2"),
+            z.literal("h3"),
+            z.literal("h4"),
+            z.literal("h5"),
+            z.literal("h6"),
+            z.literal("blockquote"),
+          ])
+          .optional(),
+        listItem: z.literal("bullet").optional(),
+        markDefs: z
+          .array(
+            z.union([
+              z.object({
+                href: z.string().optional(),
+                _type: z.literal("link"),
+                _key: z.string(),
+              }),
+              z.object({
+                stub: z.string().optional(),
+                _type: z.literal("stub"),
+                _key: z.string(),
+              }),
+            ]),
+          )
+          .optional(),
+        level: z.number().optional(),
+        _type: z.literal("contentBlock"),
+        _key: z.string(),
+      }),
+      z.object({
+        asset: z
+          .object({
+            _ref: z.string(),
+            _type: z.literal("reference"),
+            _weak: z.boolean().optional(),
+          })
+          .optional(),
+        hotspot: sanityImageHotspotSchema.optional(),
+        crop: sanityImageCropSchema.optional(),
+        alt: z.string(),
+        _type: z.literal("contentImage"),
+        _key: z.string(),
+      }),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(codeGroupSchema),
+    ]),
+  ),
 });
 
 export const homeCredentialsSchema = z.object({
@@ -290,6 +430,11 @@ export const homeCredentialsSchema = z.object({
           _key: z.string(),
         })
         .and(codeGroupSchema),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(contentAlertSchema),
     ]),
   ),
   credentials: z.array(
@@ -336,6 +481,11 @@ export const homeExperienceSchema = z.object({
           _key: z.string(),
         })
         .and(codeGroupSchema),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(contentAlertSchema),
     ]),
   ),
   positions: z.array(
@@ -387,6 +537,11 @@ export const homeProjectsSchema = z.object({
           _key: z.string(),
         })
         .and(codeGroupSchema),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(contentAlertSchema),
     ]),
   ),
   projects: z.array(
@@ -437,6 +592,11 @@ export const homeSkillsSchema = z.object({
           _key: z.string(),
         })
         .and(codeGroupSchema),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(contentAlertSchema),
     ]),
   ),
   skillGroups: z.array(
@@ -491,6 +651,11 @@ export const homeIntroSchema = z.object({
           _key: z.string(),
         })
         .and(codeGroupSchema),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(contentAlertSchema),
     ]),
   ),
   image: z.object({
@@ -504,125 +669,6 @@ export const homeIntroSchema = z.object({
     alt: z.string(),
     _type: z.literal("image"),
   }),
-});
-
-export const colorSchema = z.object({
-  _type: z.literal("color"),
-  hex: z.string().optional(),
-  alpha: z.number().optional(),
-  hsl: hslaColorSchema.optional(),
-  hsv: hsvaColorSchema.optional(),
-  rgb: rgbaColorSchema.optional(),
-});
-
-export const contentSchema = z.array(
-  z.union([
-    z
-      .object({
-        _key: z.string(),
-      })
-      .and(contentBlockSchema),
-    z
-      .object({
-        _key: z.string(),
-      })
-      .and(contentImageSchema),
-    z
-      .object({
-        _key: z.string(),
-      })
-      .and(codeGroupSchema),
-  ]),
-);
-
-export const tagSchema = z.object({
-  _id: z.string(),
-  _type: z.literal("tag"),
-  _createdAt: z.string(),
-  _updatedAt: z.string(),
-  _rev: z.string(),
-  name: z.string(),
-  slug: slugSchema,
-  category: z.object({
-    _ref: z.string(),
-    _type: z.literal("reference"),
-    _weak: z.boolean().optional(),
-  }),
-  caption: z.string(),
-  description: z.string(),
-  keywords: z.array(z.string()).optional(),
-  image: z.object({
-    asset: z.object({
-      _ref: z.string(),
-      _type: z.literal("reference"),
-      _weak: z.boolean().optional(),
-    }),
-    hotspot: sanityImageHotspotSchema.optional(),
-    crop: sanityImageCropSchema.optional(),
-    alt: z.string(),
-    _type: z.literal("image"),
-  }),
-});
-
-export const postSchema = z.object({
-  _id: z.string(),
-  _type: z.literal("post"),
-  _createdAt: z.string(),
-  _updatedAt: z.string(),
-  _rev: z.string(),
-  title: z.string(),
-  summary: z.string(),
-  slug: slugSchema,
-  author: z.object({
-    _ref: z.string(),
-    _type: z.literal("reference"),
-    _weak: z.boolean().optional(),
-  }),
-  tags: z.array(
-    z.object({
-      _ref: z.string(),
-      _type: z.literal("reference"),
-      _weak: z.boolean().optional(),
-      _key: z.string(),
-    }),
-  ),
-  keywords: z.array(z.string()).optional(),
-  giscusTerm: z.string(),
-  image: z.object({
-    asset: z.object({
-      _ref: z.string(),
-      _type: z.literal("reference"),
-      _weak: z.boolean().optional(),
-    }),
-    hotspot: sanityImageHotspotSchema.optional(),
-    crop: sanityImageCropSchema.optional(),
-    alt: z.string(),
-    _type: z.literal("image"),
-  }),
-  body: contentSchema,
-});
-
-export const sanityImageAssetSchema = z.object({
-  _id: z.string(),
-  _type: z.literal("sanity.imageAsset"),
-  _createdAt: z.string(),
-  _updatedAt: z.string(),
-  _rev: z.string(),
-  originalFilename: z.string().optional(),
-  label: z.string().optional(),
-  title: z.string().optional(),
-  description: z.string().optional(),
-  altText: z.string().optional(),
-  sha1hash: z.string().optional(),
-  extension: z.string().optional(),
-  mimeType: z.string().optional(),
-  size: z.number().optional(),
-  assetId: z.string().optional(),
-  uploadId: z.string().optional(),
-  path: z.string().optional(),
-  url: z.string().optional(),
-  metadata: sanityImageMetadataSchema.optional(),
-  source: sanityAssetSourceDataSchema.optional(),
 });
 
 export const homeHeroSchema = z.object({
@@ -701,4 +747,67 @@ export const homePageSchema = z.object({
       ]),
     )
     .optional(),
+});
+
+export const contentSchema = z.array(
+  z.union([
+    z
+      .object({
+        _key: z.string(),
+      })
+      .and(contentBlockSchema),
+    z
+      .object({
+        _key: z.string(),
+      })
+      .and(contentImageSchema),
+    z
+      .object({
+        _key: z.string(),
+      })
+      .and(codeGroupSchema),
+    z
+      .object({
+        _key: z.string(),
+      })
+      .and(contentAlertSchema),
+  ]),
+);
+
+export const postSchema = z.object({
+  _id: z.string(),
+  _type: z.literal("post"),
+  _createdAt: z.string(),
+  _updatedAt: z.string(),
+  _rev: z.string(),
+  title: z.string(),
+  summary: z.string(),
+  slug: slugSchema,
+  author: z.object({
+    _ref: z.string(),
+    _type: z.literal("reference"),
+    _weak: z.boolean().optional(),
+  }),
+  tags: z.array(
+    z.object({
+      _ref: z.string(),
+      _type: z.literal("reference"),
+      _weak: z.boolean().optional(),
+      _key: z.string(),
+    }),
+  ),
+  keywords: z.array(z.string()).optional(),
+  giscusTerm: z.string(),
+  image: z.object({
+    asset: z.object({
+      _ref: z.string(),
+      _type: z.literal("reference"),
+      _weak: z.boolean().optional(),
+    }),
+    hotspot: sanityImageHotspotSchema.optional(),
+    crop: sanityImageCropSchema.optional(),
+    alt: z.string(),
+    _type: z.literal("image"),
+  }),
+  body: contentSchema,
 });
