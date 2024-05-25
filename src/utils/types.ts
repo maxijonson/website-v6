@@ -1,4 +1,4 @@
-import { q } from "groqd";
+import { q, type BaseQuery, type Selection, type z } from "groqd";
 import type { Metadata, ResolvingMetadata } from "next";
 
 export type RouteParams = Record<string, string | string[]>;
@@ -32,3 +32,6 @@ export type UnknownArrayQuery = typeof unknownArrayQuery;
 
 const entityQuery = q("").filter().slice(0);
 export type EntityQuery = typeof entityQuery;
+
+export type ConditionValue = Selection | BaseQuery<any> | [string, z.ZodType];
+export type ConditionRecord = Record<string, ConditionValue>;

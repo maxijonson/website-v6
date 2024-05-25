@@ -2,8 +2,13 @@ import { existsSync } from "fs";
 import fs from "fs/promises";
 import { format } from "groqfmt-nodejs";
 import path from "path";
-import { homePageDetailsSelection } from "../../sanity/groqd/selections/pages/home-page/home-page-details";
-import { makeGetHomePageQuery } from "../../sanity/queries/pages/home-page/getHomePage";
+import { makeGetPostByIdQuery } from "../../sanity/queries/post/getPostById";
+import { makeContentDetailsQuery } from "../../sanity/groqd/selections/content/content-details";
+import { q } from "groqd";
+import { qType } from "../../sanity/groqd/filters/type";
+import { contentBlockDetailsSelection } from "../../sanity/groqd/selections/content/content-block-details";
+import { contentCodeGroupDetailsSelection } from "../../sanity/groqd/selections/content/content-code-group-details";
+import { contentImageDetailsSelection } from "../../sanity/groqd/selections/content/content-image-details";
 
 (async () => {
   try {
@@ -17,9 +22,21 @@ import { makeGetHomePageQuery } from "../../sanity/queries/pages/home-page/getHo
       console.info("sandbox.groq created");
     }
 
-    const query = makeGetHomePageQuery()
-      .grab$(homePageDetailsSelection)
-      .slice(0);
+    const query = makeGetPostByIdQuery()
+      .slice(0)
+      .grabOne$("body", makeContentDetailsQuery("").schema)
+      .filter()
+      .select({
+        [qType("contentBlock")]: contentBlockDetailsSelection,
+        [qType("image")]: contentImageDetailsSelection,
+        [qType("codeGroup")]: contentCodeGroupDetailsSelection,
+        default: {
+          _key: q.string(),
+          _type: q
+            .string()
+            .transform((type) => `[ContentDetails] unknown (${type})`),
+        },
+      });
 
     const queryFormatted = format(query.query);
     await fs.writeFile(queryFile, queryFormatted, "utf-8");
