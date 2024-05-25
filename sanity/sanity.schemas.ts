@@ -41,6 +41,22 @@ export const geopointSchema = z.object({
   alt: z.number().optional(),
 });
 
+export const sanityImageHotspotSchema = z.object({
+  _type: z.literal("sanity.imageHotspot"),
+  x: z.number().optional(),
+  y: z.number().optional(),
+  height: z.number().optional(),
+  width: z.number().optional(),
+});
+
+export const sanityImageCropSchema = z.object({
+  _type: z.literal("sanity.imageCrop"),
+  top: z.number().optional(),
+  bottom: z.number().optional(),
+  left: z.number().optional(),
+  right: z.number().optional(),
+});
+
 export const contentBlockSchema = z.object({
   _type: z.literal("contentBlock"),
   children: z
@@ -92,22 +108,6 @@ export const codeSchema = z.object({
   highlightedLines: z.array(z.number()).optional(),
 });
 
-export const sanityImageHotspotSchema = z.object({
-  _type: z.literal("sanity.imageHotspot"),
-  x: z.number().optional(),
-  y: z.number().optional(),
-  height: z.number().optional(),
-  width: z.number().optional(),
-});
-
-export const sanityImageCropSchema = z.object({
-  _type: z.literal("sanity.imageCrop"),
-  top: z.number().optional(),
-  bottom: z.number().optional(),
-  left: z.number().optional(),
-  right: z.number().optional(),
-});
-
 export const iconSchema = z.object({
   _type: z.literal("icon"),
   name: z.string().optional(),
@@ -122,13 +122,11 @@ export const blogSettingsSchema = z.object({
   caption: z.string(),
   description: z.string(),
   image: z.object({
-    asset: z
-      .object({
-        _ref: z.string(),
-        _type: z.literal("reference"),
-        _weak: z.boolean().optional(),
-      })
-      .optional(),
+    asset: z.object({
+      _ref: z.string(),
+      _type: z.literal("reference"),
+      _weak: z.boolean().optional(),
+    }),
     hotspot: sanityImageHotspotSchema.optional(),
     crop: sanityImageCropSchema.optional(),
     alt: z.string(),
@@ -154,13 +152,11 @@ export const categorySchema = z.object({
   description: z.string(),
   keywords: z.array(z.string()).optional(),
   image: z.object({
-    asset: z
-      .object({
-        _ref: z.string(),
-        _type: z.literal("reference"),
-        _weak: z.boolean().optional(),
-      })
-      .optional(),
+    asset: z.object({
+      _ref: z.string(),
+      _type: z.literal("reference"),
+      _weak: z.boolean().optional(),
+    }),
     hotspot: sanityImageHotspotSchema.optional(),
     crop: sanityImageCropSchema.optional(),
     alt: z.string(),
@@ -177,13 +173,11 @@ export const authorSchema = z.object({
   name: z.string(),
   slug: slugSchema,
   image: z.object({
-    asset: z
-      .object({
-        _ref: z.string(),
-        _type: z.literal("reference"),
-        _weak: z.boolean().optional(),
-      })
-      .optional(),
+    asset: z.object({
+      _ref: z.string(),
+      _type: z.literal("reference"),
+      _weak: z.boolean().optional(),
+    }),
     hotspot: sanityImageHotspotSchema.optional(),
     crop: sanityImageCropSchema.optional(),
     alt: z.string(),
@@ -249,6 +243,20 @@ export const sanityFileAssetSchema = z.object({
   source: sanityAssetSourceDataSchema.optional(),
 });
 
+export const contentImageSchema = z.object({
+  _type: z.literal("contentImage"),
+  asset: z
+    .object({
+      _ref: z.string(),
+      _type: z.literal("reference"),
+      _weak: z.boolean().optional(),
+    })
+    .optional(),
+  hotspot: sanityImageHotspotSchema.optional(),
+  crop: sanityImageCropSchema.optional(),
+  alt: z.string(),
+});
+
 export const codeGroupSchema = z.object({
   _type: z.literal("codeGroup"),
   snippets: z
@@ -272,20 +280,11 @@ export const homeCredentialsSchema = z.object({
           _key: z.string(),
         })
         .and(contentBlockSchema),
-      z.object({
-        asset: z
-          .object({
-            _ref: z.string(),
-            _type: z.literal("reference"),
-            _weak: z.boolean().optional(),
-          })
-          .optional(),
-        hotspot: sanityImageHotspotSchema.optional(),
-        crop: sanityImageCropSchema.optional(),
-        alt: z.string(),
-        _type: z.literal("image"),
-        _key: z.string(),
-      }),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(contentImageSchema),
       z
         .object({
           _key: z.string(),
@@ -302,13 +301,11 @@ export const homeCredentialsSchema = z.object({
       issueDate: z.string(),
       location: z.string().optional(),
       image: z.object({
-        asset: z
-          .object({
-            _ref: z.string(),
-            _type: z.literal("reference"),
-            _weak: z.boolean().optional(),
-          })
-          .optional(),
+        asset: z.object({
+          _ref: z.string(),
+          _type: z.literal("reference"),
+          _weak: z.boolean().optional(),
+        }),
         hotspot: sanityImageHotspotSchema.optional(),
         crop: sanityImageCropSchema.optional(),
         alt: z.string(),
@@ -329,20 +326,11 @@ export const homeExperienceSchema = z.object({
           _key: z.string(),
         })
         .and(contentBlockSchema),
-      z.object({
-        asset: z
-          .object({
-            _ref: z.string(),
-            _type: z.literal("reference"),
-            _weak: z.boolean().optional(),
-          })
-          .optional(),
-        hotspot: sanityImageHotspotSchema.optional(),
-        crop: sanityImageCropSchema.optional(),
-        alt: z.string(),
-        _type: z.literal("image"),
-        _key: z.string(),
-      }),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(contentImageSchema),
       z
         .object({
           _key: z.string(),
@@ -363,13 +351,11 @@ export const homeExperienceSchema = z.object({
         z.literal("internship"),
       ]),
       logo: z.object({
-        asset: z
-          .object({
-            _ref: z.string(),
-            _type: z.literal("reference"),
-            _weak: z.boolean().optional(),
-          })
-          .optional(),
+        asset: z.object({
+          _ref: z.string(),
+          _type: z.literal("reference"),
+          _weak: z.boolean().optional(),
+        }),
         hotspot: sanityImageHotspotSchema.optional(),
         crop: sanityImageCropSchema.optional(),
         alt: z.string(),
@@ -391,20 +377,11 @@ export const homeProjectsSchema = z.object({
           _key: z.string(),
         })
         .and(contentBlockSchema),
-      z.object({
-        asset: z
-          .object({
-            _ref: z.string(),
-            _type: z.literal("reference"),
-            _weak: z.boolean().optional(),
-          })
-          .optional(),
-        hotspot: sanityImageHotspotSchema.optional(),
-        crop: sanityImageCropSchema.optional(),
-        alt: z.string(),
-        _type: z.literal("image"),
-        _key: z.string(),
-      }),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(contentImageSchema),
       z
         .object({
           _key: z.string(),
@@ -417,13 +394,11 @@ export const homeProjectsSchema = z.object({
       title: z.string(),
       description: z.string(),
       image: z.object({
-        asset: z
-          .object({
-            _ref: z.string(),
-            _type: z.literal("reference"),
-            _weak: z.boolean().optional(),
-          })
-          .optional(),
+        asset: z.object({
+          _ref: z.string(),
+          _type: z.literal("reference"),
+          _weak: z.boolean().optional(),
+        }),
         hotspot: sanityImageHotspotSchema.optional(),
         crop: sanityImageCropSchema.optional(),
         alt: z.string(),
@@ -452,20 +427,11 @@ export const homeSkillsSchema = z.object({
           _key: z.string(),
         })
         .and(contentBlockSchema),
-      z.object({
-        asset: z
-          .object({
-            _ref: z.string(),
-            _type: z.literal("reference"),
-            _weak: z.boolean().optional(),
-          })
-          .optional(),
-        hotspot: sanityImageHotspotSchema.optional(),
-        crop: sanityImageCropSchema.optional(),
-        alt: z.string(),
-        _type: z.literal("image"),
-        _key: z.string(),
-      }),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(contentImageSchema),
       z
         .object({
           _key: z.string(),
@@ -487,13 +453,11 @@ export const homeSkillsSchema = z.object({
             z.literal(5),
           ]),
           image: z.object({
-            asset: z
-              .object({
-                _ref: z.string(),
-                _type: z.literal("reference"),
-                _weak: z.boolean().optional(),
-              })
-              .optional(),
+            asset: z.object({
+              _ref: z.string(),
+              _type: z.literal("reference"),
+              _weak: z.boolean().optional(),
+            }),
             hotspot: sanityImageHotspotSchema.optional(),
             crop: sanityImageCropSchema.optional(),
             alt: z.string(),
@@ -517,20 +481,11 @@ export const homeIntroSchema = z.object({
           _key: z.string(),
         })
         .and(contentBlockSchema),
-      z.object({
-        asset: z
-          .object({
-            _ref: z.string(),
-            _type: z.literal("reference"),
-            _weak: z.boolean().optional(),
-          })
-          .optional(),
-        hotspot: sanityImageHotspotSchema.optional(),
-        crop: sanityImageCropSchema.optional(),
-        alt: z.string(),
-        _type: z.literal("image"),
-        _key: z.string(),
-      }),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(contentImageSchema),
       z
         .object({
           _key: z.string(),
@@ -539,13 +494,11 @@ export const homeIntroSchema = z.object({
     ]),
   ),
   image: z.object({
-    asset: z
-      .object({
-        _ref: z.string(),
-        _type: z.literal("reference"),
-        _weak: z.boolean().optional(),
-      })
-      .optional(),
+    asset: z.object({
+      _ref: z.string(),
+      _type: z.literal("reference"),
+      _weak: z.boolean().optional(),
+    }),
     hotspot: sanityImageHotspotSchema.optional(),
     crop: sanityImageCropSchema.optional(),
     alt: z.string(),
@@ -569,20 +522,11 @@ export const contentSchema = z.array(
         _key: z.string(),
       })
       .and(contentBlockSchema),
-    z.object({
-      asset: z
-        .object({
-          _ref: z.string(),
-          _type: z.literal("reference"),
-          _weak: z.boolean().optional(),
-        })
-        .optional(),
-      hotspot: sanityImageHotspotSchema.optional(),
-      crop: sanityImageCropSchema.optional(),
-      alt: z.string(),
-      _type: z.literal("image"),
-      _key: z.string(),
-    }),
+    z
+      .object({
+        _key: z.string(),
+      })
+      .and(contentImageSchema),
     z
       .object({
         _key: z.string(),
@@ -608,13 +552,11 @@ export const tagSchema = z.object({
   description: z.string(),
   keywords: z.array(z.string()).optional(),
   image: z.object({
-    asset: z
-      .object({
-        _ref: z.string(),
-        _type: z.literal("reference"),
-        _weak: z.boolean().optional(),
-      })
-      .optional(),
+    asset: z.object({
+      _ref: z.string(),
+      _type: z.literal("reference"),
+      _weak: z.boolean().optional(),
+    }),
     hotspot: sanityImageHotspotSchema.optional(),
     crop: sanityImageCropSchema.optional(),
     alt: z.string(),
@@ -647,13 +589,11 @@ export const postSchema = z.object({
   keywords: z.array(z.string()).optional(),
   giscusTerm: z.string(),
   image: z.object({
-    asset: z
-      .object({
-        _ref: z.string(),
-        _type: z.literal("reference"),
-        _weak: z.boolean().optional(),
-      })
-      .optional(),
+    asset: z.object({
+      _ref: z.string(),
+      _type: z.literal("reference"),
+      _weak: z.boolean().optional(),
+    }),
     hotspot: sanityImageHotspotSchema.optional(),
     crop: sanityImageCropSchema.optional(),
     alt: z.string(),
@@ -690,13 +630,11 @@ export const homeHeroSchema = z.object({
   title: z.string(),
   subtitle: z.string(),
   image: z.object({
-    asset: z
-      .object({
-        _ref: z.string(),
-        _type: z.literal("reference"),
-        _weak: z.boolean().optional(),
-      })
-      .optional(),
+    asset: z.object({
+      _ref: z.string(),
+      _type: z.literal("reference"),
+      _weak: z.boolean().optional(),
+    }),
     hotspot: sanityImageHotspotSchema.optional(),
     crop: sanityImageCropSchema.optional(),
     alt: z.string(),

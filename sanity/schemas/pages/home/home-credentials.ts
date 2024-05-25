@@ -84,9 +84,7 @@ export default defineType({
               title: "Location",
               type: "string",
             }),
-            makeImageField("image", {
-              validation: (rule) => [rule.required()],
-            }),
+            makeImageField("image"),
           ],
         }),
       ],

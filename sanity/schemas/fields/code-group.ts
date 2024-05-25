@@ -8,7 +8,7 @@ import CodeGroupPreview, {
 export default defineType({
   type: "object",
   name: "codeGroup",
-  title: "Code Group",
+  title: "Code",
   icon: CodeIcon,
   fields: [
     defineField({

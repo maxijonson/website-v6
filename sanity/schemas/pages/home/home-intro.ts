@@ -21,9 +21,7 @@ export default defineType({
       type: content.name,
       validation: (rule) => [rule.required()],
     }),
-    makeImageField("image", {
-      validation: (rule) => [rule.required()],
-    }),
+    makeImageField("image"),
   ],
   preview: {
     select: {

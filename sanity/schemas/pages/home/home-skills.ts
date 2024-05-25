@@ -68,9 +68,7 @@ export default defineType({
                         rule.min(1).max(5).integer(),
                       ],
                     }),
-                    makeImageField("image", {
-                      validation: (rule) => [rule.required()],
-                    }),
+                    makeImageField("image"),
                   ],
                   preview: {
                     select: {

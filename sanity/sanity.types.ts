@@ -68,6 +68,19 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type ContentImage = {
+  _type: "contentImage";
+  asset?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+  };
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  alt: string;
+};
+
 export type ContentBlock = {
   _type: "contentBlock";
   children?: Array<{
@@ -109,19 +122,9 @@ export type HomeCredentials = {
     | ({
         _key: string;
       } & ContentBlock)
-    | {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        alt: string;
-        _type: "image";
+    | ({
         _key: string;
-      }
+      } & ContentImage)
     | ({
         _key: string;
       } & CodeGroup)
@@ -134,7 +137,7 @@ export type HomeCredentials = {
     issueDate: string;
     location?: string;
     image: {
-      asset?: {
+      asset: {
         _ref: string;
         _type: "reference";
         _weak?: boolean;
@@ -156,19 +159,9 @@ export type HomeExperience = {
     | ({
         _key: string;
       } & ContentBlock)
-    | {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        alt: string;
-        _type: "image";
+    | ({
         _key: string;
-      }
+      } & ContentImage)
     | ({
         _key: string;
       } & CodeGroup)
@@ -181,7 +174,7 @@ export type HomeExperience = {
     endDate?: string;
     type: "full-time" | "part-time" | "internship";
     logo: {
-      asset?: {
+      asset: {
         _ref: string;
         _type: "reference";
         _weak?: boolean;
@@ -204,19 +197,9 @@ export type HomeProjects = {
     | ({
         _key: string;
       } & ContentBlock)
-    | {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        alt: string;
-        _type: "image";
+    | ({
         _key: string;
-      }
+      } & ContentImage)
     | ({
         _key: string;
       } & CodeGroup)
@@ -225,7 +208,7 @@ export type HomeProjects = {
     title: string;
     description: string;
     image: {
-      asset?: {
+      asset: {
         _ref: string;
         _type: "reference";
         _weak?: boolean;
@@ -253,19 +236,9 @@ export type HomeSkills = {
     | ({
         _key: string;
       } & ContentBlock)
-    | {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        alt: string;
-        _type: "image";
+    | ({
         _key: string;
-      }
+      } & ContentImage)
     | ({
         _key: string;
       } & CodeGroup)
@@ -276,7 +249,7 @@ export type HomeSkills = {
       name: string;
       level: 1 | 2 | 3 | 4 | 5;
       image: {
-        asset?: {
+        asset: {
           _ref: string;
           _type: "reference";
           _weak?: boolean;
@@ -300,25 +273,15 @@ export type HomeIntro = {
     | ({
         _key: string;
       } & ContentBlock)
-    | {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        alt: string;
-        _type: "image";
+    | ({
         _key: string;
-      }
+      } & ContentImage)
     | ({
         _key: string;
       } & CodeGroup)
   >;
   image: {
-    asset?: {
+    asset: {
       _ref: string;
       _type: "reference";
       _weak?: boolean;
@@ -336,7 +299,7 @@ export type HomeHero = {
   title: string;
   subtitle: string;
   image: {
-    asset?: {
+    asset: {
       _ref: string;
       _type: "reference";
       _weak?: boolean;
@@ -400,7 +363,7 @@ export type BlogSettings = {
   caption: string;
   description: string;
   image: {
-    asset?: {
+    asset: {
       _ref: string;
       _type: "reference";
       _weak?: boolean;
@@ -417,19 +380,9 @@ export type Content = Array<
   | ({
       _key: string;
     } & ContentBlock)
-  | {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt: string;
-      _type: "image";
+  | ({
       _key: string;
-    }
+    } & ContentImage)
   | ({
       _key: string;
     } & CodeGroup)
@@ -453,7 +406,7 @@ export type Tag = {
   description: string;
   keywords?: Array<string>;
   image: {
-    asset?: {
+    asset: {
       _ref: string;
       _type: "reference";
       _weak?: boolean;
@@ -478,7 +431,7 @@ export type Category = {
   description: string;
   keywords?: Array<string>;
   image: {
-    asset?: {
+    asset: {
       _ref: string;
       _type: "reference";
       _weak?: boolean;
@@ -516,7 +469,7 @@ export type Post = {
   keywords?: Array<string>;
   giscusTerm: string;
   image: {
-    asset?: {
+    asset: {
       _ref: string;
       _type: "reference";
       _weak?: boolean;
@@ -539,7 +492,7 @@ export type Author = {
   name: string;
   slug: Slug;
   image: {
-    asset?: {
+    asset: {
       _ref: string;
       _type: "reference";
       _weak?: boolean;

@@ -42,9 +42,7 @@ export default defineType({
               type: "string",
               validation: (rule) => [rule.required()],
             }),
-            makeImageField("image", {
-              validation: (rule) => [rule.required()],
-            }),
+            makeImageField("image"),
             defineField({
               type: "array",
               name: "links",

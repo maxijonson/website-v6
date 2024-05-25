@@ -78,9 +78,7 @@ export default defineType({
               },
               validation: (rule) => [rule.required()],
             }),
-            makeImageField("logo", {
-              validation: (rule) => [rule.required()],
-            }),
+            makeImageField("logo"),
             defineField({
               name: "highlights",
               title: "Highlights",

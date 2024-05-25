@@ -55,6 +55,7 @@ export const makeImageField = <TName extends string>(
     title: "Image",
     options: makeImageFieldDefaultOptions,
     fields: makeImageFieldDefaultFields,
+    validation: (rule) => [rule.required().assetRequired()],
     ...opts,
   });
 };

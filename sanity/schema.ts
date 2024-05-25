@@ -9,6 +9,7 @@ import { deepPageSchemas } from "./schemas/pages";
 import blogSettings from "./schemas/singletons/blogSettings";
 import codeGroup from "./schemas/fields/code-group";
 import contentBlock from "./schemas/fields/content-block";
+import contentImage from "./schemas/fields/content-image";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -21,5 +22,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     ...deepPageSchemas,
     codeGroup,
     contentBlock,
+    contentImage,
   ],
 };

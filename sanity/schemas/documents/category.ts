@@ -71,7 +71,6 @@ export default defineType({
       group: groupSeo.name,
     }),
     makeImageField("image", {
-      validation: (rule) => [rule.required()],
       group: groupMedia.name,
     }),
   ],

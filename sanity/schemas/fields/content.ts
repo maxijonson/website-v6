@@ -1,6 +1,7 @@
-import { defineArrayMember, defineField, defineType } from "sanity";
+import { defineArrayMember, defineType } from "sanity";
 import codeGroup from "./code-group";
 import contentBlock from "./content-block";
+import contentImage from "./content-image";
 
 export default defineType({
   title: "Post Content",
@@ -11,16 +12,7 @@ export default defineType({
       type: contentBlock.name,
     }),
     defineArrayMember({
-      type: "image",
-      options: { hotspot: true },
-      fields: [
-        defineField({
-          name: "alt",
-          type: "string",
-          title: "Alternative Text",
-          validation: (rule) => [rule.required()],
-        }),
-      ],
+      type: contentImage.name,
     }),
     defineArrayMember({
       type: codeGroup.name,

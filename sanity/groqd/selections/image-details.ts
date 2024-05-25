@@ -1,4 +1,5 @@
 import { q, sanityImage, type Selection, type TypeFromSelection } from "groqd";
+import { contentImageSchema } from "../../sanity.schemas";
 
 type WithAssetOption =
   | "base"
@@ -11,7 +12,7 @@ type WithAssetOption =
   | "blurHash";
 
 export const baseAdditionalFieldsSelection = {
-  alt: q.string(),
+  alt: contentImageSchema.shape.alt,
   metadata: q("asset->metadata").grab$({
     lqip: q.string(),
   }),
@@ -62,11 +63,7 @@ export const makeImageDetailsQuery = <
 
 export const imageDetailsSelection = {
   ...baseAdditionalFieldsSelection,
-  asset: q.object({
-    _ref: q.string(),
-    _type: q.literal("reference"),
-    _weak: q.boolean().optional(),
-  }),
+  asset: contentImageSchema.shape.asset.unwrap(),
 } satisfies Selection;
 
 export type ImageDetails = TypeFromSelection<typeof imageDetailsSelection>;

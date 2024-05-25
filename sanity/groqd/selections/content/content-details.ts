@@ -7,7 +7,7 @@ import { contentImageDetailsSelection } from "./content-image-details";
 
 export const contentDetailsSelection = {
   [qType("contentBlock")]: contentBlockDetailsSelection,
-  [qType("image")]: contentImageDetailsSelection,
+  [qType("contentImage")]: contentImageDetailsSelection,
   [qType("codeGroup")]: contentCodeGroupDetailsSelection,
   default: {
     _key: q.string(),

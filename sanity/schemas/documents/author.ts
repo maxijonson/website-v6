@@ -35,7 +35,6 @@ export default defineType({
         ...makeImageFieldDefaultOptions,
         hotspot: true,
       },
-      validation: (rule) => [rule.required()],
     }),
     defineField({
       name: "bio",

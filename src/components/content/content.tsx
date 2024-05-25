@@ -14,7 +14,7 @@ export interface ContentProps extends PortableTextProps {
 const defaultContentComponents: Partial<PortableTextReactComponents> = {
   types: {
     codeGroup: ContentCodeGroup,
-    image: ContentImage,
+    contentImage: ContentImage,
   },
   marks: {
     link: ContentLink,
