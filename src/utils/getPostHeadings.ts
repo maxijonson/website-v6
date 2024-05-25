@@ -2,7 +2,7 @@ import { toPlainText } from "next-sanity";
 import { getHeadingId } from "./getHeadingId";
 import { blockHasChildren } from "./blockHasChildren";
 import type { ContentDetails } from "../../sanity/groqd/selections/content/content-details";
-import type { ContentBlockDetails } from "../../sanity/groqd/selections/content/content-block-details";
+import type { ContentBlockDetails } from "../../sanity/groqd/selections/content/content-block-details/content-block-details";
 
 export const getPostHeadings = (body: ContentDetails) => {
   return body

@@ -1,7 +1,7 @@
 import type { ConditionRecord } from "@/utils/types";
 import { q, type InferType } from "groqd";
 import { qType } from "../../filters/type";
-import { contentBlockDetailsSelection } from "./content-block-details";
+import { contentBlockDetailsSelection } from "./content-block-details/content-block-details";
 import { contentCodeGroupDetailsSelection } from "./content-code-group-details";
 import { contentImageDetailsSelection } from "./content-image-details";
 import { contentAlertDetailsSelection } from "./content-alert-details";

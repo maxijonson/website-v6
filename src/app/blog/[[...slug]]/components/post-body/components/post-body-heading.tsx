@@ -1,7 +1,7 @@
 import { getHeadingId } from "@/utils/getHeadingId";
 import { type PortableTextBlockComponent } from "next-sanity";
 import Link from "next/link";
-import type { ContentBlockDetails } from "../../../../../../../sanity/groqd/selections/content/content-block-details";
+import type { ContentBlockDetails } from "../../../../../../../sanity/groqd/selections/content/content-block-details/content-block-details";
 
 const isValidHeading = (
   props: string | undefined,

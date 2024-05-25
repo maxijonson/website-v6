@@ -109,8 +109,24 @@ export const contentBlockSchema = z.object({
           _key: z.string(),
         }),
         z.object({
-          stub: z.string().optional(),
-          _type: z.literal("stub"),
+          reference: z.union([
+            z.object({
+              _ref: z.string(),
+              _type: z.literal("reference"),
+              _weak: z.boolean().optional(),
+            }),
+            z.object({
+              _ref: z.string(),
+              _type: z.literal("reference"),
+              _weak: z.boolean().optional(),
+            }),
+            z.object({
+              _ref: z.string(),
+              _type: z.literal("reference"),
+              _weak: z.boolean().optional(),
+            }),
+          ]),
+          _type: z.literal("internalLink"),
           _key: z.string(),
         }),
       ]),
@@ -152,6 +168,35 @@ export const slugSchema = z.object({
   _type: z.literal("slug"),
   current: z.string(),
   source: z.string().optional(),
+});
+
+export const tagSchema = z.object({
+  _id: z.string(),
+  _type: z.literal("tag"),
+  _createdAt: z.string(),
+  _updatedAt: z.string(),
+  _rev: z.string(),
+  name: z.string(),
+  slug: slugSchema,
+  category: z.object({
+    _ref: z.string(),
+    _type: z.literal("reference"),
+    _weak: z.boolean().optional(),
+  }),
+  caption: z.string(),
+  description: z.string(),
+  keywords: z.array(z.string()).optional(),
+  image: z.object({
+    asset: z.object({
+      _ref: z.string(),
+      _type: z.literal("reference"),
+      _weak: z.boolean().optional(),
+    }),
+    hotspot: sanityImageHotspotSchema.optional(),
+    crop: sanityImageCropSchema.optional(),
+    alt: z.string(),
+    _type: z.literal("image"),
+  }),
 });
 
 export const categorySchema = z.object({
@@ -279,35 +324,6 @@ export const colorSchema = z.object({
   rgb: rgbaColorSchema.optional(),
 });
 
-export const tagSchema = z.object({
-  _id: z.string(),
-  _type: z.literal("tag"),
-  _createdAt: z.string(),
-  _updatedAt: z.string(),
-  _rev: z.string(),
-  name: z.string(),
-  slug: slugSchema,
-  category: z.object({
-    _ref: z.string(),
-    _type: z.literal("reference"),
-    _weak: z.boolean().optional(),
-  }),
-  caption: z.string(),
-  description: z.string(),
-  keywords: z.array(z.string()).optional(),
-  image: z.object({
-    asset: z.object({
-      _ref: z.string(),
-      _type: z.literal("reference"),
-      _weak: z.boolean().optional(),
-    }),
-    hotspot: sanityImageHotspotSchema.optional(),
-    crop: sanityImageCropSchema.optional(),
-    alt: z.string(),
-    _type: z.literal("image"),
-  }),
-});
-
 export const sanityImageAssetSchema = z.object({
   _id: z.string(),
   _type: z.literal("sanity.imageAsset"),
@@ -376,8 +392,24 @@ export const contentAlertSchema = z.object({
                 _key: z.string(),
               }),
               z.object({
-                stub: z.string().optional(),
-                _type: z.literal("stub"),
+                reference: z.union([
+                  z.object({
+                    _ref: z.string(),
+                    _type: z.literal("reference"),
+                    _weak: z.boolean().optional(),
+                  }),
+                  z.object({
+                    _ref: z.string(),
+                    _type: z.literal("reference"),
+                    _weak: z.boolean().optional(),
+                  }),
+                  z.object({
+                    _ref: z.string(),
+                    _type: z.literal("reference"),
+                    _weak: z.boolean().optional(),
+                  }),
+                ]),
+                _type: z.literal("internalLink"),
                 _key: z.string(),
               }),
             ]),

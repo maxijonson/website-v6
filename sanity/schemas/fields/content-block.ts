@@ -1,4 +1,5 @@
 import { defineType } from "sanity";
+import { DocumentIcon } from "@sanity/icons";
 
 export default defineType({
   name: "contentBlock",
@@ -32,23 +33,22 @@ export default defineType({
             title: "URL",
             name: "href",
             type: "url",
+            validation: (rule) => [rule.required()],
           },
         ],
       },
       {
-        name: "stub",
-        title: "STUB DO NOT USE",
+        name: "internalLink",
         type: "object",
-        readOnly: true,
-        validation: (Rule) => Rule.error("Stub annotation should not be used."),
-        deprecated: {
-          reason:
-            "Stub annotation so that generated schemas is a union. Has no purpose.",
-        },
+        title: "Internal link",
+        icon: DocumentIcon,
         fields: [
           {
-            name: "stub",
-            type: "string",
+            name: "reference",
+            type: "reference",
+            title: "Reference",
+            to: [{ type: "post" }, { type: "category" }, { type: "tag" }],
+            validation: (rule) => [rule.required()],
           },
         ],
       },

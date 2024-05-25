@@ -1,4 +1,4 @@
-import type { ContentBlockDetails } from "../../sanity/groqd/selections/content/content-block-details";
+import type { ContentBlockDetails } from "../../sanity/groqd/selections/content/content-block-details/content-block-details";
 
 export const blockHasChildren = (
   block: ContentBlockDetails,

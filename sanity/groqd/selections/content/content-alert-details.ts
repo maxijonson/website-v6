@@ -1,7 +1,7 @@
 import { q, type Selection, type TypeFromSelection } from "groqd";
 import { contentAlertSchema } from "../../../sanity.schemas";
 import { qType } from "../../filters/type";
-import { contentBlockDetailsSelection } from "./content-block-details";
+import { contentBlockDetailsSelection } from "./content-block-details/content-block-details";
 import { contentCodeGroupDetailsSelection } from "./content-code-group-details";
 import { contentImageDetailsSelection } from "./content-image-details";
 
