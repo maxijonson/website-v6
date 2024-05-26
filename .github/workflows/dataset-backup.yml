@@ -18,11 +18,11 @@ jobs:
         uses: actions/checkout@v4
       - name: Get uploaded file name
         id: upload_name
-        run: echo "UPLOAD_NAME=$(date +'%Y-%m-%d_%Hh%Mm%Ss')_${{ secrets.SANITY_PROJECT_ID }}-${{ inputs.dataset || 'production' }}-${{ github.run_id }}.tar.gz" >> $GITHUB_ENV
+        run: echo "UPLOAD_NAME=$(date +'%Y-%m-%d_%Hh%Mm%Ss')_${{ secrets.SANITY_PROJECT_ID }}-${{ inputs.dataset || 'production' }}-${{ github.run_id }}.tar.gz" >> "$GITHUB_OUTPUT"
       - name: Install dependencies
         run: npm install
       - name: Export dataset
-        run: npx sanity dataset export ${{ inputs.dataset || 'production' }} $UPLOAD_NAME
+        run: npx sanity dataset export ${{ inputs.dataset || 'production' }} '${{ steps.upload_name.outputs.UPLOAD_NAME }}'
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_TOKEN }}
           NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
@@ -37,5 +37,5 @@ jobs:
         with:
           project_id: ${{ secrets.BACKUPS_SA_PROJECT }}
           destination: "${{ secrets.BACKUPS_BUCKET }}/sanity-datasets/${{ secrets.SANITY_PROJECT_ID }}/${{ inputs.dataset || 'production' }}"
-          path: "$UPLOAD_NAME"
+          path: "./${{ steps.upload_name.outputs.UPLOAD_NAME }}"
           parent: false
