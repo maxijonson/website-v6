@@ -37,5 +37,5 @@ jobs:
         with:
           project_id: ${{ secrets.BACKUPS_SA_PROJECT }}
           destination: "${{ secrets.BACKUPS_BUCKET }}/sanity-datasets/${{ secrets.SANITY_PROJECT_ID }}/${{ inputs.dataset || 'production' }}"
-          path: $UPLOAD_NAME
+          path: "$UPLOAD_NAME"
           parent: false
