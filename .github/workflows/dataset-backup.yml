@@ -20,11 +20,15 @@ jobs:
         uses: actions/checkout@v4
       - name: Get uploaded file name
         id: upload_name
-        run: echo "UPLOAD_NAME=$(TZ=America/New_York date +'%Y-%m-%d_%Hh%Mm%Ss')_${{ secrets.SANITY_PROJECT_ID }}-${{ inputs.dataset || 'production' }}-${{ github.run_id }}.tar.gz" >> "$GITHUB_ENV"
+        run: echo "UPLOAD_NAME=$(TZ=America/New_York date +'%Y-%m-%d_%Hh%Mm%Ss')_${{ secrets.SANITY_PROJECT_ID }}-${{ inputs.dataset || 'production' }}-${{ github.run_id }}" >> "$GITHUB_OUTPUT"
+      - name: Check upload name is not empty
+        if: steps.upload_name.outputs.UPLOAD_NAME == ''
+        run: |
+          echo "Error: UPLOAD_NAME is empty" && exit 1
       - name: Install dependencies
         run: npm install
       - name: Export dataset
-        run: npx sanity dataset export ${{ inputs.dataset || 'production' }} '${{ steps.upload_name.outputs.UPLOAD_NAME }}'
+        run: npx sanity dataset export ${{ inputs.dataset || 'production' }} 'backups/${{ steps.upload_name.outputs.UPLOAD_NAME }}/${{ steps.upload_name.outputs.UPLOAD_NAME }}.tar.gz'
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_TOKEN }}
           NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
@@ -39,6 +43,6 @@ jobs:
         with:
           project_id: ${{ secrets.BACKUPS_SA_PROJECT }}
           destination: "${{ secrets.BACKUPS_BUCKET }}/sanity-datasets/${{ secrets.SANITY_PROJECT_ID }}/${{ inputs.dataset || 'production' }}"
-          path: "./${{ steps.upload_name.outputs.UPLOAD_NAME }}"
+          path: "./backups/${{ steps.upload_name.outputs.UPLOAD_NAME }}/${{ steps.upload_name.outputs.UPLOAD_NAME }}.tar.gz"
           parent: false
           process_gcloudignore: false
