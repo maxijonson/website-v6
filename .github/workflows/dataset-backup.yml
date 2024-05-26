@@ -9,7 +9,7 @@ on:
         default: "production"
         type: string
   schedule:
-    - cron: '22 3 * * 0' # Every Sunday at 3:22 AM. This aims to run when GitHub Actions are less likely to be busy.
+    - cron: "22 3 * * 0" # Every Sunday at 3:22 AM. This aims to run when GitHub Actions are less likely to be busy.
 
 jobs:
   backup-dataset:
