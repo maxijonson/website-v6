@@ -23,7 +23,7 @@ jobs:
         run: npm install
       - name: "Hack: Create sanity.cli.ts file for sanity CLI to work"
         run: |
-          rm sanity.cli.ts && echo 'export default { projectId: "${{ secrets.SANITY_PROJECT_ID }}", dataset: "${{ inputs.dataset }}" }' > sanity.cli.ts
+          rm sanity.cli.ts && echo 'export default { api: { projectId: "${{ secrets.SANITY_PROJECT_ID }}", dataset: "${{ inputs.dataset }}" } }' > sanity.cli.ts
       - name: Export dataset
         uses: sanity-io/github-action-sanity@v0.7-alpha
         with:
