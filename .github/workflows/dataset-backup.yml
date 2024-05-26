@@ -14,11 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Backup dataset
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Get uploaded file name
         id: upload_name
         run: echo "UPLOAD_NAME=$(date +'%Y-%m-%d_%Hh%Mm%Ss')_${{ secrets.SANITY_PROJECT_ID }}-${{ inputs.dataset || 'production' }}-${{ github.run_id }}.tar.gz" >> $GITHUB_ENV
       - run: npm install
+      - run: |
+          ls -la && rm sanity.cli.ts && 'export default { projectId: "${{ secrets.SANITY_PROJECT_ID }}", dataset: "${{ inputs.dataset }}" }' > sanity.cli.ts
       - name: Export dataset
         uses: sanity-io/github-action-sanity@v0.7-alpha
         with:
