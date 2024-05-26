@@ -1,0 +1,36 @@
+name: Dataset backup
+
+on:
+  workflow_dispatch:
+    inputs:
+      dataset:
+        description: "Dataset name to backup"
+        required: true
+        default: "production"
+        type: string
+
+jobs:
+  backup-dataset:
+    runs-on: ubuntu-latest
+    name: Backup dataset
+    steps:
+      - uses: actions/checkout@v2
+      - name: Export dataset
+        uses: sanity-io/github-action-sanity@v0.7-alpha
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_TOKEN }}
+        with:
+          args: dataset export ${{ inputs.dataset || 'production' }} backups/backup.tar.gz
+      - name: Get uploaded file name
+        id: upload_name
+        run: echo "::set-output name=filename::$(date +'%Y-%m-%d_%Hh%Mm%Ss')_${{ secrets.SANITY_PROJECT_ID }}-${{ inputs.dataset || 'production' }}-${{ github.run_id }}.tar.gz"
+      - uses: 'google-github-actions/auth@v2'
+        with:
+          service_account: ${{ secrets.BACKUPS_SA_EMAIL }}
+          credentials_json: ${{ secrets.BACKUPS_SA_KEY }}
+      - name: Upload backup.tar.gz to Google Cloud Storage
+        uses: "google-github-actions/upload-cloud-storage@v2"
+        with:
+          project_id: ${{ secrets.BACKUPS_SA_PROJECT }}
+          destination: ${{ secrets.BACKUPS_BUCKET }}
+          path: "sanity-datasets/${{ secrets.SANITY_PROJECT_ID }}/${{ inputs.dataset || 'production' }}/${{ steps.upload_name.outputs.filename }}"
