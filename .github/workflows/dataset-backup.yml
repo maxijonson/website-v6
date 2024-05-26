@@ -5,7 +5,7 @@ on:
     inputs:
       dataset:
         description: "Dataset name to backup"
-        required: true
+        required: false
         default: "production"
         type: string
   schedule:
