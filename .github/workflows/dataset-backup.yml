@@ -13,9 +13,6 @@ jobs:
   backup-dataset:
     runs-on: ubuntu-latest
     name: Backup dataset
-    env:
-      NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
-      NEXT_PUBLIC_SANITY_DATASET: ${{ inputs.dataset || 'production' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,16 +21,16 @@ jobs:
         run: echo "UPLOAD_NAME=$(date +'%Y-%m-%d_%Hh%Mm%Ss')_${{ secrets.SANITY_PROJECT_ID }}-${{ inputs.dataset || 'production' }}-${{ github.run_id }}.tar.gz" >> $GITHUB_ENV
       - name: Install dependencies
         run: npm install
-      # - name: "Hack: Create sanity.cli.ts file for sanity CLI to work"
-      #   run: |
-      #     rm sanity.cli.ts && echo 'export default { api: { projectId: "${{ secrets.SANITY_PROJECT_ID }}", dataset: "${{ inputs.dataset }}" } }' > sanity.cli.ts
       - name: Export dataset
-        uses: sanity-io/github-action-sanity@v0.7-alpha
-        with:
-          args: dataset export ${{ inputs.dataset || 'production' }} ${{ steps.upload_name.outputs.UPLOAD_NAME }}
+        # uses: sanity-io/github-action-sanity@v0.7-alpha
+        # with:
+        #   args: dataset export ${{ inputs.dataset || 'production' }} ${{ steps.upload_name.outputs.UPLOAD_NAME }}
+        run: npx sanity dataset export ${{ inputs.dataset || 'production' }} ${{ steps.upload_name.outputs.UPLOAD_NAME }}
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_TOKEN }}
           SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ inputs.dataset || 'production' }}
       - name: Authenticate with Google Cloud
         uses: "google-github-actions/auth@v2"
         with:
