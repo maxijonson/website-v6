@@ -22,13 +22,9 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Export dataset
-        # uses: sanity-io/github-action-sanity@v0.7-alpha
-        # with:
-        #   args: dataset export ${{ inputs.dataset || 'production' }} ${{ steps.upload_name.outputs.UPLOAD_NAME }}
-        run: npx sanity dataset export ${{ inputs.dataset || 'production' }} ${{ steps.upload_name.outputs.UPLOAD_NAME }}
+        run: npx sanity dataset export ${{ inputs.dataset || 'production' }} $UPLOAD_NAME
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_TOKEN }}
-          SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
           NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
           NEXT_PUBLIC_SANITY_DATASET: ${{ inputs.dataset || 'production' }}
       - name: Authenticate with Google Cloud
@@ -41,5 +37,5 @@ jobs:
         with:
           project_id: ${{ secrets.BACKUPS_SA_PROJECT }}
           destination: "${{ secrets.BACKUPS_BUCKET }}/sanity-datasets/${{ secrets.SANITY_PROJECT_ID }}/${{ inputs.dataset || 'production' }}"
-          path: ${{ steps.upload_name.outputs.UPLOAD_NAME }}
+          path: $UPLOAD_NAME
           parent: false
