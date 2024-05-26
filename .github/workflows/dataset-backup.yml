@@ -39,3 +39,4 @@ jobs:
           destination: "${{ secrets.BACKUPS_BUCKET }}/sanity-datasets/${{ secrets.SANITY_PROJECT_ID }}/${{ inputs.dataset || 'production' }}"
           path: "./${{ steps.upload_name.outputs.UPLOAD_NAME }}"
           parent: false
+          process_gcloudignore: false
