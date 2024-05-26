@@ -19,11 +19,12 @@ jobs:
         id: upload_name
         run: echo "UPLOAD_NAME=$(date +'%Y-%m-%d_%Hh%Mm%Ss')_${{ secrets.SANITY_PROJECT_ID }}-${{ inputs.dataset || 'production' }}-${{ github.run_id }}.tar.gz" >> $GITHUB_ENV
       - run: npm install
+      - run: |
+          rm sanity.config.ts && echo 'export default { projectId: "${{ secrets.SANITY_PROJECT_ID }}", dataset: "${{ inputs.dataset }}" }' > sanity.config.js
       - name: Export dataset
-        # uses: sanity-io/github-action-sanity@v0.7-alpha
-        # with:
-        #   args: dataset export ${{ inputs.dataset || 'production' }} ${{ steps.upload_name.outputs.UPLOAD_NAME }}
-        run: npx sanity dataset export ${{ inputs.dataset || 'production' }} ${{ steps.upload_name.outputs.UPLOAD_NAME }}
+        uses: sanity-io/github-action-sanity@v0.7-alpha
+        with:
+          args: dataset export ${{ inputs.dataset || 'production' }} ${{ steps.upload_name.outputs.UPLOAD_NAME }}
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_TOKEN }}
       - uses: "google-github-actions/auth@v2"
