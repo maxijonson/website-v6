@@ -17,14 +17,15 @@ jobs:
       - uses: actions/checkout@v2
       - name: Get uploaded file name
         id: upload_name
-        run: echo "::set-output name=filename::$(date +'%Y-%m-%d_%Hh%Mm%Ss')_${{ secrets.SANITY_PROJECT_ID }}-${{ inputs.dataset || 'production' }}-${{ github.run_id }}.tar.gz"
+        run: echo "UPLOAD_NAME=$(date +'%Y-%m-%d_%Hh%Mm%Ss')_${{ secrets.SANITY_PROJECT_ID }}-${{ inputs.dataset || 'production' }}-${{ github.run_id }}.tar.gz" >> $GITHUB_ENV
+      - run: npm install
       - name: Export dataset
         uses: sanity-io/github-action-sanity@v0.7-alpha
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_TOKEN }}
         with:
-          args: dataset export ${{ inputs.dataset || 'production' }} ${{ steps.upload_name.outputs.filename }}
-      - uses: 'google-github-actions/auth@v2'
+          args: dataset export ${{ inputs.dataset || 'production' }} ${{ steps.upload_name.outputs.UPLOAD_NAME }}
+      - uses: "google-github-actions/auth@v2"
         with:
           service_account: ${{ secrets.BACKUPS_SA_EMAIL }}
           credentials_json: ${{ secrets.BACKUPS_SA_KEY }}
@@ -33,5 +34,5 @@ jobs:
         with:
           project_id: ${{ secrets.BACKUPS_SA_PROJECT }}
           destination: "${{ secrets.BACKUPS_BUCKET }}/sanity-datasets/${{ secrets.SANITY_PROJECT_ID }}/${{ inputs.dataset || 'production' }}"
-          path: ${{ steps.upload_name.outputs.filename }}
+          path: ${{ steps.upload_name.outputs.UPLOAD_NAME }}
           parent: false
