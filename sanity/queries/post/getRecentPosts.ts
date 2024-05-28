@@ -6,6 +6,7 @@ import { runSlicedQuery } from "../slice";
 import { makeGetPostsQuery } from "./getPosts";
 import { makeGetPostsByCategoryIdQuery } from "./getPostsByCategoryId";
 import { makeGetPostsByTagIdQuery } from "./getPostsByTagId";
+import { getQueryTag } from "../../utils/getQueryTag";
 
 const runLatestPostsQuery = <S extends Selection>(
   query: UnknownArrayQuery,
@@ -21,7 +22,10 @@ export const getRecentPosts = <S extends Selection>(selection: S, amount = 4) =>
     selection,
     amount,
     {},
-    { next: { tags: [cacheTag.posts] } },
+    {
+      tag: getQueryTag("post", getRecentPosts.name),
+      next: { tags: [cacheTag.posts] },
+    },
   );
 
 export const getRecentPostsByCategoryId = <S extends Selection>(
@@ -34,7 +38,10 @@ export const getRecentPostsByCategoryId = <S extends Selection>(
     selection,
     amount,
     { categoryId },
-    { next: { tags: [categoryId, cacheTag.posts] } },
+    {
+      tag: getQueryTag("post", getRecentPostsByCategoryId.name),
+      next: { tags: [categoryId, cacheTag.posts] },
+    },
   );
 
 export const getRecentPostsByTagId = <S extends Selection>(
@@ -47,5 +54,8 @@ export const getRecentPostsByTagId = <S extends Selection>(
     selection,
     amount,
     { tagId },
-    { next: { tags: [tagId, cacheTag.posts] } },
+    {
+      tag: getQueryTag("post", getRecentPostsByTagId.name),
+      next: { tags: [tagId, cacheTag.posts] },
+    },
   );

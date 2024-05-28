@@ -3,6 +3,7 @@ import { qAnd } from "../../groqd/filters/and";
 import { runQuery } from "../../groqd/runQuery";
 import { makeGetPostsQuery } from "./getPosts";
 import { cacheTag } from "@/utils/cache";
+import { getQueryTag } from "../../utils/getQueryTag";
 
 export const makeFindPostBySlugQuery = (filter?: string) =>
   makeGetPostsQuery(qAnd("slug.current == $slug", filter));
@@ -14,5 +15,8 @@ export const findPostBySlug = <S extends Selection>(
   runQuery(
     makeFindPostBySlugQuery().grab$(selection).slice(0).nullable(),
     { slug },
-    { next: { tags: [cacheTag.postSlug(slug)] } },
+    {
+      tag: getQueryTag("post", findPostBySlug.name),
+      next: { tags: [cacheTag.postSlug(slug)] },
+    },
   );

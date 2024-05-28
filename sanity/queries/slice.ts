@@ -5,6 +5,7 @@ import {
   type RunQueryOptions,
   type RunQueryParams,
 } from "../groqd/runQuery";
+import { getQueryTag } from "../utils/getQueryTag";
 
 export const makeSlicedQuery = (
   query: UnknownArrayQuery,
@@ -24,5 +25,8 @@ export const runSlicedQuery = <S extends Selection>(
   runQuery(
     makeSlicedQuery(query, sliceStart, sliceEnd).grab$(selection),
     params,
-    options,
+    {
+      tag: getQueryTag("misc", runSlicedQuery.name),
+      ...options,
+    },
   );

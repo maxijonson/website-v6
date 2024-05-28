@@ -2,6 +2,7 @@ import { q, type Selection } from "groqd";
 import { qAnd } from "../../groqd/filters/and";
 import { qType } from "../../groqd/filters/type";
 import { runQuery } from "../../groqd/runQuery";
+import { getQueryTag } from "../../utils/getQueryTag";
 
 export const BLOGSETTINGS_DOCUMENT_ID = "blogSettings";
 
@@ -12,5 +13,8 @@ export const getBlogSettings = <S extends Selection>(selection: S) =>
   runQuery(
     makeGetBlogSettingsQuery().grab$(selection).slice(0),
     { blogSettingsId: BLOGSETTINGS_DOCUMENT_ID },
-    { next: { tags: ["blogSettings"] } },
+    {
+      tag: getQueryTag("blog-settings", getBlogSettings.name),
+      next: { tags: ["blogSettings"] },
+    },
   );

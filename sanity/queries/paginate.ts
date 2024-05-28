@@ -6,6 +6,7 @@ import {
   type RunQueryOptions,
   type RunQueryParams,
 } from "../groqd/runQuery";
+import { getQueryTag } from "../utils/getQueryTag";
 
 export const makePaginatedQuery = (
   query: UnknownArrayQuery,
@@ -29,5 +30,8 @@ export const runPaginatedQuery = async <S extends Selection>(
   runQuery(
     makePaginatedQuery(query, pageIndex, pageSize).grab$(selection),
     params,
-    options,
+    {
+      tag: getQueryTag("misc", runPaginatedQuery.name),
+      ...options,
+    },
   );

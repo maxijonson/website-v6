@@ -1,5 +1,6 @@
 import { runQuery } from "../../groqd/runQuery";
 import { contentDetailsSelection } from "../../groqd/selections/content/content-details";
+import { getQueryTag } from "../../utils/getQueryTag";
 import { makeGetPostByIdQuery } from "./getPostById";
 
 export const getPostBody = async (postId: string) =>
@@ -10,5 +11,5 @@ export const getPostBody = async (postId: string) =>
       .filter()
       .select(contentDetailsSelection),
     { postId },
-    { next: { tags: [postId] } },
+    { tag: getQueryTag("post", getPostBody.name), next: { tags: [postId] } },
   );

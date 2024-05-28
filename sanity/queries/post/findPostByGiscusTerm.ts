@@ -3,6 +3,7 @@ import { qAnd } from "../../groqd/filters/and";
 import { runQuery } from "../../groqd/runQuery";
 import { makeGetPostsQuery } from "./getPosts";
 import { cacheTag } from "@/utils/cache";
+import { getQueryTag } from "../../utils/getQueryTag";
 
 export const makeFindPostByGiscusTermQuery = (filter?: string) =>
   makeGetPostsQuery(qAnd("giscusTerm == $giscusTerm", filter));
@@ -14,5 +15,8 @@ export const findPostByGiscusTerm = <S extends Selection>(
   runQuery(
     makeFindPostByGiscusTermQuery().grab$(selection).slice(0).nullable(),
     { giscusTerm },
-    { next: { tags: [cacheTag.posts] } },
+    {
+      tag: getQueryTag("post", findPostByGiscusTerm.name),
+      next: { tags: [cacheTag.posts] },
+    },
   );

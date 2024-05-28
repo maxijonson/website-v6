@@ -3,6 +3,7 @@ import { qAnd } from "../../groqd/filters/and";
 import { runQuery } from "../../groqd/runQuery";
 import { makeGetPostsQuery } from "./getPosts";
 import { qId } from "../../groqd/filters/id";
+import { getQueryTag } from "../../utils/getQueryTag";
 
 export const makeGetPostByIdQuery = (filter?: string) =>
   makeGetPostsQuery(qAnd(qId("$postId"), filter));
@@ -14,5 +15,5 @@ export const getPostById = <S extends Selection>(
   runQuery(
     makeGetPostByIdQuery().grab$(selection).slice(0),
     { postId },
-    { next: { tags: [postId] } },
+    { tag: getQueryTag("post", getPostById.name), next: { tags: [postId] } },
   );
