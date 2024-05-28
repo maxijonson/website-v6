@@ -14,12 +14,11 @@ export const getQueryTag = (
         return 3;
     }
   })();
-  const sha = (() => {
-    if (process.env.VERCEL_GIT_COMMIT_SHA) {
-      return process.env.VERCEL_GIT_COMMIT_SHA.slice(0, 7);
-    }
-    return "local";
-  })();
+  const sha = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || "0000000";
 
+  console.info(
+    [sha, environment, type, name].join(".").slice(0, 75),
+    [sha, environment, type, name].join(".").slice(0, 75).length,
+  );
   return [sha, environment, type, name].join(".").slice(0, 75);
 };
