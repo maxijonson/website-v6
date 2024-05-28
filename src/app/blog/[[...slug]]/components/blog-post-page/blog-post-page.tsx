@@ -1,35 +1,38 @@
 import Footer from "@/components/footer/footer";
+import StructuredData from "@/components/structured-data/structured-data";
+import TristanStructuredData, {
+  tristanSchema,
+} from "@/components/structured-data/tristan-structured-data";
+import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import { getBaseURL } from "@/utils/getBaseURL";
 import { getPostHeadings } from "@/utils/getPostHeadings";
+import { q } from "groqd";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { contentDetailsSelection } from "../../../../../../sanity/groqd/selections/content/content-details";
 import { postDetailsSelection } from "../../../../../../sanity/groqd/selections/post-details";
 import { findPostBySlug } from "../../../../../../sanity/queries/post/findPostBySlug";
-import { getPostBody } from "../../../../../../sanity/queries/post/getPostBody";
 import { urlForImage } from "../../../../../../sanity/utils/image";
 import type { BlogPageProps } from "../../page";
 import BlogHeader from "../blog-header/blog-header";
 import BlogHero from "../blog-hero/blog-hero";
 import PostBody from "../post-body/post-body";
 import TableOfContents from "../table-of-contents/table-of-contents";
-import { Separator } from "@/components/ui/separator";
-import BlogPostShare from "./blog-post-share";
-import BlogPostComments from "./blog-post-comments";
-import { Suspense } from "react";
-import TristanStructuredData, {
-  tristanSchema,
-} from "@/components/structured-data/tristan-structured-data";
-import StructuredData from "@/components/structured-data/structured-data";
-import { getBaseURL } from "@/utils/getBaseURL";
 import BlogPostCoffee from "./blog-post-coffee";
+import BlogPostComments from "./blog-post-comments";
+import BlogPostShare from "./blog-post-share";
 
 const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   if (slug.length !== 1) notFound();
 
-  const post = await findPostBySlug(slug[0], postDetailsSelection);
+  const post = await findPostBySlug(slug[0], {
+    ...postDetailsSelection,
+    body: q("body").filter().select(contentDetailsSelection),
+  });
   if (!post) notFound();
 
-  const body = await getPostBody(post.id);
-  const headings = getPostHeadings(body);
+  const headings = getPostHeadings(post.body);
 
   return (
     <div>
@@ -56,7 +59,7 @@ const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
           />
           <div className={cn("mx-auto flex w-full max-w-5xl pt-8")}>
             <div className="w-full p-4">
-              <PostBody body={body} />
+              <PostBody body={post.body} />
               <div className={cn("flex flex-col pt-8", "md:hidden")}>
                 <div className="mx-auto mb-3">
                   <BlogPostCoffee />
