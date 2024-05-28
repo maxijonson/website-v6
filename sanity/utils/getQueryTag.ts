@@ -2,10 +2,24 @@ export const getQueryTag = (
   type: "blog-settings" | "category" | "home-page" | "post" | "tag" | "misc",
   name: string,
 ) => {
-  return [
-    process.env.VERCEL_ENV || process.env.NODE_ENV || "development",
-    process.env.VERCEL_GIT_COMMIT_SHA || "local",
-    type,
-    name,
-  ].join(".");
+  const environment = (() => {
+    switch (process.env.VERCEL_ENV || process.env.NODE_ENV || "development") {
+      case "production":
+        return 0;
+      case "preview":
+        return 1;
+      case "development":
+        return 2;
+      default:
+        return 3;
+    }
+  })();
+  const sha = (() => {
+    if (process.env.VERCEL_GIT_COMMIT_SHA) {
+      return process.env.VERCEL_GIT_COMMIT_SHA.slice(0, 7);
+    }
+    return "local";
+  })();
+
+  return [sha, environment, type, name].join(".").slice(0, 75);
 };
