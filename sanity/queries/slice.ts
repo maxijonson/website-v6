@@ -26,7 +26,7 @@ export const runSlicedQuery = <S extends Selection>(
     makeSlicedQuery(query, sliceStart, sliceEnd).grab$(selection),
     params,
     {
-      tag: getQueryTag("misc", "runSlicedQuery"),
       ...options,
+      tag: options?.tag ?? getQueryTag("misc", "runSlicedQuery"),
     },
   );

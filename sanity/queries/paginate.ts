@@ -31,7 +31,7 @@ export const runPaginatedQuery = async <S extends Selection>(
     makePaginatedQuery(query, pageIndex, pageSize).grab$(selection),
     params,
     {
-      tag: getQueryTag("misc", "runPaginatedQuery"),
       ...options,
+      tag: options?.tag ?? getQueryTag("misc", "runPaginatedQuery"),
     },
   );
