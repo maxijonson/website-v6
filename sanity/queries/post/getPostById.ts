@@ -15,5 +15,5 @@ export const getPostById = <S extends Selection>(
   runQuery(
     makeGetPostByIdQuery().grab$(selection).slice(0),
     { postId },
-    { tag: getQueryTag("post", getPostById.name), next: { tags: [postId] } },
+    { tag: getQueryTag("post", "getPostById"), next: { tags: [postId] } },
   );

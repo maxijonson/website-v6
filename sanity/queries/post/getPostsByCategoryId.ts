@@ -16,7 +16,7 @@ export const getPostsByCategoryId = <S extends Selection>(
     makeGetPostsByCategoryIdQuery().grab$(selection),
     { categoryId },
     {
-      tag: getQueryTag("post", getPostsByCategoryId.name),
+      tag: getQueryTag("post", "getPostsByCategoryId"),
       next: { tags: [categoryId, cacheTag.posts] },
     },
   );

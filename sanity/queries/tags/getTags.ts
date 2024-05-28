@@ -21,7 +21,7 @@ export const getTags = <S extends Selection>(selection: S) =>
     makeGetTagsQuery().grab$(selection),
     {},
     {
-      tag: getQueryTag("tag", getTags.name),
+      tag: getQueryTag("tag", "getTags"),
       next: { tags: [cacheTag.tags] },
     },
   );

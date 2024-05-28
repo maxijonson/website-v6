@@ -16,7 +16,7 @@ export const getPostsByTagId = <S extends Selection>(
     makeGetPostsByTagIdQuery().grab$(selection),
     { tagId },
     {
-      tag: getQueryTag("post", getPostsByTagId.name),
+      tag: getQueryTag("post", "getPostsByTagId"),
       next: { tags: [tagId, cacheTag.posts] },
     },
   );

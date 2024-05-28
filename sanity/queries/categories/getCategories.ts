@@ -21,7 +21,7 @@ export const getCategories = async <S extends Selection>(selection: S) =>
     makeGetCategoriesQuery().grab$(selection),
     {},
     {
-      tag: getQueryTag("category", getCategories.name),
+      tag: getQueryTag("category", "getCategories"),
       next: { tags: [cacheTag.categories] },
     },
   );

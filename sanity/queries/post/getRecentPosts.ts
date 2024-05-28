@@ -23,7 +23,7 @@ export const getRecentPosts = <S extends Selection>(selection: S, amount = 4) =>
     amount,
     {},
     {
-      tag: getQueryTag("post", getRecentPosts.name),
+      tag: getQueryTag("post", "getRecentPosts"),
       next: { tags: [cacheTag.posts] },
     },
   );
@@ -39,7 +39,7 @@ export const getRecentPostsByCategoryId = <S extends Selection>(
     amount,
     { categoryId },
     {
-      tag: getQueryTag("post", getRecentPostsByCategoryId.name),
+      tag: getQueryTag("post", "getRecentPostsByCategoryId"),
       next: { tags: [categoryId, cacheTag.posts] },
     },
   );
@@ -55,7 +55,7 @@ export const getRecentPostsByTagId = <S extends Selection>(
     amount,
     { tagId },
     {
-      tag: getQueryTag("post", getRecentPostsByTagId.name),
+      tag: getQueryTag("post", "getRecentPostsByTagId"),
       next: { tags: [tagId, cacheTag.posts] },
     },
   );

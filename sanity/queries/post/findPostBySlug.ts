@@ -16,7 +16,7 @@ export const findPostBySlug = <S extends Selection>(
     makeFindPostBySlugQuery().grab$(selection).slice(0).nullable(),
     { slug },
     {
-      tag: getQueryTag("post", findPostBySlug.name),
+      tag: getQueryTag("post", "findPostBySlug"),
       next: { tags: [cacheTag.postSlug(slug)] },
     },
   );

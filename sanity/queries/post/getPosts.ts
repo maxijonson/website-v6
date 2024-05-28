@@ -13,7 +13,7 @@ export const getPosts = <S extends Selection>(selection: S) =>
     makeGetPostsQuery().grab$(selection),
     {},
     {
-      tag: getQueryTag("post", getPosts.name),
+      tag: getQueryTag("post", "getPosts"),
       next: { tags: [cacheTag.posts] },
     },
   );

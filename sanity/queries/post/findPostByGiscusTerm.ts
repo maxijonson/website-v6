@@ -16,7 +16,7 @@ export const findPostByGiscusTerm = <S extends Selection>(
     makeFindPostByGiscusTermQuery().grab$(selection).slice(0).nullable(),
     { giscusTerm },
     {
-      tag: getQueryTag("post", findPostByGiscusTerm.name),
+      tag: getQueryTag("post", "findPostByGiscusTerm"),
       next: { tags: [cacheTag.posts] },
     },
   );

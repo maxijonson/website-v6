@@ -14,5 +14,5 @@ export const findTagBySlug = <S extends Selection>(
   runQuery(
     makeFindTagBySlugQuery().grab$(selection).slice(0).nullable(),
     { slug },
-    { tag: getQueryTag("tag", findTagBySlug.name), next: { tags: [slug] } },
+    { tag: getQueryTag("tag", "findTagBySlug"), next: { tags: [slug] } },
   );

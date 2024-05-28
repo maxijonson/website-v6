@@ -11,5 +11,5 @@ export const getPostBody = async (postId: string) =>
       .filter()
       .select(contentDetailsSelection),
     { postId },
-    { tag: getQueryTag("post", getPostBody.name), next: { tags: [postId] } },
+    { tag: getQueryTag("post", "getPostBody"), next: { tags: [postId] } },
   );

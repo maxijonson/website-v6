@@ -14,7 +14,7 @@ export const getHomePage = () =>
     makeGetHomePageQuery().grab$(homePageDetailsSelection).slice(0),
     {},
     {
-      tag: getQueryTag("home-page", getHomePage.name),
+      tag: getQueryTag("home-page", "getHomePage"),
       next: { tags: [cacheTag.pages.homePage] },
     },
   );

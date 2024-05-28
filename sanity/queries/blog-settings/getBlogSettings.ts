@@ -14,7 +14,7 @@ export const getBlogSettings = <S extends Selection>(selection: S) =>
     makeGetBlogSettingsQuery().grab$(selection).slice(0),
     { blogSettingsId: BLOGSETTINGS_DOCUMENT_ID },
     {
-      tag: getQueryTag("blog-settings", getBlogSettings.name),
+      tag: getQueryTag("blog-settings", "getBlogSettings"),
       next: { tags: ["blogSettings"] },
     },
   );

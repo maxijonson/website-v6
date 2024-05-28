@@ -16,7 +16,7 @@ export const findCategoryBySlug = <S extends Selection>(
     makeFindCategoryBySlugQuery().grab$(selection).slice(0).nullable(),
     { slug },
     {
-      tag: getQueryTag("category", findCategoryBySlug.name),
+      tag: getQueryTag("category", "findCategoryBySlug"),
       next: { tags: [cacheTag.categorySlug(slug)] },
     },
   );
