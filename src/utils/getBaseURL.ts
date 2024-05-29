@@ -9,11 +9,11 @@ export const getBaseURL = () => {
     case "development":
       return new URL("http://localhost:3000");
     case "production":
-      return new URL("https://chintristan.io");
+      return new URL("https://www.chintristan.io");
     default:
       if (process.env.VERCEL_URL) {
         return new URL(`https://${process.env.VERCEL_URL}`);
       }
-      return new URL("https://chintristan.io");
+      return new URL("https://www.chintristan.io");
   }
 };
