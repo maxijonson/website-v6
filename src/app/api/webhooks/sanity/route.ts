@@ -8,6 +8,7 @@ import { getPostsByCategoryId } from "../../../../../sanity/queries/post/getPost
 import { getPostsByTagId } from "../../../../../sanity/queries/post/getPostsByTagId";
 import { getTagsByCategoryId } from "../../../../../sanity/queries/tags/getTagsByCategoryId";
 import { webhookBodyQuery } from "./query";
+import { serverEnv } from "@/env/env-server";
 
 const webhookBodySchema = webhookBodyQuery.slice(0).schema;
 
@@ -15,7 +16,7 @@ export const POST = async (req: NextRequest) => {
   try {
     const { isValidSignature, body } = await parseBody<unknown>(
       req,
-      process.env.SANITY_REVALIDATE_SECRET,
+      serverEnv.SANITY_REVALIDATE_SECRET,
       true,
     );
 

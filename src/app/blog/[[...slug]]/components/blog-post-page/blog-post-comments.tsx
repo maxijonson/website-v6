@@ -1,4 +1,5 @@
 "use client";
+import { clientEnv } from "@/env/env-client";
 import { getBaseURL } from "@/utils/getBaseURL";
 import Giscus from "@giscus/react";
 import { useTheme } from "next-themes";
@@ -11,7 +12,7 @@ const BlogPostComments = (props: BlogPostCommentsProps) => {
   const { resolvedTheme } = useTheme();
 
   const term = (() => {
-    if (process.env.NODE_ENV === "production") {
+    if (clientEnv.NEXT_PUBLIC_NODE_ENV === "production") {
       return props.term;
     }
     if (getBaseURL().hostname.startsWith("staging")) {

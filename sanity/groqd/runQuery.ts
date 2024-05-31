@@ -1,3 +1,4 @@
+import { clientEnv } from "@/env/env-client";
 import { makeSafeQueryRunner } from "groqd";
 import type { FilteredResponseQueryOptions } from "next-sanity";
 import { client } from "../client";
@@ -18,9 +19,11 @@ export const runQuery = makeSafeQueryRunner(
 
     const perspective: RunQueryOptions["perspective"] =
       options?.perspective ?? (isDraftMode ? "previewDrafts" : "published");
+
     const stega: RunQueryOptions["stega"] =
       options?.stega ??
-      (perspective === "previewDrafts" || process.env.VERCEL_ENV === "preview");
+      (perspective === "previewDrafts" ||
+        clientEnv.NEXT_PUBLIC_VERCEL_ENV === "preview");
 
     const token = await (async () => {
       try {
