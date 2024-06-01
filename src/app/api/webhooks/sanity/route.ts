@@ -9,6 +9,7 @@ import { getPostsByTagId } from "../../../../../sanity/queries/post/getPostsByTa
 import { getTagsByCategoryId } from "../../../../../sanity/queries/tags/getTagsByCategoryId";
 import { webhookBodyQuery } from "./query";
 import { serverEnv } from "@/env/env-server";
+import { useCdn } from "../../../../../sanity/env";
 
 const webhookBodySchema = webhookBodyQuery.slice(0).schema;
 
@@ -33,6 +34,12 @@ export const POST = async (req: NextRequest) => {
       return new Response(JSON.stringify({ message, isValidSignature, body }), {
         status: 400,
       });
+    }
+
+    if (useCdn) {
+      console.warn(
+        "Sanity revalidate webhook called, but the app is currently using Sanity's CDN. Revalidation may not work as expected.",
+      );
     }
 
     const data = parseResult.data;
