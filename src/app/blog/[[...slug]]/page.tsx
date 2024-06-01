@@ -9,6 +9,7 @@ import { blogHomeHandler } from "./route-handlers/blogHomeHandler";
 import { blogCategoryHandler } from "./route-handlers/blogCategoryHandler";
 import { blogTagHandler } from "./route-handlers/blogTagHandler";
 import { blogPostHandler } from "./route-handlers/blogPostHandler";
+import { serverEnv } from "@/env/env-server";
 
 export type BlogPageParams = {
   slug?: string[];
@@ -29,6 +30,7 @@ export const generateStaticParams: GenerateStaticParams<
   Record<string, never>,
   BlogPageParams
 > = async (parentProps) => {
+  if (serverEnv.SANITY_ECO_MODE) return [];
   const generatedParams = await Promise.all(
     handlers.map(
       (handler) => handler.generateStaticParams?.(parentProps) ?? [],

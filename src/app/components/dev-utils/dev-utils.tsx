@@ -10,7 +10,7 @@ const DevUtilsClient = () => {
   const searchParams = useSearchParams();
 
   if (
-    clientEnv.NEXT_PUBLIC_NODE_ENV === "production" &&
+    clientEnv.NEXT_PUBLIC_VERCEL_ENV === "production" &&
     !searchParams.has("dev-utils")
   ) {
     return null;

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { createVanillaExtractPlugin } from "@vanilla-extract/next-plugin";
 import crypto from "crypto";
 import { fileURLToPath } from "node:url";
@@ -5,7 +6,7 @@ import createJiti from "jiti";
 
 // Validate environment variables
 const jiti = createJiti(fileURLToPath(import.meta.url));
-jiti("./src/env/env-server.ts");
+const { serverEnv } = jiti("./src/env/env-server.ts");
 const { clientEnv } = jiti("./src/env/env-client.ts");
 
 const withVanillaExtract = createVanillaExtractPlugin();
@@ -102,3 +103,20 @@ const nextConfig = {
 };
 
 export default withVanillaExtract(nextConfig);
+
+console.table(clientEnv);
+
+console.table(
+  Object.entries(serverEnv).reduce((acc, [key, value]) => {
+    return {
+      ...acc,
+      [key]: [
+        "SANITY_API_READ_TOKEN",
+        "SANITY_API_WRITE_TOKEN",
+        "SANITY_REVALIDATE_SECRET",
+      ].includes(key)
+        ? value.slice(0, 4) + "..."
+        : value,
+    };
+  }, {}),
+);
