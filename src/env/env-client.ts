@@ -30,7 +30,9 @@ export const clientEnv = createEnv({
     NEXT_PUBLIC_SANITY_FORCE_USE_CDN: process.env.NEXT_PUBLIC_SANITY_USE_CDN,
 
     NEXT_PUBLIC_VERCEL_ENV:
-      process.env.NEXT_PUBLIC_VERCEL_ENV || process.env.NODE_ENV,
+      process.env.NEXT_PUBLIC_VERCEL_ENV ||
+      process.env.NODE_ENV ||
+      "development",
     NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF:
       process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF,
     NEXT_PUBLIC_VERCEL_URL: process.env.NEXT_PUBLIC_VERCEL_URL,
