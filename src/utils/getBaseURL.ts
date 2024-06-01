@@ -8,7 +8,7 @@ export const getBaseURL = () => {
   if (clientEnv.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF === "develop") {
     return new URL("https://staging.chintristan.io");
   }
-  switch (clientEnv.NEXT_PUBLIC_NODE_ENV) {
+  switch (clientEnv.NEXT_PUBLIC_VERCEL_ENV) {
     case "development":
       return new URL("http://localhost:3000");
     case "production":

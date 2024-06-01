@@ -12,7 +12,7 @@ const BlogPostComments = (props: BlogPostCommentsProps) => {
   const { resolvedTheme } = useTheme();
 
   const term = (() => {
-    if (clientEnv.NEXT_PUBLIC_NODE_ENV === "production") {
+    if (clientEnv.NEXT_PUBLIC_VERCEL_ENV === "production") {
       return props.term;
     }
     if (getBaseURL().hostname.startsWith("staging")) {

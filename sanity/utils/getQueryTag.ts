@@ -5,11 +5,7 @@ export const getQueryTag = (
   name: string,
 ) => {
   const environment = (() => {
-    switch (
-      clientEnv.NEXT_PUBLIC_VERCEL_ENV ||
-      clientEnv.NEXT_PUBLIC_NODE_ENV ||
-      "development"
-    ) {
+    switch (clientEnv.NEXT_PUBLIC_VERCEL_ENV) {
       case "production":
         return 0;
       case "preview":
