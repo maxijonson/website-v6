@@ -13,6 +13,7 @@ import { structure } from "./sanity/desk/structure";
 import { apiVersion, dataset, projectId } from "./sanity/env";
 import { schema } from "./sanity/schema";
 import { presentationTool } from "sanity/presentation";
+import { media } from "sanity-plugin-media";
 
 export const configBase = {
   projectId,
@@ -32,6 +33,7 @@ export const configBase = {
     codeInput(),
     colorInput(),
     iconify(),
+    media(),
   ],
 } satisfies Partial<Config>;
 
