@@ -39,7 +39,7 @@ export default defineType({
     defineField({
       name: "bio",
       title: "Bio",
-      type: "string",
+      type: "text",
       validation: (rule) => [
         rule.required(),
         rule.min(3).max(250).error("Must be between 3 and 250 characters"),
