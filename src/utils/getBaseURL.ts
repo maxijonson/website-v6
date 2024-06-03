@@ -13,11 +13,11 @@ export const getBaseURL = () => {
     case "development":
       return new URL(`http://localhost:${serverEnv.PORT ?? 3000}`);
     case "production":
-      return new URL("https://chintristan.io");
+      return new URL("https://www.chintristan.io");
     default:
       if (clientEnv.NEXT_PUBLIC_VERCEL_URL) {
         return new URL(`https://${clientEnv.NEXT_PUBLIC_VERCEL_URL}`);
       }
-      return new URL("https://chintristan.io");
+      return new URL("https://www.chintristan.io");
   }
 };
