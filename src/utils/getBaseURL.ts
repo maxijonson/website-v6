@@ -1,4 +1,5 @@
 import { clientEnv } from "@/env/env-client";
+import { serverEnv } from "@/env/env-server";
 
 export const getBaseURL = () => {
   if (typeof window !== "undefined") {
@@ -10,7 +11,7 @@ export const getBaseURL = () => {
   }
   switch (clientEnv.NEXT_PUBLIC_VERCEL_ENV) {
     case "development":
-      return new URL("http://localhost:3000");
+      return new URL(`http://localhost:${serverEnv.PORT ?? 3000}`);
     case "production":
       return new URL("https://chintristan.io");
     default:

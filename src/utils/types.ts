@@ -1,5 +1,7 @@
 import { q, type BaseQuery, type Selection, type z } from "groqd";
 import type { Metadata, ResolvingMetadata } from "next";
+import type { ImageResponse } from "next/og";
+import type { NextRequest } from "next/server";
 
 export type Awaitable<T> = Promise<any> extends T ? T : T | Promise<T>;
 
@@ -46,6 +48,9 @@ export interface RouteCatchAllHandler<
   render: (pageProps: PageProps<TParams>) => Awaitable<JSX.Element>;
   generateStaticParams?: GenerateStaticParams<TParentParams, TParams>;
   generateMetadata?: GenerateMetadata<TParams>;
+  openGraphImage?: (
+    props: OpenGraphImageProps<TParams>,
+  ) => Awaitable<ImageResponse>;
 }
 
 const unknownArrayQuery = q("").filter();
@@ -56,3 +61,8 @@ export type EntityQuery = typeof entityQuery;
 
 export type ConditionValue = Selection | BaseQuery<any> | [string, z.ZodType];
 export type ConditionRecord = Record<string, ConditionValue>;
+
+export type GetRouteHandler<TParams extends RouteParams = RouteParams> = (
+  req: NextRequest,
+  props: { params: TParams },
+) => Awaitable<Response>;
