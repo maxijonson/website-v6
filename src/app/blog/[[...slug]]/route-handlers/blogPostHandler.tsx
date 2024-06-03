@@ -117,9 +117,10 @@ export const blogPostHandler: BlogRouteHandler = {
           <img
             src={imageUrl}
             alt={post.image.alt}
-            tw="w-full h-full object-cover absolute z-0 top-0 left-0"
+            tw="w-full h-full absolute top-0 left-0"
+            style={{ objectFit: "cover" }}
           />
-          <div tw="bg-black/70 w-full h-full flex flex-col justify-center items-center z-10 text-stone-50">
+          <div tw="bg-black/85 w-full h-full flex flex-col justify-center items-center text-stone-50">
             <div tw="flex justify-center flex-wrap max-w-4xl">
               {post.tags.map((tag) => (
                 <span

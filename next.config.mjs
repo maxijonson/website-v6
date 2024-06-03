@@ -3,11 +3,13 @@ import { createVanillaExtractPlugin } from "@vanilla-extract/next-plugin";
 import crypto from "crypto";
 import { fileURLToPath } from "node:url";
 import createJiti from "jiti";
+import chalk from "chalk";
 
 // Validate environment variables
 const jiti = createJiti(fileURLToPath(import.meta.url));
 const { serverEnv } = jiti("./src/env/env-server.ts");
 const { clientEnv } = jiti("./src/env/env-client.ts");
+const { getBaseURL } = jiti("./src/utils/getBaseURL.ts");
 
 const withVanillaExtract = createVanillaExtractPlugin();
 
@@ -103,6 +105,10 @@ const nextConfig = {
 };
 
 export default withVanillaExtract(nextConfig);
+
+console.info(
+  chalk.cyan("Base URL on the server is:", chalk.bold(getBaseURL().href)),
+);
 
 console.table(clientEnv);
 
