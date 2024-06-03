@@ -1,15 +1,7 @@
-import type {
-  GenerateMetadata,
-  GenerateStaticParams,
-  PageProps,
-  RouteCatchAllHandler,
-} from "@/utils/types";
-import { notFound } from "next/navigation";
-import { blogHomeHandler } from "./route-handlers/blogHomeHandler";
-import { blogCategoryHandler } from "./route-handlers/blogCategoryHandler";
-import { blogTagHandler } from "./route-handlers/blogTagHandler";
-import { blogPostHandler } from "./route-handlers/blogPostHandler";
 import { serverEnv } from "@/env/env-server";
+import type { PageProps } from "@/utils/types";
+import { notFound } from "next/navigation";
+import { blogRouteHandlers, type BlogRouteHandler } from "./route-handlers";
 
 export type BlogPageParams = {
   slug?: string[];
@@ -17,33 +9,22 @@ export type BlogPageParams = {
 
 export type BlogPageProps = PageProps<BlogPageParams>;
 
-export type BlogRouteHandler = RouteCatchAllHandler<BlogPageParams>;
+export const generateStaticParams: BlogRouteHandler["generateStaticParams"] =
+  async (parentProps) => {
+    if (serverEnv.SANITY_ECO_MODE) return [];
+    const generatedParams = await Promise.all(
+      blogRouteHandlers.map(
+        (handler) => handler.generateStaticParams?.(parentProps) ?? [],
+      ),
+    );
+    return generatedParams.flat();
+  };
 
-const handlers: BlogRouteHandler[] = [
-  blogHomeHandler,
-  blogPostHandler,
-  blogCategoryHandler,
-  blogTagHandler,
-];
-
-export const generateStaticParams: GenerateStaticParams<
-  Record<string, never>,
-  BlogPageParams
-> = async (parentProps) => {
-  if (serverEnv.SANITY_ECO_MODE) return [];
-  const generatedParams = await Promise.all(
-    handlers.map(
-      (handler) => handler.generateStaticParams?.(parentProps) ?? [],
-    ),
-  );
-  return generatedParams.flat();
-};
-
-export const generateMetadata: GenerateMetadata<BlogPageParams> = async (
+export const generateMetadata: BlogRouteHandler["generateMetadata"] = async (
   pageProps,
   parent,
 ) => {
-  for (const handler of handlers) {
+  for (const handler of blogRouteHandlers) {
     if (await handler.canHandle(pageProps)) {
       return handler.generateMetadata?.(pageProps, parent) ?? {};
     }
@@ -51,8 +32,8 @@ export const generateMetadata: GenerateMetadata<BlogPageParams> = async (
   return {};
 };
 
-const BlogPage = async (props: BlogPageProps) => {
-  for (const handler of handlers) {
+const BlogPage: BlogRouteHandler["render"] = async (props) => {
+  for (const handler of blogRouteHandlers) {
     if (await handler.canHandle(props)) {
       return handler.render(props);
     }

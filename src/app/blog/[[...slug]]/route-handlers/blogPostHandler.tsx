@@ -5,9 +5,9 @@ import { findPostBySlug } from "../../../../../sanity/queries/post/findPostBySlu
 import { getPosts } from "../../../../../sanity/queries/post/getPosts";
 import { urlForImage } from "../../../../../sanity/utils/image";
 import BlogPostPage from "../components/blog-post-page/blog-post-page";
-import type { BlogRouteHandler } from "../page";
 import { pick } from "../../../../../sanity/groqd/selections/pick";
 import { postDetailsSelection } from "../../../../../sanity/groqd/selections/post-details";
+import type { BlogRouteHandler } from ".";
 
 export const blogPostHandler: BlogRouteHandler = {
   canHandle: async ({ params: { slug = [] } }) => {

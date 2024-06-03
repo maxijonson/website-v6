@@ -1,5 +1,4 @@
 import { findCategoryBySlug } from "../../../../../sanity/queries/categories/findCategoryBySlug";
-import type { BlogRouteHandler } from "../page";
 import BlogCategoryPage from "../components/blog-category-page/blog-category-page";
 import { getCategories } from "../../../../../sanity/queries/categories/getCategories";
 import { getDefinedParentMetadata } from "@/utils/getDefinedParentMetadata";
@@ -10,6 +9,7 @@ import { getTagsByCategoryId } from "../../../../../sanity/queries/tags/getTagsB
 import { pick } from "../../../../../sanity/groqd/selections/pick";
 import { categoryDetailsSelection } from "../../../../../sanity/groqd/selections/category-details";
 import { tagDetailsSelection } from "../../../../../sanity/groqd/selections/tag-details";
+import type { BlogRouteHandler } from ".";
 
 export const blogCategoryHandler: BlogRouteHandler = {
   canHandle: async ({ params: { slug = [] } }) => {

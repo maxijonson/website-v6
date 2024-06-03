@@ -1,4 +1,3 @@
-import type { BlogRouteHandler } from "../page";
 import { findTagBySlug } from "../../../../../sanity/queries/tags/findTagBySlug";
 import BlogTagPage from "../components/blog-tag-page/blog-tag-page";
 import { getTags } from "../../../../../sanity/queries/tags/getTags";
@@ -8,6 +7,7 @@ import type { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
 import { urlForImage } from "../../../../../sanity/utils/image";
 import { pick } from "../../../../../sanity/groqd/selections/pick";
 import { tagDetailsSelection } from "../../../../../sanity/groqd/selections/tag-details";
+import type { BlogRouteHandler } from ".";
 
 export const blogTagHandler: BlogRouteHandler = {
   canHandle: async ({ params: { slug = [] } }) => {

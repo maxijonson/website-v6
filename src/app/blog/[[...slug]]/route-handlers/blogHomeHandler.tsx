@@ -1,7 +1,6 @@
 import { getCategories } from "../../../../../sanity/queries/categories/getCategories";
 import { getTags } from "../../../../../sanity/queries/tags/getTags";
 import BlogHomePage from "../components/blog-home-page/blog-home-page";
-import type { BlogRouteHandler } from "../page";
 import type { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
 import { getDefinedParentMetadata } from "@/utils/getDefinedParentMetadata";
 import { pick } from "../../../../../sanity/groqd/selections/pick";
@@ -11,6 +10,7 @@ import { getBlogSettings } from "../../../../../sanity/queries/blog-settings/get
 import { blogSettingsDetailsSelection } from "../../../../../sanity/groqd/selections/blog-settings-details";
 import { urlForImage } from "../../../../../sanity/utils/image";
 import { getImageDimensions } from "@sanity/asset-utils";
+import type { BlogRouteHandler } from ".";
 
 export const blogHomeHandler: BlogRouteHandler = {
   canHandle: ({ params: { slug = [] } }) => slug.length === 0,
