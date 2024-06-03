@@ -111,6 +111,27 @@ export const blogPostHandler: BlogRouteHandler = {
       .size(authorAvatarSize, authorAvatarSize)
       .url();
 
+    console.info([
+      {
+        name: "Inter",
+        data: new URL("/font/Inter/Inter-Regular.ttf", getBaseURL()),
+        style: "normal",
+        weight: 400,
+      },
+      {
+        name: "Inter",
+        data: new URL("/font/Inter/Inter-Medium.ttf", getBaseURL()),
+        style: "normal",
+        weight: 500,
+      },
+      {
+        name: "Inter",
+        data: new URL("/font/Inter/Inter-Bold.ttf", getBaseURL()),
+        style: "normal",
+        weight: 700,
+      },
+    ]);
+
     return new ImageResponse(
       (
         <div tw="flex flex-col w-full h-full items-center justify-center bg-black">
