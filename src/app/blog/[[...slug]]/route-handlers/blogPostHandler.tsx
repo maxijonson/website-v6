@@ -8,7 +8,10 @@ import { postDetailsSelection } from "../../../../../sanity/groqd/selections/pos
 import { findPostBySlug } from "../../../../../sanity/queries/post/findPostBySlug";
 import { getPosts } from "../../../../../sanity/queries/post/getPosts";
 import BlogPostPage from "../components/blog-post-page/blog-post-page";
-import { getOpenGraphImageResponse } from "../utils/getOpenGraphImageResponse";
+import {
+  getOpenGraphImageResponse,
+  ogImageSize,
+} from "../utils/getOpenGraphImageResponse";
 
 export const blogPostHandler: BlogRouteHandler = {
   canHandle: async ({ params: { slug = [] } }) => {
@@ -47,10 +50,9 @@ export const blogPostHandler: BlogRouteHandler = {
 
     const ogImages: Required<OpenGraph["images"]> = [
       {
+        ...ogImageSize,
         url: `/og/blog/${slug[0]}`,
         alt: post.image.alt,
-        width: 1200,
-        height: 630,
       },
     ];
 
@@ -104,9 +106,9 @@ export const blogPostHandler: BlogRouteHandler = {
       image: post.image,
       title: post.title,
       description: post.summary,
+      tags: post.tags,
       author: post.author,
       date: post.createdAt,
-      tags: post.tags,
     });
   },
 };

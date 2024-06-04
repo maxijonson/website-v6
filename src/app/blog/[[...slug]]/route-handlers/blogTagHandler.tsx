@@ -8,6 +8,8 @@ import { urlForImage } from "../../../../../sanity/utils/image";
 import { pick } from "../../../../../sanity/groqd/selections/pick";
 import { tagDetailsSelection } from "../../../../../sanity/groqd/selections/tag-details";
 import type { BlogRouteHandler } from ".";
+import { notFound } from "next/navigation";
+import { getOpenGraphImageResponse } from "../utils/getOpenGraphImageResponse";
 
 export const blogTagHandler: BlogRouteHandler = {
   canHandle: async ({ params: { slug = [] } }) => {
@@ -67,5 +69,19 @@ export const blogTagHandler: BlogRouteHandler = {
         images: ogImages,
       },
     };
+  },
+  openGraphImage: async ({ params: { slug = [] } }) => {
+    const tag = await findTagBySlug(
+      slug[0],
+      pick(tagDetailsSelection, ["image", "caption", "description", "name"]),
+    );
+    if (!tag) notFound();
+
+    return getOpenGraphImageResponse({
+      image: tag.image,
+      title: tag.caption,
+      description: tag.description,
+      tags: [tag],
+    });
   },
 };

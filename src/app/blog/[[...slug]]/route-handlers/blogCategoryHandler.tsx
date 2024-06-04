@@ -1,15 +1,18 @@
-import { findCategoryBySlug } from "../../../../../sanity/queries/categories/findCategoryBySlug";
-import BlogCategoryPage from "../components/blog-category-page/blog-category-page";
-import { getCategories } from "../../../../../sanity/queries/categories/getCategories";
 import { getDefinedParentMetadata } from "@/utils/getDefinedParentMetadata";
-import { urlForImage } from "../../../../../sanity/utils/image";
-import { getImageDimensions } from "@sanity/asset-utils";
 import type { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
-import { getTagsByCategoryId } from "../../../../../sanity/queries/tags/getTagsByCategoryId";
-import { pick } from "../../../../../sanity/groqd/selections/pick";
-import { categoryDetailsSelection } from "../../../../../sanity/groqd/selections/category-details";
-import { tagDetailsSelection } from "../../../../../sanity/groqd/selections/tag-details";
+import { notFound } from "next/navigation";
 import type { BlogRouteHandler } from ".";
+import { categoryDetailsSelection } from "../../../../../sanity/groqd/selections/category-details";
+import { pick } from "../../../../../sanity/groqd/selections/pick";
+import { tagDetailsSelection } from "../../../../../sanity/groqd/selections/tag-details";
+import { findCategoryBySlug } from "../../../../../sanity/queries/categories/findCategoryBySlug";
+import { getCategories } from "../../../../../sanity/queries/categories/getCategories";
+import { getTagsByCategoryId } from "../../../../../sanity/queries/tags/getTagsByCategoryId";
+import BlogCategoryPage from "../components/blog-category-page/blog-category-page";
+import {
+  getOpenGraphImageResponse,
+  ogImageSize,
+} from "../utils/getOpenGraphImageResponse";
 
 export const blogCategoryHandler: BlogRouteHandler = {
   canHandle: async ({ params: { slug = [] } }) => {
@@ -53,13 +56,11 @@ export const blogCategoryHandler: BlogRouteHandler = {
     const title = `${category.name} - Tristan Chin's Blog`;
     const description = category.description;
 
-    const imageDimensions = getImageDimensions(category.image);
     const ogImages: Required<OpenGraph["images"]> = [
       {
-        url: urlForImage(category.image),
+        ...ogImageSize,
+        url: `/og/blog/${slug[0]}`,
         alt: category.image.alt,
-        width: imageDimensions.width,
-        height: imageDimensions.height,
       },
     ];
 
@@ -90,5 +91,24 @@ export const blogCategoryHandler: BlogRouteHandler = {
         images: ogImages,
       },
     };
+  },
+  openGraphImage: async ({ params: { slug = [] } }) => {
+    const category = await findCategoryBySlug(
+      slug[0],
+      pick(categoryDetailsSelection, [
+        "image",
+        "caption",
+        "description",
+        "name",
+      ]),
+    );
+    if (!category) notFound();
+
+    return getOpenGraphImageResponse({
+      image: category.image,
+      title: category.caption,
+      description: category.description,
+      tags: [category],
+    });
   },
 };

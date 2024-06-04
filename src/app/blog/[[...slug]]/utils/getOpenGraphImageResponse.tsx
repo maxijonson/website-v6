@@ -15,6 +15,11 @@ export interface GetOpenGraphImageResponseProps {
   tags?: Pick<TagDetails, "name">[];
 }
 
+export const ogImageSize = {
+  width: 1200,
+  height: 630,
+} as const;
+
 export const getOpenGraphImageResponse = async ({
   image,
   author,
@@ -49,7 +54,7 @@ export const getOpenGraphImageResponse = async ({
                 <span
                   key={tag.name}
                   tw={cn(
-                    "bg-stone-200 text-stone-800 px-3 py-1 rounded-full text-xl mb-4",
+                    "bg-stone-200 text-stone-800 px-3 py-1 rounded-full text-2xl mb-4",
                     {
                       "ml-4": tag !== tags[0],
                     },
@@ -66,7 +71,7 @@ export const getOpenGraphImageResponse = async ({
           )}
 
           {description && (
-            <div tw="max-w-6xl text-2xl text-center text-stone-300 mt-4">
+            <div tw="max-w-5xl text-2xl text-center text-stone-300 mt-4">
               {description}
             </div>
           )}
@@ -101,8 +106,7 @@ export const getOpenGraphImageResponse = async ({
       </div>
     ),
     {
-      width: 1200,
-      height: 630,
+      ...ogImageSize,
       fonts: [
         {
           name: "Inter",
