@@ -1,15 +1,16 @@
-import { findTagBySlug } from "../../../../../sanity/queries/tags/findTagBySlug";
-import BlogTagPage from "../components/blog-tag-page/blog-tag-page";
-import { getTags } from "../../../../../sanity/queries/tags/getTags";
 import { getDefinedParentMetadata } from "@/utils/getDefinedParentMetadata";
-import { getImageDimensions } from "@sanity/asset-utils";
 import type { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
-import { urlForImage } from "../../../../../sanity/utils/image";
+import { notFound } from "next/navigation";
+import type { BlogRouteHandler } from ".";
 import { pick } from "../../../../../sanity/groqd/selections/pick";
 import { tagDetailsSelection } from "../../../../../sanity/groqd/selections/tag-details";
-import type { BlogRouteHandler } from ".";
-import { notFound } from "next/navigation";
-import { getOpenGraphImageResponse } from "../utils/getOpenGraphImageResponse";
+import { findTagBySlug } from "../../../../../sanity/queries/tags/findTagBySlug";
+import { getTags } from "../../../../../sanity/queries/tags/getTags";
+import BlogTagPage from "../components/blog-tag-page/blog-tag-page";
+import {
+  getOpenGraphImageResponse,
+  ogImageSize,
+} from "../utils/getOpenGraphImageResponse";
 
 export const blogTagHandler: BlogRouteHandler = {
   canHandle: async ({ params: { slug = [] } }) => {
@@ -37,13 +38,11 @@ export const blogTagHandler: BlogRouteHandler = {
     const title = `${tag.name} - Tristan Chin's Blog`;
     const description = tag.description;
 
-    const imageDimensions = getImageDimensions(tag.image);
     const ogImages: Required<OpenGraph["images"]> = [
       {
-        url: urlForImage(tag.image),
+        ...ogImageSize,
+        url: `/og/blog/${slug[0]}`,
         alt: tag.image.alt,
-        width: imageDimensions.width,
-        height: imageDimensions.height,
       },
     ];
 
