@@ -52,7 +52,7 @@ export const blogPostHandler: BlogRouteHandler = {
     const ogImages: Required<OpenGraph["images"]> = [
       {
         ...ogImageSize,
-        url: `/og/blog/${slug[0]}`,
+        url: new URL(`/og/blog/${slug[0]}`, getBaseURL()),
         alt: post.image.alt,
       },
     ];

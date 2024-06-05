@@ -34,7 +34,7 @@ export const blogHomeHandler: BlogRouteHandler = {
     const ogImages: Required<OpenGraph["images"]> = [
       {
         ...ogImageSize,
-        url: "/og/blog/",
+        url: new URL("/og/blog", getBaseURL()),
         alt: blogSettings.image.alt,
       },
     ];
