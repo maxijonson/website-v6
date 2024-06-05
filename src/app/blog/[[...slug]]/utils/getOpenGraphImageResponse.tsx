@@ -20,6 +20,29 @@ export const ogImageSize = {
   height: 630,
 } as const;
 
+type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+type FontStyle = "normal" | "italic";
+const loadFont = async ({
+  url,
+  ...config
+}: {
+  name: string;
+  url: URL;
+  style: FontStyle;
+  weight: FontWeight;
+}) => {
+  try {
+    return await fetch(url.toString())
+      .then((res) => res.arrayBuffer())
+      .then((data) => ({
+        ...config,
+        data,
+      }));
+  } catch {
+    return undefined;
+  }
+};
+
 export const getOpenGraphImageResponse = async ({
   image,
   author,
@@ -37,6 +60,38 @@ export const getOpenGraphImageResponse = async ({
         .size(authorAvatarSize, authorAvatarSize)
         .url()
     : null;
+
+  const fonts = (
+    await Promise.all([
+      loadFont({
+        name: "Inter",
+        url: new URL(
+          "/font/Inter/Inter-Regular.ttf",
+          "https://www.chintristan.io",
+        ),
+        style: "normal",
+        weight: 400,
+      }),
+      loadFont({
+        name: "Inter",
+        url: new URL(
+          "/font/Inter/Inter-Medium.ttf",
+          "https://www.chintristan.io",
+        ),
+        style: "normal",
+        weight: 500,
+      }),
+      loadFont({
+        name: "Inter",
+        url: new URL(
+          "/font/Inter/Inter-Bold.ttf",
+          "https://www.chintristan.io",
+        ),
+        style: "normal",
+        weight: 700,
+      }),
+    ])
+  ).filter((font): font is NonNullable<typeof font> => font !== undefined);
 
   return new ImageResponse(
     (
@@ -107,38 +162,7 @@ export const getOpenGraphImageResponse = async ({
     ),
     {
       ...ogImageSize,
-      fonts: [
-        {
-          name: "Inter",
-          data: await fetch(
-            new URL(
-              "/font/Inter/Inter-Regular.ttf",
-              "https://www.chintristan.io",
-            ),
-          ).then((res) => res.arrayBuffer()),
-          style: "normal",
-          weight: 400,
-        },
-        {
-          name: "Inter",
-          data: await fetch(
-            new URL(
-              "/font/Inter/Inter-Medium.ttf",
-              "https://www.chintristan.io",
-            ),
-          ).then((res) => res.arrayBuffer()),
-          style: "normal",
-          weight: 500,
-        },
-        {
-          name: "Inter",
-          data: await fetch(
-            new URL("/font/Inter/Inter-Bold.ttf", "https://www.chintristan.io"),
-          ).then((res) => res.arrayBuffer()),
-          style: "normal",
-          weight: 700,
-        },
-      ],
+      fonts,
     },
   );
 };
