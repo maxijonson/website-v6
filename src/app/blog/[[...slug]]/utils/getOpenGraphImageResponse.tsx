@@ -28,7 +28,6 @@ export const getOpenGraphImageResponse = async ({
   date,
   tags = [],
 }: GetOpenGraphImageResponseProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const imageUrl = getImageBuilder(image).blur(100).url();
 
   const authorAvatarSize = 80;
@@ -42,12 +41,12 @@ export const getOpenGraphImageResponse = async ({
   return new ImageResponse(
     (
       <div tw="flex flex-col w-full h-full items-center justify-center bg-black">
-        {/* <img
+        <img
           src={imageUrl}
           alt={image.alt}
           tw="w-full h-full"
           style={{ objectFit: "cover" }}
-        /> */}
+        />
         <div tw="bg-black/85 w-full h-full flex flex-col justify-center items-center text-stone-50">
           {tags.length > 0 && (
             <div tw="flex justify-center flex-wrap max-w-4xl">
