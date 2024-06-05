@@ -44,7 +44,7 @@ export const getOpenGraphImageResponse = async ({
         <img
           src={imageUrl}
           alt={image.alt}
-          tw="w-full h-full"
+          tw="w-full h-full absolute top-0 left-0"
           style={{ objectFit: "cover" }}
         />
         <div tw="bg-black/85 w-full h-full flex flex-col justify-center items-center text-stone-50">
