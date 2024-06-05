@@ -40,6 +40,8 @@ export const generateMetadata = (): Metadata => {
       locale: "en_US",
       countryName: "Canada",
       title: "Tristan Chin's Personal Website",
+      siteName: "Tristan Chin's Personal Website",
+      url: metadataBase,
       description,
       images: [
         {

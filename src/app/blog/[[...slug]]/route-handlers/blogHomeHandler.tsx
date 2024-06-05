@@ -13,6 +13,7 @@ import {
   getOpenGraphImageResponse,
   ogImageSize,
 } from "../utils/getOpenGraphImageResponse";
+import { getBaseURL } from "@/utils/getBaseURL";
 
 export const blogHomeHandler: BlogRouteHandler = {
   canHandle: ({ params: { slug = [] } }) => slug.length === 0,
@@ -56,6 +57,7 @@ export const blogHomeHandler: BlogRouteHandler = {
         title,
         description,
         images: ogImages,
+        url: new URL("/blog", getBaseURL()),
       },
       twitter: {
         ...definedParentMetadata.twitter,

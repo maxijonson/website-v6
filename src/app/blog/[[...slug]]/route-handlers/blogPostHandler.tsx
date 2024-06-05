@@ -12,6 +12,7 @@ import {
   getOpenGraphImageResponse,
   ogImageSize,
 } from "../utils/getOpenGraphImageResponse";
+import { getBaseURL } from "@/utils/getBaseURL";
 
 export const blogPostHandler: BlogRouteHandler = {
   canHandle: async ({ params: { slug = [] } }) => {
@@ -79,6 +80,7 @@ export const blogPostHandler: BlogRouteHandler = {
         title,
         description,
         images: ogImages,
+        url: new URL(`/blog/${slug[0]}`, getBaseURL()),
       },
       twitter: {
         ...definedParentMetadata.twitter,
