@@ -1,5 +1,4 @@
 import { clientEnv } from "../env/env-client";
-import { serverEnv } from "../env/env-server";
 
 export const getBaseURL = () => {
   if (typeof window !== "undefined") {
@@ -16,9 +15,5 @@ export const getBaseURL = () => {
     return new URL(`https://${clientEnv.NEXT_PUBLIC_VERCEL_URL}`);
   }
 
-  try {
-    return new URL(`http://localhost:${serverEnv.PORT ?? 3000}`);
-  } catch {
-    return new URL("http://localhost:3000");
-  }
+  return new URL(`http://localhost:3000`);
 };
