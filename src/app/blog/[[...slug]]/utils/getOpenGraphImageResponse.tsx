@@ -6,6 +6,7 @@ import type { AuthorDetails } from "../../../../../sanity/groqd/selections/autho
 import type { ImageDetails } from "../../../../../sanity/groqd/selections/image-details";
 import type { TagDetails } from "../../../../../sanity/groqd/selections/tag-details";
 import { getImageBuilder } from "../../../../../sanity/utils/image";
+import path from "path";
 
 export interface GetOpenGraphImageResponseProps {
   image: ImageDetails;
@@ -38,6 +39,10 @@ export const getOpenGraphImageResponse = async ({
         .size(authorAvatarSize, authorAvatarSize)
         .url()
     : null;
+
+  const fontDir = path
+    .join(import.meta.url, "../../../../../../public/font/Inter")
+    .replace("file:", "");
 
   return new ImageResponse(
     (
@@ -113,19 +118,19 @@ export const getOpenGraphImageResponse = async ({
           name: "Inter",
           style: "normal",
           weight: 400,
-          data: await fs.readFile("./public/font/Inter/Inter-Regular.ttf"),
+          data: await fs.readFile(path.join(fontDir, "Inter-Regular.ttf")),
         },
         {
           name: "Inter",
           style: "normal",
           weight: 500,
-          data: await fs.readFile("./public/font/Inter/Inter-Medium.ttf"),
+          data: await fs.readFile(path.join(fontDir, "Inter-Medium.ttf")),
         },
         {
           name: "Inter",
           style: "normal",
           weight: 700,
-          data: await fs.readFile("./public/font/Inter/Inter-Bold.ttf"),
+          data: await fs.readFile(path.join(fontDir, "Inter-Bold.ttf")),
         },
       ],
     },
