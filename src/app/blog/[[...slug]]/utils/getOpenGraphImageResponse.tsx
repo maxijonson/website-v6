@@ -21,6 +21,35 @@ export const ogImageSize = {
   height: 630,
 } as const;
 
+type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+type FontStyle = "normal" | "italic";
+const loadFont = async ({
+  url,
+  ...config
+}: {
+  name: string;
+  url: URL;
+  style: FontStyle;
+  weight: FontWeight;
+}) => {
+  try {
+    let res: Response | null = null;
+    res = await fetch(url.toString());
+    if (!res.ok) {
+      res = await fetch(new URL(url.pathname, "https://www.chintristan.io"));
+      if (!res.ok) {
+        return undefined;
+      }
+    }
+    return {
+      ...config,
+      data: await res.arrayBuffer(),
+    };
+  } catch {
+    return undefined;
+  }
+};
+
 export const getOpenGraphImageResponse = async ({
   image,
   author,
@@ -38,6 +67,29 @@ export const getOpenGraphImageResponse = async ({
         .size(authorAvatarSize, authorAvatarSize)
         .url()
     : null;
+
+  const fonts = (
+    await Promise.all([
+      loadFont({
+        name: "Inter",
+        url: new URL("/font/Inter/Inter-Regular.ttf", getBaseURL()),
+        style: "normal",
+        weight: 400,
+      }),
+      loadFont({
+        name: "Inter",
+        url: new URL("/font/Inter/Inter-Medium.ttf", getBaseURL()),
+        style: "normal",
+        weight: 500,
+      }),
+      loadFont({
+        name: "Inter",
+        url: new URL("/font/Inter/Inter-Bold.ttf", getBaseURL()),
+        style: "normal",
+        weight: 700,
+      }),
+    ])
+  ).filter((font): font is NonNullable<typeof font> => font !== undefined);
 
   return new ImageResponse(
     (
@@ -108,32 +160,7 @@ export const getOpenGraphImageResponse = async ({
     ),
     {
       ...ogImageSize,
-      fonts: [
-        {
-          name: "Inter",
-          data: await fetch(
-            new URL("/font/Inter/Inter-Regular.ttf", getBaseURL()),
-          ).then((res) => res.arrayBuffer()),
-          style: "normal",
-          weight: 400,
-        },
-        {
-          name: "Inter",
-          data: await fetch(
-            new URL("/font/Inter/Inter-Medium.ttf", getBaseURL()),
-          ).then((res) => res.arrayBuffer()),
-          style: "normal",
-          weight: 500,
-        },
-        {
-          name: "Inter",
-          data: await fetch(
-            new URL("/font/Inter/Inter-Bold.ttf", getBaseURL()),
-          ).then((res) => res.arrayBuffer()),
-          style: "normal",
-          weight: 700,
-        },
-      ],
+      fonts: fonts.length > 0 ? fonts : undefined,
     },
   );
 };
