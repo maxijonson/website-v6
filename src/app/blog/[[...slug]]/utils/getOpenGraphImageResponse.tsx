@@ -23,33 +23,25 @@ export const ogImageSize = {
   height: 630,
 } as const;
 
-type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
-type FontStyle = "normal" | "italic";
-const loadFont = async ({
-  url,
-  ...config
-}: {
-  name: string;
-  url: URL;
-  style: FontStyle;
-  weight: FontWeight;
-}) => {
-  try {
-    let res: Response | null = null;
-    res = await fetch(url.toString());
-    if (!res.ok) {
-      res = await fetch(new URL(url.pathname, "https://www.chintristan.io"));
-      if (!res.ok) {
-        return undefined;
-      }
-    }
-    return {
-      ...config,
-      data: await res.arrayBuffer(),
-    };
-  } catch {
-    return undefined;
-  }
+const getInterRegular = async () => {
+  const response = await fetch(new URL("$/font/Inter/Inter-Regular.ttf", import.meta.url));
+  const interRegular = await response.arrayBuffer();
+
+  return interRegular;
+};
+
+const getInterMedium = async () => {
+  const response = await fetch(new URL("$/font/Inter/Inter-Medium.ttf", import.meta.url));
+  const interMedium = await response.arrayBuffer();
+
+  return interMedium;
+};
+
+const getInterBold = async () => {
+  const response = await fetch(new URL("$/font/Inter/Inter-Bold.ttf", import.meta.url));
+  const interSemiBold = await response.arrayBuffer();
+
+  return interSemiBold;
 };
 
 export const getOpenGraphImageResponse = async ({
@@ -69,29 +61,6 @@ export const getOpenGraphImageResponse = async ({
         .size(authorAvatarSize, authorAvatarSize)
         .url()
     : null;
-
-  const fonts = (
-    await Promise.all([
-      loadFont({
-        name: "Inter",
-        url: new URL("/font/Inter/Inter-Regular.ttf", getBaseURL()),
-        style: "normal",
-        weight: 400,
-      }),
-      loadFont({
-        name: "Inter",
-        url: new URL("/font/Inter/Inter-Medium.ttf", getBaseURL()),
-        style: "normal",
-        weight: 500,
-      }),
-      loadFont({
-        name: "Inter",
-        url: new URL("/font/Inter/Inter-Bold.ttf", getBaseURL()),
-        style: "normal",
-        weight: 700,
-      }),
-    ])
-  ).filter((font): font is NonNullable<typeof font> => font !== undefined);
 
   return new ImageResponse(
     (
@@ -159,7 +128,26 @@ export const getOpenGraphImageResponse = async ({
     ),
     {
       ...ogImageSize,
-      fonts: fonts.length > 0 ? fonts : undefined,
+      fonts: [
+        {
+          name: "Inter",
+          style: "normal",
+          weight: 400,
+          data: await getInterRegular(),
+        },
+        {
+          name: "Inter",
+          style: "normal",
+          weight: 500,
+          data: await getInterMedium(),
+        },
+        {
+          name: "Inter",
+          style: "normal",
+          weight: 700,
+          data: await getInterBold(),
+        },
+      ],
     },
   );
 };
