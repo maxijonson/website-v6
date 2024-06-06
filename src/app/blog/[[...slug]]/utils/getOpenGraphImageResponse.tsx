@@ -40,6 +40,11 @@ export const getOpenGraphImageResponse = async ({
         .url()
     : null;
 
+  console.info("cwd", process.cwd());
+  console.info("import.meta.url", import.meta.url);
+  console.info("__dirname", __dirname);
+  console.info("__filename", __filename);
+
   const fontDir = path
     .join(import.meta.url, "../../../../../../public/font/Inter")
     .replace("file:", "");
