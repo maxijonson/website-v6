@@ -5,7 +5,7 @@ import { getImageBuilder } from "../../../../../sanity/utils/image";
 import type { AuthorDetails } from "../../../../../sanity/groqd/selections/author-details";
 import type { TagDetails } from "../../../../../sanity/groqd/selections/tag-details";
 import { cn } from "@/lib/utils";
-import { getBaseURL } from "@/utils/getBaseURL";
+// import { getBaseURL } from "@/utils/getBaseURL";
 
 export interface GetOpenGraphImageResponseProps {
   image: ImageDetails;
@@ -23,7 +23,7 @@ export const ogImageSize = {
 
 type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 type FontStyle = "normal" | "italic";
-const loadFont = async ({
+export const loadFont = async ({
   url,
   ...config
 }: {
@@ -68,28 +68,28 @@ export const getOpenGraphImageResponse = async ({
         .url()
     : null;
 
-  const fonts = (
-    await Promise.all([
-      loadFont({
-        name: "Inter",
-        url: new URL("/font/Inter/Inter-Regular.ttf", getBaseURL()),
-        style: "normal",
-        weight: 400,
-      }),
-      loadFont({
-        name: "Inter",
-        url: new URL("/font/Inter/Inter-Medium.ttf", getBaseURL()),
-        style: "normal",
-        weight: 500,
-      }),
-      loadFont({
-        name: "Inter",
-        url: new URL("/font/Inter/Inter-Bold.ttf", getBaseURL()),
-        style: "normal",
-        weight: 700,
-      }),
-    ])
-  ).filter((font): font is NonNullable<typeof font> => font !== undefined);
+  // const fonts = (
+  //   await Promise.all([
+  //     loadFont({
+  //       name: "Inter",
+  //       url: new URL("/font/Inter/Inter-Regular.ttf", getBaseURL()),
+  //       style: "normal",
+  //       weight: 400,
+  //     }),
+  //     loadFont({
+  //       name: "Inter",
+  //       url: new URL("/font/Inter/Inter-Medium.ttf", getBaseURL()),
+  //       style: "normal",
+  //       weight: 500,
+  //     }),
+  //     loadFont({
+  //       name: "Inter",
+  //       url: new URL("/font/Inter/Inter-Bold.ttf", getBaseURL()),
+  //       style: "normal",
+  //       weight: 700,
+  //     }),
+  //   ])
+  // ).filter((font): font is NonNullable<typeof font> => font !== undefined);
 
   return new ImageResponse(
     (
@@ -160,7 +160,6 @@ export const getOpenGraphImageResponse = async ({
     ),
     {
       ...ogImageSize,
-      fonts: fonts.length > 0 ? fonts : undefined,
     },
   );
 };
