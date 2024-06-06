@@ -23,7 +23,7 @@ export const ogImageSize = {
 
 const getInterRegular = async () => {
   const response = await fetch(
-    new URL("$/font/Inter/Inter-Regular.ttf", import.meta.url),
+    new URL("/font/Inter/Inter-Regular.ttf", "https://www.chintristan.io/"),
   );
   const interRegular = await response.arrayBuffer();
 
@@ -32,7 +32,7 @@ const getInterRegular = async () => {
 
 const getInterMedium = async () => {
   const response = await fetch(
-    new URL("$/font/Inter/Inter-Medium.ttf", import.meta.url),
+    new URL("/font/Inter/Inter-Medium.ttf", "https://www.chintristan.io/"),
   );
   const interMedium = await response.arrayBuffer();
 
@@ -41,7 +41,7 @@ const getInterMedium = async () => {
 
 const getInterBold = async () => {
   const response = await fetch(
-    new URL("$/font/Inter/Inter-Bold.ttf", import.meta.url),
+    new URL("/font/Inter/Inter-Bold.ttf", "https://www.chintristan.io/"),
   );
   const interSemiBold = await response.arrayBuffer();
 
