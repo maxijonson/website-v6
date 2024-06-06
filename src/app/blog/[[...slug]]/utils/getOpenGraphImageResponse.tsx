@@ -52,21 +52,21 @@ const loadFont = async ({
 
 export const getOpenGraphImageResponse = async ({
   image,
-  author,
+  // author,
   title,
   description,
-  date,
+  // date,
   tags = [],
 }: GetOpenGraphImageResponseProps) => {
   const imageUrl = getImageBuilder(image).blur(100).url();
 
-  const authorAvatarSize = 80;
-  const authorAvatarUrl = author
-    ? getImageBuilder(author.image)
-        .quality(100)
-        .size(authorAvatarSize, authorAvatarSize)
-        .url()
-    : null;
+  // const authorAvatarSize = 80;
+  // const authorAvatarUrl = author
+  //   ? getImageBuilder(author.image)
+  //       .quality(100)
+  //       .size(authorAvatarSize, authorAvatarSize)
+  //       .url()
+  //   : null;
 
   const fonts = (
     await Promise.all([
@@ -129,7 +129,7 @@ export const getOpenGraphImageResponse = async ({
             </div>
           )}
 
-          {(author || date) && (
+          {/* {(author || date) && (
             <div tw="flex items-center mt-4 text-stone-300">
               {author && authorAvatarUrl && (
                 <div tw="flex items-center">
@@ -154,7 +154,7 @@ export const getOpenGraphImageResponse = async ({
                 </div>
               )}
             </div>
-          )}
+          )} */}
         </div>
       </div>
     ),
