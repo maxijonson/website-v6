@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from "next/og";
 import type { ImageDetails } from "../../../../../sanity/groqd/selections/image-details";
@@ -52,21 +53,21 @@ const loadFont = async ({
 
 export const getOpenGraphImageResponse = async ({
   image,
-  // author,
+  author,
   title,
   description,
-  // date,
+  date,
   tags = [],
 }: GetOpenGraphImageResponseProps) => {
   const imageUrl = getImageBuilder(image).blur(100).url();
 
-  // const authorAvatarSize = 80;
-  // const authorAvatarUrl = author
-  //   ? getImageBuilder(author.image)
-  //       .quality(100)
-  //       .size(authorAvatarSize, authorAvatarSize)
-  //       .url()
-  //   : null;
+  const authorAvatarSize = 80;
+  const authorAvatarUrl = author
+    ? getImageBuilder(author.image)
+        .quality(100)
+        .size(authorAvatarSize, authorAvatarSize)
+        .url()
+    : null;
 
   const fonts = (
     await Promise.all([
@@ -96,7 +97,6 @@ export const getOpenGraphImageResponse = async ({
       <div tw="flex flex-col w-full h-full items-center justify-center bg-black">
         <img
           src={imageUrl}
-          alt={image.alt}
           tw="w-full h-full absolute top-0 left-0"
           style={{ objectFit: "cover" }}
         />
@@ -129,17 +129,16 @@ export const getOpenGraphImageResponse = async ({
             </div>
           )}
 
-          {/* {(author || date) && (
+          {(author || date) && (
             <div tw="flex items-center mt-4 text-stone-300">
               {author && authorAvatarUrl && (
                 <div tw="flex items-center">
-                  <img
+                  {/* <img
                     src={authorAvatarUrl}
-                    alt={author.image.alt}
                     tw="rounded-full"
                     width={authorAvatarSize}
                     height={authorAvatarSize}
-                  />
+                  /> */}
                   <div tw="ml-4 text-3xl">{author.name}</div>
                 </div>
               )}
@@ -154,7 +153,7 @@ export const getOpenGraphImageResponse = async ({
                 </div>
               )}
             </div>
-          )} */}
+          )}
         </div>
       </div>
     ),
