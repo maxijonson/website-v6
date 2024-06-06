@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import { ImageResponse } from "next/og";
-import type { ImageDetails } from "../../../../../sanity/groqd/selections/image-details";
-import { getImageBuilder } from "../../../../../sanity/utils/image";
-import type { AuthorDetails } from "../../../../../sanity/groqd/selections/author-details";
-import type { TagDetails } from "../../../../../sanity/groqd/selections/tag-details";
 import { cn } from "@/lib/utils";
+import fs from "fs/promises";
+import { ImageResponse } from "next/og";
+import type { AuthorDetails } from "../../../../../sanity/groqd/selections/author-details";
+import type { ImageDetails } from "../../../../../sanity/groqd/selections/image-details";
+import type { TagDetails } from "../../../../../sanity/groqd/selections/tag-details";
+import { getImageBuilder } from "../../../../../sanity/utils/image";
 
 export interface GetOpenGraphImageResponseProps {
   image: ImageDetails;
@@ -19,29 +20,6 @@ export const ogImageSize = {
   width: 1200,
   height: 630,
 } as const;
-
-type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
-type FontStyle = "normal" | "italic";
-const loadFont = async ({
-  url,
-  ...config
-}: {
-  name: string;
-  url: URL;
-  style: FontStyle;
-  weight: FontWeight;
-}) => {
-  try {
-    return await fetch(url.toString())
-      .then((res) => res.arrayBuffer())
-      .then((data) => ({
-        ...config,
-        data,
-      }));
-  } catch {
-    return undefined;
-  }
-};
 
 export const getOpenGraphImageResponse = async ({
   image,
@@ -60,38 +38,6 @@ export const getOpenGraphImageResponse = async ({
         .size(authorAvatarSize, authorAvatarSize)
         .url()
     : null;
-
-  const fonts = (
-    await Promise.all([
-      loadFont({
-        name: "Inter",
-        url: new URL(
-          "/font/Inter/Inter-Regular.ttf",
-          "https://www.chintristan.io",
-        ),
-        style: "normal",
-        weight: 400,
-      }),
-      loadFont({
-        name: "Inter",
-        url: new URL(
-          "/font/Inter/Inter-Medium.ttf",
-          "https://www.chintristan.io",
-        ),
-        style: "normal",
-        weight: 500,
-      }),
-      loadFont({
-        name: "Inter",
-        url: new URL(
-          "/font/Inter/Inter-Bold.ttf",
-          "https://www.chintristan.io",
-        ),
-        style: "normal",
-        weight: 700,
-      }),
-    ])
-  ).filter((font): font is NonNullable<typeof font> => font !== undefined);
 
   return new ImageResponse(
     (
@@ -162,7 +108,26 @@ export const getOpenGraphImageResponse = async ({
     ),
     {
       ...ogImageSize,
-      fonts,
+      fonts: [
+        {
+          name: "Inter",
+          style: "normal",
+          weight: 400,
+          data: await fs.readFile("./public/font/Inter/Inter-Regular.ttf"),
+        },
+        {
+          name: "Inter",
+          style: "normal",
+          weight: 500,
+          data: await fs.readFile("./public/font/Inter/Inter-Medium.ttf"),
+        },
+        {
+          name: "Inter",
+          style: "normal",
+          weight: 700,
+          data: await fs.readFile("./public/font/Inter/Inter-Bold.ttf"),
+        },
+      ],
     },
   );
 };
