@@ -132,7 +132,7 @@ export const getOpenGraphImageResponse = async ({
 
           {(author || date) && (
             <div tw="flex items-center mt-4 text-stone-300">
-              {/* {author && authorAvatarUrl && (
+              {author && authorAvatarUrl && (
                 <div tw="flex items-center">
                   <img
                     src={authorAvatarUrl}
@@ -142,7 +142,7 @@ export const getOpenGraphImageResponse = async ({
                   />
                   <div tw="ml-4 text-3xl">{author.name}</div>
                 </div>
-              )} */}
+              )}
 
               {author && date && <div tw="mx-4">•</div>}
               {date && (
