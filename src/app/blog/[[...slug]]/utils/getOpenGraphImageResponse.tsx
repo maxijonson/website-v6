@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { cn } from "@/lib/utils";
 import fs from "fs/promises";
+import fss from "fs";
 import { ImageResponse } from "next/og";
 import type { AuthorDetails } from "../../../../../sanity/groqd/selections/author-details";
 import type { ImageDetails } from "../../../../../sanity/groqd/selections/image-details";
@@ -40,14 +41,17 @@ export const getOpenGraphImageResponse = async ({
         .url()
     : null;
 
-  console.info("cwd", process.cwd());
-  console.info("import.meta.url", import.meta.url);
-  console.info("__dirname", __dirname);
-  console.info("__filename", __filename);
-
-  const fontDir = path
+  const fontDirPublic = path
     .join(import.meta.url, "../../../../../../public/font/Inter")
     .replace("file:", "");
+  const fontDirVercel = path
+    .join(import.meta.url, "../../../../../../font/Inter")
+    .replace("file:", "");
+
+  const fontDir = fss.existsSync(fontDirPublic) ? fontDirPublic : fontDirVercel;
+  if (!fss.existsSync(fontDir)) {
+    console.error("Font directory not found:", fontDir);
+  }
 
   return new ImageResponse(
     (
@@ -118,26 +122,28 @@ export const getOpenGraphImageResponse = async ({
     ),
     {
       ...ogImageSize,
-      fonts: [
-        {
-          name: "Inter",
-          style: "normal",
-          weight: 400,
-          data: await fs.readFile(path.join(fontDir, "Inter-Regular.ttf")),
-        },
-        {
-          name: "Inter",
-          style: "normal",
-          weight: 500,
-          data: await fs.readFile(path.join(fontDir, "Inter-Medium.ttf")),
-        },
-        {
-          name: "Inter",
-          style: "normal",
-          weight: 700,
-          data: await fs.readFile(path.join(fontDir, "Inter-Bold.ttf")),
-        },
-      ],
+      fonts: fss.existsSync(fontDir)
+        ? [
+            {
+              name: "Inter",
+              style: "normal",
+              weight: 400,
+              data: await fs.readFile(path.join(fontDir, "Inter-Regular.ttf")),
+            },
+            {
+              name: "Inter",
+              style: "normal",
+              weight: 500,
+              data: await fs.readFile(path.join(fontDir, "Inter-Medium.ttf")),
+            },
+            {
+              name: "Inter",
+              style: "normal",
+              weight: 700,
+              data: await fs.readFile(path.join(fontDir, "Inter-Bold.ttf")),
+            },
+          ]
+        : undefined,
     },
   );
 };
