@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from "next/og";
@@ -131,7 +132,7 @@ export const getOpenGraphImageResponse = async ({
 
           {(author || date) && (
             <div tw="flex items-center mt-4 text-stone-300">
-              {author && authorAvatarUrl && (
+              {/* {author && authorAvatarUrl && (
                 <div tw="flex items-center">
                   <img
                     src={authorAvatarUrl}
@@ -143,7 +144,7 @@ export const getOpenGraphImageResponse = async ({
                 </div>
               )}
 
-              {/* {author && date && <div tw="mx-4">•</div>}
+              {author && date && <div tw="mx-4">•</div>}
 
               {date && (
                 <div tw="text-3xl">
