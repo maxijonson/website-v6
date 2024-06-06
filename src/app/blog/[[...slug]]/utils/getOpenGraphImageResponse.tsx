@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from "next/og";
@@ -7,7 +6,6 @@ import { getImageBuilder } from "../../../../../sanity/utils/image";
 import type { AuthorDetails } from "../../../../../sanity/groqd/selections/author-details";
 import type { TagDetails } from "../../../../../sanity/groqd/selections/tag-details";
 import { cn } from "@/lib/utils";
-import { getBaseURL } from "@/utils/getBaseURL";
 
 export interface GetOpenGraphImageResponseProps {
   image: ImageDetails;
@@ -24,21 +22,27 @@ export const ogImageSize = {
 } as const;
 
 const getInterRegular = async () => {
-  const response = await fetch(new URL("$/font/Inter/Inter-Regular.ttf", import.meta.url));
+  const response = await fetch(
+    new URL("$/font/Inter/Inter-Regular.ttf", import.meta.url),
+  );
   const interRegular = await response.arrayBuffer();
 
   return interRegular;
 };
 
 const getInterMedium = async () => {
-  const response = await fetch(new URL("$/font/Inter/Inter-Medium.ttf", import.meta.url));
+  const response = await fetch(
+    new URL("$/font/Inter/Inter-Medium.ttf", import.meta.url),
+  );
   const interMedium = await response.arrayBuffer();
 
   return interMedium;
 };
 
 const getInterBold = async () => {
-  const response = await fetch(new URL("$/font/Inter/Inter-Bold.ttf", import.meta.url));
+  const response = await fetch(
+    new URL("$/font/Inter/Inter-Bold.ttf", import.meta.url),
+  );
   const interSemiBold = await response.arrayBuffer();
 
   return interSemiBold;
