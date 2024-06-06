@@ -133,17 +133,17 @@ export const getOpenGraphImageResponse = async ({
             <div tw="flex items-center mt-4 text-stone-300">
               {author && authorAvatarUrl && (
                 <div tw="flex items-center">
-                  {/* <img
+                  <img
                     src={authorAvatarUrl}
                     tw="rounded-full"
                     width={authorAvatarSize}
                     height={authorAvatarSize}
-                  /> */}
+                  />
                   <div tw="ml-4 text-3xl">{author.name}</div>
                 </div>
               )}
 
-              {author && date && <div tw="mx-4">•</div>}
+              {/* {author && date && <div tw="mx-4">•</div>}
 
               {date && (
                 <div tw="text-3xl">
@@ -151,7 +151,7 @@ export const getOpenGraphImageResponse = async ({
                     dateStyle: "long",
                   })}
                 </div>
-              )}
+              )} */}
             </div>
           )}
         </div>
