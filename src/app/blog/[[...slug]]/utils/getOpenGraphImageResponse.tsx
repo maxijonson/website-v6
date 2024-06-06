@@ -144,15 +144,14 @@ export const getOpenGraphImageResponse = async ({
                 </div>
               )}
 
-              {author && date && <div tw="mx-4">•</div>}
-
+              {author && date && <div tw="mx-4">•</div>} */}
               {date && (
                 <div tw="text-3xl">
                   {new Date(date).toLocaleDateString("en", {
                     dateStyle: "long",
                   })}
                 </div>
-              )} */}
+              )}
             </div>
           )}
         </div>
