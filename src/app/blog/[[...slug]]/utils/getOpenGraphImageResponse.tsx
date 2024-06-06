@@ -142,9 +142,9 @@ export const getOpenGraphImageResponse = async ({
                   />
                   <div tw="ml-4 text-3xl">{author.name}</div>
                 </div>
-              )}
+              )} */}
 
-              {author && date && <div tw="mx-4">•</div>} */}
+              {author && date && <div tw="mx-4">•</div>}
               {date && (
                 <div tw="text-3xl">
                   {new Date(date).toLocaleDateString("en", {
