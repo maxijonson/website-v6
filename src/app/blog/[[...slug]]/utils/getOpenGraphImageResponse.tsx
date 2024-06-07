@@ -6,6 +6,7 @@ import { getImageBuilder } from "../../../../../sanity/utils/image";
 import type { AuthorDetails } from "../../../../../sanity/groqd/selections/author-details";
 import type { TagDetails } from "../../../../../sanity/groqd/selections/tag-details";
 import { cn } from "@/lib/utils";
+import { clientEnv } from "@/env/env-client";
 
 export interface GetOpenGraphImageResponseProps {
   image: ImageDetails;
@@ -94,7 +95,11 @@ export const getOpenGraphImageResponse = async ({
           )}
 
           {title && (
-            <div tw="text-6xl max-w-5xl text-center font-bold">{title}</div>
+            <div tw="text-6xl max-w-5xl text-center font-bold">
+              {title ||
+                (clientEnv.NEXT_PUBLIC_VERCEL_ENV !== "production" &&
+                  "Untitled")}
+            </div>
           )}
 
           {description && (
