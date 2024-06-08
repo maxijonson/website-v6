@@ -6,7 +6,6 @@ import { getImageBuilder } from "../../../../../sanity/utils/image";
 import type { AuthorDetails } from "../../../../../sanity/groqd/selections/author-details";
 import type { TagDetails } from "../../../../../sanity/groqd/selections/tag-details";
 import { cn } from "@/lib/utils";
-import { clientEnv } from "@/env/env-client";
 
 export interface GetOpenGraphImageResponseProps {
   image: ImageDetails;
@@ -75,7 +74,7 @@ export const getOpenGraphImageResponse = async ({
           tw="w-full h-full absolute top-0 left-0"
           style={{ objectFit: "cover" }}
         />
-        <div tw="bg-black/85 w-full h-full flex flex-col justify-center items-center text-stone-50">
+        <div tw="bg-black/85 w-full h-full absolute top-0 left-0 flex flex-col justify-center items-center text-stone-50">
           {tags.length > 0 && (
             <div tw="flex justify-center flex-wrap max-w-4xl">
               {tags.map((tag) => (
@@ -95,11 +94,7 @@ export const getOpenGraphImageResponse = async ({
           )}
 
           {title && (
-            <div tw="text-6xl max-w-5xl text-center font-bold">
-              {title ||
-                (clientEnv.NEXT_PUBLIC_VERCEL_ENV !== "production" &&
-                  "Untitled")}
-            </div>
+            <div tw="text-6xl max-w-5xl text-center font-bold">{title}</div>
           )}
 
           {description && (
