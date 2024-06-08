@@ -5,6 +5,7 @@ import type { ImageDetails } from "../../../../../sanity/groqd/selections/image-
 import { getImageBuilder } from "../../../../../sanity/utils/image";
 import type { AuthorDetails } from "../../../../../sanity/groqd/selections/author-details";
 import type { TagDetails } from "../../../../../sanity/groqd/selections/tag-details";
+import { cn } from "@/lib/utils";
 
 export interface GetOpenGraphImageResponseProps {
   image: ImageDetails;
@@ -67,65 +68,24 @@ export const getOpenGraphImageResponse = async ({
 
   return new ImageResponse(
     (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          width: "100%",
-          height: "100%",
-          backgroundColor: "black",
-        }}
-      >
+      <div tw="flex flex-col w-full h-full items-center justify-center bg-black">
         <img
           src={imageUrl}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-          }}
+          tw="w-full h-full absolute top-0 left-0"
+          style={{ objectFit: "cover" }}
         />
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.85)",
-            color: "#fafaf9",
-          }}
-        >
+        <div tw="bg-black/85 w-full h-full absolute top-0 left-0 flex flex-col justify-center items-center text-stone-50">
           {tags.length > 0 && (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                flexWrap: "wrap",
-                maxWidth: "896px",
-              }}
-            >
+            <div tw="flex justify-center flex-wrap max-w-4xl">
               {tags.map((tag) => (
                 <span
                   key={tag.name}
-                  style={{
-                    backgroundColor: "#e7e5e4",
-                    color: "#262626",
-                    padding: "4px 12px",
-                    borderRadius: "9999px",
-                    fontSize: "24px",
-                    lineHeight: "32px",
-                    marginBottom: "16px",
-                    marginLeft: tag !== tags[0] ? "16px" : "0",
-                  }}
+                  tw={cn(
+                    "bg-stone-200 text-stone-800 px-3 py-1 rounded-full text-2xl mb-4",
+                    {
+                      "ml-4": tag !== tags[0],
+                    },
+                  )}
                 >
                   {tag.name}
                 </span>
@@ -134,84 +94,32 @@ export const getOpenGraphImageResponse = async ({
           )}
 
           {title && (
-            <div
-              style={{
-                fontSize: "60px",
-                lineHeight: "1",
-                maxWidth: "1024px",
-                textAlign: "center",
-                fontWeight: 700,
-              }}
-            >
-              {title}
-            </div>
+            <div tw="text-6xl max-w-5xl text-center font-bold">{title}</div>
           )}
 
           {description && (
-            <div
-              style={{
-                maxWidth: "1024px",
-                textAlign: "center",
-                fontSize: "24px",
-                lineHeight: "32px",
-                color: "#d6d3d1",
-                marginTop: "16px",
-              }}
-            >
+            <div tw="max-w-5xl text-2xl text-center text-stone-300 mt-4">
               {description}
             </div>
           )}
 
           {(author || date) && (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginTop: "16px",
-                color: "#d6d3d1",
-              }}
-            >
+            <div tw="flex items-center mt-4 text-stone-300">
               {author && authorAvatarUrl && (
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
+                <div tw="flex items-center">
                   <img
                     src={authorAvatarUrl}
-                    style={{ borderRadius: "9999px" }}
+                    tw="rounded-full"
                     width={authorAvatarSize}
                     height={authorAvatarSize}
                   />
-                  <div
-                    style={{
-                      marginLeft: "16px",
-                      fontSize: "30px",
-                      lineHeight: "36px",
-                    }}
-                  >
-                    {author.name}
-                  </div>
+                  <div tw="ml-4 text-3xl">{author.name}</div>
                 </div>
               )}
 
-              {author && date && (
-                <div
-                  style={{
-                    margin: "0 16px",
-                  }}
-                >
-                  •
-                </div>
-              )}
+              {author && date && <div tw="mx-4">•</div>}
               {date && (
-                <div
-                  style={{
-                    fontSize: "30px",
-                    lineHeight: "36px",
-                  }}
-                >
+                <div tw="text-3xl">
                   {new Date(date).toLocaleDateString("en", {
                     dateStyle: "long",
                   })}
