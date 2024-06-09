@@ -109,7 +109,6 @@ export const blogPostHandler: BlogRouteHandler = {
       title: post.title,
       description: post.summary,
       tags: post.tags,
-      author: post.author,
       date: post.createdAt,
     });
   },
