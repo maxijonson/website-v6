@@ -4,12 +4,12 @@ import ThemeProvider from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import { scrollbarClassName } from "@/tailwind/classes";
 import { getBaseURL } from "@/utils/getBaseURL";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
 import { draftMode } from "next/headers";
 import AutomaticVisualEditing from "./components/automatic-visual-editing/automatic-visual-editing";
 import DevUtilsClient from "./components/dev-utils/dev-utils";
+import SpeedInsightsClient from "./components/speed-insights-client/speed-insights-client";
+import VercelAnalyticsClient from "./components/vercel-analytics-client/vercel-analytics-client";
 import "./globals.css";
 
 export const generateMetadata = (): Metadata => {
@@ -92,8 +92,8 @@ const RootLayout = ({
           <DevUtilsClient />
           {children}
         </ThemeProvider>
-        <SpeedInsights />
-        <Analytics />
+        <SpeedInsightsClient />
+        <VercelAnalyticsClient />
         {draftMode().isEnabled && <AutomaticVisualEditing />}
       </body>
     </html>
