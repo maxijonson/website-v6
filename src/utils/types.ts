@@ -1,7 +1,6 @@
 import { q, type BaseQuery, type Selection, type z } from "groqd";
 import type { Metadata, ResolvingMetadata } from "next";
-import type { ImageResponse } from "next/og";
-import type { NextRequest } from "next/server";
+import type { NextRequest, NextResponse } from "next/server";
 
 export type Awaitable<T> = Promise<any> extends T ? T : T | Promise<T>;
 
@@ -50,7 +49,7 @@ export interface RouteCatchAllHandler<
   generateMetadata?: GenerateMetadata<TParams>;
   openGraphImage?: (
     props: OpenGraphImageProps<TParams>,
-  ) => Awaitable<ImageResponse>;
+  ) => Awaitable<Response | NextResponse>;
 }
 
 const unknownArrayQuery = q("").filter();

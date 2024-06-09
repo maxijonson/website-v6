@@ -23,25 +23,16 @@ export const ogImageSize = {
 
 const getInterRegular = async () => {
   const response = await fetch(
-    new URL("/font/Inter/Inter-Regular.ttf", "https://www.chintristan.io/"),
+    "https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.ttf",
   );
   const interRegular = await response.arrayBuffer();
 
   return interRegular;
 };
 
-const getInterMedium = async () => {
-  const response = await fetch(
-    new URL("/font/Inter/Inter-Medium.ttf", "https://www.chintristan.io/"),
-  );
-  const interMedium = await response.arrayBuffer();
-
-  return interMedium;
-};
-
 const getInterBold = async () => {
   const response = await fetch(
-    new URL("/font/Inter/Inter-Bold.ttf", "https://www.chintristan.io/"),
+    "https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-700-normal.ttf",
   );
   const interSemiBold = await response.arrayBuffer();
 
@@ -56,13 +47,22 @@ export const getOpenGraphImageResponse = async ({
   date,
   tags = [],
 }: GetOpenGraphImageResponseProps) => {
-  const imageUrl = getImageBuilder(image).blur(100).url();
+  const imageUrl = getImageBuilder(image)
+    .blur(100)
+    .quality(20)
+    .width(ogImageSize.width)
+    .height(ogImageSize.height)
+    .auto("format")
+    .fit("crop")
+    .url();
 
   const authorAvatarSize = 80;
   const authorAvatarUrl = author
     ? getImageBuilder(author.image)
-        .quality(100)
+        .quality(20)
         .size(authorAvatarSize, authorAvatarSize)
+        .auto("format")
+        .fit("crop")
         .url()
     : null;
 
@@ -138,12 +138,6 @@ export const getOpenGraphImageResponse = async ({
           style: "normal",
           weight: 400,
           data: await getInterRegular(),
-        },
-        {
-          name: "Inter",
-          style: "normal",
-          weight: 500,
-          data: await getInterMedium(),
         },
         {
           name: "Inter",

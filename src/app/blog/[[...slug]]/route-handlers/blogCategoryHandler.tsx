@@ -91,6 +91,7 @@ export const blogCategoryHandler: BlogRouteHandler = {
         title,
         description,
         images: ogImages,
+        cardType: "summary_large_image",
       },
     };
   },

@@ -14,7 +14,7 @@ export const GET: GetRouteHandler<{ path: string[] }> = async (
         return (
           handler.openGraphImage?.({
             params: { slug },
-            id: "og-image",
+            id: `blog/${slug.join("/")}`,
           }) ?? notFound()
         );
       }
