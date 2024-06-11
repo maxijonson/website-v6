@@ -27,126 +27,140 @@ export class ConsentApi {
 
   private static changeListeners: Array<
     (
-      newConsent: typeof ConsentApi.consent,
-      previousConsent: typeof ConsentApi.consent,
+      newConsent: typeof this.consent,
+      previousConsent: typeof this.consent,
     ) => void
   > = [];
-  private static readyListeners: Array<
-    (consent: typeof ConsentApi.consent) => void
-  > = [];
+  private static readyListeners: Array<(consent: typeof this.consent) => void> =
+    [];
 
   public static init(): void {
-    if (ConsentApi.isReady) return;
-    ConsentApi.isReady = true;
+    if (this.isReady) return;
+    this.isReady = true;
 
-    const cookies = Object.fromEntries(
-      document.cookie
-        .split("; ")
-        .map((v) => v.split(/=(.*)/s).map(decodeURIComponent)),
-    );
-    const consentCookieText: string = cookies[CONSENT_COOKIE_NAME];
-    if (consentCookieText) {
-      try {
-        const parsedConsent = consentCookieSchema.parse(
-          JSON.parse(consentCookieText),
-        );
-        ConsentApi.consent = { ...parsedConsent.purposes };
-      } catch {}
+    try {
+      const cookies = Object.fromEntries(
+        document.cookie
+          .split("; ")
+          .map((v) => v.split(/=(.*)/s).map(decodeURIComponent)),
+      );
+      const consentCookieText: string = cookies[CONSENT_COOKIE_NAME];
+      if (consentCookieText) {
+        try {
+          const parsedConsent = consentCookieSchema.parse(
+            JSON.parse(consentCookieText),
+          );
+          this.consent = { ...parsedConsent.purposes };
+        } catch {
+          this.warn(
+            "Failed to parse consent cookie. Resetting consent.",
+            consentCookieText,
+          );
+        }
+      }
+    } catch {
+      this.error("Failed to initialize consent API. Using defaults.");
     }
 
-    const cookieValue = JSON.stringify(
-      consentCookieSchema.parse({
-        version: 1,
-        purposes: ConsentApi.consent,
-      } satisfies ConsentCookie),
-    );
-    document.cookie = `${CONSENT_COOKIE_NAME}=${cookieValue}; path=/`;
-    ConsentApi.updateCookie();
-
-    ConsentApi.fireReady({ ...ConsentApi.consent });
-    if (ConsentApi.enableLogging) {
+    this.fireReady({ ...this.consent });
+    if (this.enableLogging) {
       console.info("[ConsentApi] Initialized");
     }
   }
 
   public static getConsent(purpose: Purpose): boolean {
-    return ConsentApi.consent[purpose];
+    return this.consent[purpose];
   }
 
-  public static setConsent(consent: typeof ConsentApi.consent): void {
-    const previousConsent = { ...ConsentApi.consent };
-    ConsentApi.consent = { ...consent };
-    const newConsent = { ...ConsentApi.consent };
+  public static setConsent(consent: typeof this.consent): void {
+    const previousConsent = { ...this.consent };
+    this.consent = { ...consent };
+    const newConsent = { ...this.consent };
 
-    ConsentApi.updateCookie();
-    ConsentApi.fireConsentChange(newConsent, previousConsent);
+    this.refreshCookie();
+    this.fireConsentChange(newConsent, previousConsent);
   }
 
   public static setPurposeConsent(purpose: Purpose, value: boolean): void {
-    const previousConsent = { ...ConsentApi.consent };
-    ConsentApi.consent[purpose] = value;
-    const newConsent = { ...ConsentApi.consent };
+    const previousConsent = { ...this.consent };
+    this.consent[purpose] = value;
+    const newConsent = { ...this.consent };
 
-    ConsentApi.updateCookie();
-    ConsentApi.fireConsentChange(newConsent, previousConsent);
+    this.refreshCookie();
+    this.fireConsentChange(newConsent, previousConsent);
   }
 
   public static onConsentChange(
-    listener: (typeof ConsentApi.changeListeners)[number],
+    listener: (typeof this.changeListeners)[number],
   ): void {
-    ConsentApi.changeListeners.push(listener);
+    this.changeListeners.push(listener);
   }
 
   public static offConsentChange(
-    listener: (typeof ConsentApi.changeListeners)[number],
+    listener: (typeof this.changeListeners)[number],
   ): void {
-    const index = ConsentApi.changeListeners.indexOf(listener);
+    const index = this.changeListeners.indexOf(listener);
     if (index !== -1) {
-      ConsentApi.changeListeners.splice(index, 1);
+      this.changeListeners.splice(index, 1);
     }
   }
 
   private static fireConsentChange(
-    ...args: Parameters<(typeof ConsentApi.changeListeners)[number]>
+    ...args: Parameters<(typeof this.changeListeners)[number]>
   ) {
-    ConsentApi.changeListeners.forEach((listener) => {
+    this.changeListeners.forEach((listener) => {
       listener(...args);
     });
   }
 
-  public static onReady(
-    listener: (typeof ConsentApi.readyListeners)[number],
-  ): void {
-    if (ConsentApi.isReady) {
-      listener({ ...ConsentApi.consent });
+  public static onReady(listener: (typeof this.readyListeners)[number]): void {
+    if (this.isReady) {
+      listener({ ...this.consent });
       return;
     }
 
-    ConsentApi.readyListeners.push(listener);
+    this.readyListeners.push(listener);
   }
 
-  public static offReady(
-    listener: (typeof ConsentApi.readyListeners)[number],
-  ): void {
-    const index = ConsentApi.readyListeners.indexOf(listener);
+  public static offReady(listener: (typeof this.readyListeners)[number]): void {
+    const index = this.readyListeners.indexOf(listener);
     if (index !== -1) {
-      ConsentApi.readyListeners.splice(index, 1);
+      this.readyListeners.splice(index, 1);
     }
   }
 
   private static fireReady(
-    ...args: Parameters<(typeof ConsentApi.readyListeners)[number]>
+    ...args: Parameters<(typeof this.readyListeners)[number]>
   ) {
-    ConsentApi.readyListeners.forEach((listener) => {
+    this.readyListeners.forEach((listener) => {
       listener(...args);
     });
   }
 
-  private static updateCookie(): void {
-    const cookieValue = JSON.stringify(
-      consentCookieSchema.parse({ version: 1, purposes: ConsentApi.consent }),
-    );
-    document.cookie = `${CONSENT_COOKIE_NAME}=${cookieValue}; path=/`;
+  private static refreshCookie(): void {
+    try {
+      const cookieValue = consentCookieSchema.parse({
+        version: 1,
+        purposes: this.consent,
+      });
+      document.cookie = `${CONSENT_COOKIE_NAME}=${JSON.stringify(cookieValue)}; path=/`;
+      this.log("Updated consent cookie", { ...this.consent });
+    } catch (error) {
+      this.error("Failed to update consent cookie", error);
+    }
+  }
+
+  private static log(...args: any[]): void {
+    if (!this.enableLogging) return;
+    console.info(`[Analytics][ConsentAPI]`, ...args);
+  }
+  private static warn(...args: any[]): void {
+    if (!this.enableLogging) return;
+    console.warn(`[Analytics][ConsentAPI]`, ...args);
+  }
+  private static error(...args: any[]): void {
+    if (!this.enableLogging) return;
+    console.error(`[Analytics][ConsentAPI]`, ...args);
   }
 }
 

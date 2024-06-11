@@ -20,18 +20,18 @@ export abstract class AnalyticsProvider {
   public abstract init(): void;
 
   public abstract track(event: string, properties?: Record<string, any>): void;
-  public queueTrack(event: string, properties?: Record<string, any>): void {
+  protected queueTrack(event: string, properties?: Record<string, any>): void {
     this.queuedEvents.push([event, properties]);
     this.log("Queued event", event, properties);
   }
 
   public abstract identify(properties?: Record<string, any>): void;
-  public queueIdentify(properties: Record<string, any> = {}): void {
+  protected queueIdentify(properties: Record<string, any> = {}): void {
     this.queuedIdentify = { ...this.queuedIdentify, ...properties };
     this.log("Queued identify", properties);
   }
 
-  public trackQueuedData(): void {
+  protected trackQueuedData(): void {
     if (
       !this.isEnabled ||
       (!this.queuedIdentify && this.queuedEvents.length === 0)
@@ -54,7 +54,7 @@ export abstract class AnalyticsProvider {
     }
   }
 
-  public log(...args: any[]): void {
+  protected log(...args: any[]): void {
     if (!AnalyticsProvider.enableLogging) return;
     if (AnalyticsProvider.enableLogging === "trace") {
       // eslint-disable-next-line no-console
@@ -63,11 +63,11 @@ export abstract class AnalyticsProvider {
       console.info(`[Analytics][${this.name}]`, ...args);
     }
   }
-  public warn(...args: any[]): void {
+  protected warn(...args: any[]): void {
     if (!AnalyticsProvider.enableLogging) return;
     console.warn(`[Analytics][${this.name}]`, ...args);
   }
-  public error(...args: any[]): void {
+  protected error(...args: any[]): void {
     if (!AnalyticsProvider.enableLogging) return;
     console.error(`[Analytics][${this.name}]`, ...args);
   }

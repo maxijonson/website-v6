@@ -50,9 +50,6 @@ export class PostHogAnalyticsProvider extends AnalyticsProvider {
     properties?: Record<string, any> | undefined,
   ): void {
     if (!this.isEnabled) {
-      if (this.hasInit && !this.isOptedIn) {
-        return;
-      }
       return this.queueTrack(event, properties);
     }
     posthog.capture(event, properties);

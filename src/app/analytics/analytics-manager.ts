@@ -7,7 +7,7 @@ export class AnalyticsManager {
   ];
 
   public static track(event: string, properties?: Record<string, any>): void {
-    AnalyticsManager.providers.forEach((provider) => {
+    this.providers.forEach((provider) => {
       provider.track(event, properties);
     });
   }
@@ -15,10 +15,7 @@ export class AnalyticsManager {
   public static getProvider(
     type: typeof AnalyticsProvider,
   ): AnalyticsProvider | null {
-    return (
-      AnalyticsManager.providers.find((provider) => provider instanceof type) ??
-      null
-    );
+    return this.providers.find((provider) => provider instanceof type) ?? null;
   }
 }
 
