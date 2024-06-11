@@ -6,6 +6,7 @@ import { scrollbarClassName } from "@/tailwind/classes";
 import { getBaseURL } from "@/utils/getBaseURL";
 import type { Metadata, Viewport } from "next";
 import { draftMode } from "next/headers";
+import AnalyticsProvider from "./components/analytics/analytics-provider";
 import AutomaticVisualEditing from "./components/automatic-visual-editing/automatic-visual-editing";
 import DevUtilsClient from "./components/dev-utils/dev-utils";
 import SpeedInsightsClient from "./components/speed-insights-client/speed-insights-client";
@@ -88,10 +89,12 @@ const RootLayout = ({
       className={cn(scrollbarClassName, "scroll-smooth")}
     >
       <body className={fontSans.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <DevUtilsClient />
-          {children}
-        </ThemeProvider>
+        <AnalyticsProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <DevUtilsClient />
+            {children}
+          </ThemeProvider>
+        </AnalyticsProvider>
         <SpeedInsightsClient />
         <VercelAnalyticsClient />
         {draftMode().isEnabled && <AutomaticVisualEditing />}
