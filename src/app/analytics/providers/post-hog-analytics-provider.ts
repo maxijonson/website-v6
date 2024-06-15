@@ -1,7 +1,7 @@
 import { clientEnv } from "@/env/env-client";
 import posthog from "posthog-js";
 import { AnalyticsProvider } from "../analytics-provider";
-import { ConsentApi } from "../consent-api";
+import { ConsentApi, type Consent } from "../consent-api";
 
 export class PostHogAnalyticsProvider extends AnalyticsProvider {
   public name = "PostHog";
@@ -17,8 +17,10 @@ export class PostHogAnalyticsProvider extends AnalyticsProvider {
   }
 
   public init(): void {
-    ConsentApi.onConsentChange(() => this.onConsentApiEvent());
-    ConsentApi.onReady(() => this.onConsentApiEvent());
+    ConsentApi.onConsentChange((newConsent, prevConsent) => {
+      this.onConsentApiEvent(newConsent, prevConsent);
+    });
+    ConsentApi.onReady((consent) => this.onConsentApiEvent(consent, consent));
   }
 
   public track(
@@ -45,7 +47,7 @@ export class PostHogAnalyticsProvider extends AnalyticsProvider {
     return posthog.__loaded;
   }
 
-  private onConsentApiEvent() {
+  private onConsentApiEvent(newConsent: Consent, prevConsent: Consent) {
     if (!this.hasInit && this.hasConsent) {
       this.log("Initializing");
       posthog.init(clientEnv.NEXT_PUBLIC_POSTHOG_KEY, {
@@ -65,14 +67,21 @@ export class PostHogAnalyticsProvider extends AnalyticsProvider {
         autocapture: false,
         loaded: () => {
           this.log("Initialized");
-          this.trackQueuedData();
+
+          // Let PostHog track $opt_in before we start tracking events
+          setTimeout(() => {
+            this.trackQueuedData();
+          }, 0);
         },
       });
     }
 
     if (!this.hasInit) return;
 
-    if (this.hasConsent && !this.isOptedIn) {
+    if (
+      this.hasConsent &&
+      (!this.isOptedIn || newConsent.performance !== prevConsent.performance)
+    ) {
       posthog.opt_in_capturing();
     } else if (!this.hasConsent && this.isOptedIn) {
       posthog.opt_out_capturing();

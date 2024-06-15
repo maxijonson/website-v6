@@ -10,6 +10,7 @@ export const consentCookieSchema = z.object({
 });
 export type ConsentCookie = z.infer<typeof consentCookieSchema>;
 export type Purpose = keyof ConsentCookie["purposes"];
+export type Consent = Record<Purpose, boolean>;
 
 export class ConsentApi {
   private static enableLogging: boolean = (() => {
@@ -21,18 +22,14 @@ export class ConsentApi {
   })();
 
   private static isReady = false;
-  private static consent: Record<Purpose, boolean> = {
+  private static consent: Consent = {
     performance: false,
   };
 
   private static changeListeners: Array<
-    (
-      newConsent: typeof this.consent,
-      previousConsent: typeof this.consent,
-    ) => void
+    (newConsent: Consent, previousConsent: Consent) => void
   > = [];
-  private static readyListeners: Array<(consent: typeof this.consent) => void> =
-    [];
+  private static readyListeners: Array<(consent: Consent) => void> = [];
 
   public static init(): void {
     if (this.isReady) return;
@@ -72,7 +69,7 @@ export class ConsentApi {
     return this.consent[purpose];
   }
 
-  public static setConsent(consent: typeof this.consent): void {
+  public static setConsent(consent: Consent): void {
     const previousConsent = { ...this.consent };
     this.consent = { ...consent };
     const newConsent = { ...this.consent };

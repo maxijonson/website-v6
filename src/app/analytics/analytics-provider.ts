@@ -40,7 +40,7 @@ export abstract class AnalyticsProvider {
     }
     this.log("Tracking queued data", {
       identify: this.queuedIdentify ? { ...this.queuedIdentify } : undefined,
-      events: this.queuedEvents.length,
+      events: [...this.queuedEvents],
     });
 
     if (this.queuedIdentify) {
