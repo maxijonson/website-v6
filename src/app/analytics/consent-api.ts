@@ -140,7 +140,9 @@ export class ConsentApi {
         version: 1,
         purposes: this.consent,
       });
-      document.cookie = `${CONSENT_COOKIE_NAME}=${JSON.stringify(cookieValue)}; path=/`;
+      // Expires in 1 year
+      const maxAge = 60 * 60 * 24 * 365;
+      document.cookie = `${CONSENT_COOKIE_NAME}=${JSON.stringify(cookieValue)}; path=/; max-age=${maxAge}`;
       this.log("Updated consent cookie", { ...this.consent });
     } catch (error) {
       this.error("Failed to update consent cookie", error);

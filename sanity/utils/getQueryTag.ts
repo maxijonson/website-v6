@@ -1,7 +1,14 @@
 import { clientEnv } from "@/env/env-client";
 
 export const getQueryTag = (
-  type: "blog-settings" | "category" | "home-page" | "post" | "tag" | "misc",
+  type:
+    | "blog-settings"
+    | "category"
+    | "home-page"
+    | "privacy-policy-page"
+    | "post"
+    | "tag"
+    | "misc",
   name: string,
 ) => {
   const environment = (() => {

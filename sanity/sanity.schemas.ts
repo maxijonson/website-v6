@@ -104,7 +104,7 @@ export const contentBlockSchema = z.object({
     .array(
       z.union([
         z.object({
-          href: z.string().optional(),
+          href: z.string(),
           _type: z.literal("link"),
           _key: z.string(),
         }),
@@ -256,6 +256,15 @@ export const sanityImageMetadataSchema = z.object({
   isOpaque: z.boolean().optional(),
 });
 
+export const mediaTagSchema = z.object({
+  _id: z.string(),
+  _type: z.literal("media.tag"),
+  _createdAt: z.string(),
+  _updatedAt: z.string(),
+  _rev: z.string(),
+  name: slugSchema.optional(),
+});
+
 export const hslaColorSchema = z.object({
   _type: z.literal("hslaColor"),
   h: z.number().optional(),
@@ -387,7 +396,7 @@ export const contentAlertSchema = z.object({
           .array(
             z.union([
               z.object({
-                href: z.string().optional(),
+                href: z.string(),
                 _type: z.literal("link"),
                 _key: z.string(),
               }),
@@ -734,6 +743,38 @@ export const homeHeroSchema = z.object({
       _type: z.literal("logo"),
       _key: z.string(),
     }),
+  ),
+});
+
+export const privacyPolicyPageSchema = z.object({
+  _id: z.string(),
+  _type: z.literal("privacyPolicyPage"),
+  _createdAt: z.string(),
+  _updatedAt: z.string(),
+  _rev: z.string(),
+  content: z.array(
+    z.union([
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(contentBlockSchema),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(contentImageSchema),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(codeGroupSchema),
+      z
+        .object({
+          _key: z.string(),
+        })
+        .and(contentAlertSchema),
+    ]),
   ),
 });
 

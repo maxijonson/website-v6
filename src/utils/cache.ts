@@ -14,5 +14,6 @@ export const cacheTag = {
 
   pages: {
     homePage: "homePage",
+    privacyPolicyPage: "privacyPolicyPage",
   },
 } as const;

@@ -85,7 +85,7 @@ export type ContentAlert = {
         listItem?: "bullet";
         markDefs?: Array<
           | {
-              href?: string;
+              href: string;
               _type: "link";
               _key: string;
             }
@@ -161,7 +161,7 @@ export type ContentBlock = {
   listItem?: "bullet";
   markDefs?: Array<
     | {
-        href?: string;
+        href: string;
         _type: "link";
         _key: string;
       }
@@ -427,6 +427,28 @@ export type HomeHero = {
   }>;
 };
 
+export type PrivacyPolicyPage = {
+  _id: string;
+  _type: "privacyPolicyPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  content: Array<
+    | ({
+        _key: string;
+      } & ContentBlock)
+    | ({
+        _key: string;
+      } & ContentImage)
+    | ({
+        _key: string;
+      } & CodeGroup)
+    | ({
+        _key: string;
+      } & ContentAlert)
+  >;
+};
+
 export type HomePage = {
   _id: string;
   _type: "homePage";
@@ -665,6 +687,15 @@ export type SanityImageMetadata = {
   blurHash?: string;
   hasAlpha?: boolean;
   isOpaque?: boolean;
+};
+
+export type MediaTag = {
+  _id: string;
+  _type: "media.tag";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: Slug;
 };
 
 export type Slug = {
