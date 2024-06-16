@@ -5,6 +5,19 @@ import Content from "@/components/content/content";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import type { PortableTextReactComponents } from "next-sanity";
+import PostBodyHeading from "../blog/[[...slug]]/components/post-body/components/post-body-heading";
+
+const components: Partial<PortableTextReactComponents> = {
+  block: {
+    h1: PostBodyHeading,
+    h2: PostBodyHeading,
+    h3: PostBodyHeading,
+    h4: PostBodyHeading,
+    h5: PostBodyHeading,
+    h6: PostBodyHeading,
+  },
+};
 
 const PrivacyPolicyPage = async () => {
   const { updatedAt, content } = await getPrivacyPolicyPage();
@@ -39,6 +52,7 @@ const PrivacyPolicyPage = async () => {
             "dark:prose-invert dark:text-stone-50",
           )}
           value={content}
+          components={components}
         />
       </main>
       <Footer />

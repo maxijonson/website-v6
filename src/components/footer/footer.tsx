@@ -12,7 +12,7 @@ const Footer = () => {
       <Separator className="mt-20" />
       <Contact />
       <div>
-        <Link href="/privacy">Privacy Policy</Link>
+        <Link href="/privacy-policy">Privacy Policy</Link>
       </div>
       <div>{new Date().getFullYear()} &copy; Tristan Chin</div>
     </footer>
