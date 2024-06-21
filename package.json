@@ -17,7 +17,8 @@
     "sanity:copy:production-to-staging": "npm run sanity:copy -- --from-dataset production --to-dataset staging",
     "groq:fmt": "tsx scripts/groq/groqfmt.ts",
     "groq:preview": "npm run dotenvx -- tsx scripts/groq/groq-preview.ts",
-    "tunnel": "npm run dotenvx -- tsx scripts/tunnel.ts --env-file=.env.local"
+    "tunnel": "npm run dotenvx -- tsx scripts/tunnel.ts --env-file=.env.local",
+    "posthog:print-filter": "npm run dotenvx -- tsx scripts/print-posthog-property-filter.ts"
   },
   "dependencies": {
     "@giscus/react": "^3.0.0",
