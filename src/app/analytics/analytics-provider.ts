@@ -1,3 +1,5 @@
+import { ConsentApi, type Consent } from "./consent-api";
+
 export abstract class AnalyticsProvider {
   public static enableLogging: boolean | "trace" = (() => {
     if (typeof window !== "undefined") {
@@ -11,11 +13,16 @@ export abstract class AnalyticsProvider {
   })();
 
   public abstract name: string;
+  public abstract cookieTypes: (keyof Consent)[];
 
   public abstract get isEnabled(): boolean;
 
   private queuedEvents: Array<[string, Record<string, any> | undefined]> = [];
   private queuedIdentify: Record<string, any> | undefined;
+
+  public get hasConsent(): boolean {
+    return this.cookieTypes.every((type) => ConsentApi.getConsent(type));
+  }
 
   public abstract init(): void;
 

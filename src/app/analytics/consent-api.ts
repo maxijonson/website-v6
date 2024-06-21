@@ -5,7 +5,7 @@ export const CONSENT_COOKIE_NAME = "consent";
 export const consentCookieSchema = z.object({
   version: z.literal(1),
   purposes: z.object({
-    performance: z.boolean(),
+    cookieless: z.boolean(),
   }),
 });
 export type ConsentCookie = z.infer<typeof consentCookieSchema>;
@@ -23,7 +23,10 @@ export class ConsentApi {
 
   private static isReady = false;
   private static consent: Consent = {
-    performance: false,
+    cookieless: (() => {
+      if (typeof window === "undefined") return true;
+      return navigator.doNotTrack !== "1";
+    })(),
   };
 
   private static changeListeners: Array<
@@ -61,7 +64,7 @@ export class ConsentApi {
 
     this.fireReady({ ...this.consent });
     if (this.enableLogging) {
-      console.info("[ConsentApi] Initialized");
+      console.info("[Analytics][ConsentApi] Initialized");
     }
   }
 

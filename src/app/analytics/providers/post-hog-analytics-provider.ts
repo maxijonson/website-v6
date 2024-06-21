@@ -4,6 +4,7 @@ import { AnalyticsProvider } from "../analytics-provider";
 import { ConsentApi, type Consent } from "../consent-api";
 
 export class PostHogAnalyticsProvider extends AnalyticsProvider {
+  public cookieTypes: (keyof Consent)[] = ["cookieless"];
   public name = "PostHog";
 
   public get isEnabled(): boolean {
@@ -33,10 +34,8 @@ export class PostHogAnalyticsProvider extends AnalyticsProvider {
     posthog.capture(event, properties);
   }
 
-  public identify(_properties?: Record<string, any> | undefined): void {}
-
-  private get hasConsent(): boolean {
-    return ConsentApi.getConsent("performance");
+  public identify(_properties?: Record<string, any> | undefined): void {
+    // Since PostHog is configured to be cookieless, we don't want to identify users
   }
 
   private get isOptedIn(): boolean {
@@ -65,6 +64,8 @@ export class PostHogAnalyticsProvider extends AnalyticsProvider {
         disable_session_recording: true,
         enable_heatmaps: false,
         autocapture: false,
+        save_referrer: false,
+        persistence: "memory",
         loaded: () => {
           this.log("Initialized");
 
@@ -80,7 +81,8 @@ export class PostHogAnalyticsProvider extends AnalyticsProvider {
 
     if (
       this.hasConsent &&
-      (!this.isOptedIn || newConsent.performance !== prevConsent.performance)
+      (!this.isOptedIn ||
+        this.cookieTypes.some((type) => newConsent[type] !== prevConsent[type]))
     ) {
       posthog.opt_in_capturing();
     } else if (!this.hasConsent && this.isOptedIn) {
