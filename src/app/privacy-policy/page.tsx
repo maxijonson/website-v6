@@ -7,6 +7,12 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import type { PortableTextReactComponents } from "next-sanity";
 import PostBodyHeading from "../blog/[[...slug]]/components/post-body/components/post-body-heading";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "Privacy policy for the website",
+};
 
 const components: Partial<PortableTextReactComponents> = {
   block: {
