@@ -2,50 +2,35 @@ import { q } from "groqd";
 import { categoryDetailsSelection } from "../../../../../sanity/groqd/selections/category-details";
 import { postDetailsSelection } from "../../../../../sanity/groqd/selections/post-details";
 import { tagDetailsSelection } from "../../../../../sanity/groqd/selections/tag-details";
+import { qType } from "../../../../../sanity/groqd/filters/type";
+import { pick } from "../../../../../sanity/groqd/selections/pick";
+import { authorDetailsSelection } from "../../../../../sanity/groqd/selections/author-details";
+import { blogSettingsDetailsSelection } from "../../../../../sanity/groqd/selections/blog-settings-details";
+import { homePageDetailsSelection } from "../../../../../sanity/groqd/selections/pages/home-page/home-page-details";
+import { privacyPolicyPageDetailsSelection } from "../../../../../sanity/groqd/selections/pages/privacy-policy-page/privacy-policy-page-details";
 
 export const webhookFilter =
-  "_type in ['post', 'category', 'tag', 'author', 'blogSettings', 'homePage']";
+  "_type in ['post', 'category', 'tag', 'author', 'blogSettings', 'homePage', 'privacyPolicyPage']";
 
 export const webhookBodyQuery = q("*")
   .filter(webhookFilter)
+  .slice(0)
   .select({
-    "_type == 'post'": {
-      type: ["_type", q.literal("post")],
-      id: postDetailsSelection.id,
-      slug: postDetailsSelection.slug,
-      tags: q("tags")
-        .filter()
-        .deref()
-        .grab$({
-          id: tagDetailsSelection.id,
-          slug: tagDetailsSelection.slug,
-          category: q("category").deref().grab$({
-            id: categoryDetailsSelection.id,
-            slug: categoryDetailsSelection.slug,
-          }),
-        }),
-    },
-    "_type == 'category'": {
-      type: ["_type", q.literal("category")],
-      id: postDetailsSelection.id,
-      slug: postDetailsSelection.slug,
-    },
-    "_type == 'tag'": {
-      type: ["_type", q.literal("tag")],
-      id: postDetailsSelection.id,
-      slug: postDetailsSelection.slug,
-      category: q("category").deref().grab$({
-        id: categoryDetailsSelection.id,
-        slug: categoryDetailsSelection.slug,
-      }),
-    },
-    "_type == 'author'": {
-      type: ["_type", q.literal("author")],
-    },
-    "_type == 'blogSettings'": {
-      type: ["_type", q.literal("blogSettings")],
-    },
-    "_type == 'homePage'": {
-      type: ["_type", q.literal("homePage")],
+    [qType("post")]: pick(postDetailsSelection, ["type", "id", "slug", "tags"]),
+    [qType("category")]: pick(categoryDetailsSelection, ["type", "id", "slug"]),
+    [qType("tag")]: pick(tagDetailsSelection, [
+      "type",
+      "id",
+      "slug",
+      "category",
+    ]),
+    [qType("author")]: pick(authorDetailsSelection, ["type"]),
+    [qType("blogSettings")]: pick(blogSettingsDetailsSelection, ["type"]),
+    [qType("homePage")]: pick(homePageDetailsSelection, ["type"]),
+    [qType("privacyPolicyPage")]: pick(privacyPolicyPageDetailsSelection, [
+      "type",
+    ]),
+    default: {
+      type: ["'unknown'", q.literal("unknown")],
     },
   });

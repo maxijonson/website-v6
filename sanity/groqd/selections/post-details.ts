@@ -8,6 +8,7 @@ import { tagDetailsSelection } from "./tag-details";
 const postTagsQuery = q("tags").filter().deref().grab$(tagDetailsSelection);
 
 export const postDetailsSelection = {
+  type: ["_type", postSchema.shape._type],
   id: ["_id", postSchema.shape._id],
   createdAt: ["_createdAt", postSchema.shape._createdAt],
   updatedAt: ["_updatedAt", postSchema.shape._updatedAt],

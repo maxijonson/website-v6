@@ -4,6 +4,7 @@ import { categoryDetailsSelection } from "./category-details";
 import { makeImageDetailsQuery } from "./image-details";
 
 export const tagDetailsSelection = {
+  type: ["_type", tagSchema.shape._type],
   id: ["_id", tagSchema.shape._id],
   createdAt: ["_createdAt", tagSchema.shape._createdAt],
   updatedAt: ["_updatedAt", tagSchema.shape._updatedAt],

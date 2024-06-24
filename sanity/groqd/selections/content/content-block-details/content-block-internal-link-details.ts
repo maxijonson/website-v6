@@ -1,4 +1,5 @@
 import { q, type Selection, type TypeFromSelection } from "groqd";
+import { categorySchema, postSchema } from "../../../../sanity.schemas";
 
 export const contentBlockInternalLinkDetailsSelection = {
   _key: q.string(),
@@ -7,15 +8,15 @@ export const contentBlockInternalLinkDetailsSelection = {
     .deref()
     .select({
       "_type == 'post'": {
-        type: ["_type", q.literal("post")],
+        type: ["_type", postSchema.shape._type],
         slug: ["slug.current", q.string()],
       },
       "_type == 'category'": {
-        type: ["_type", q.literal("category")],
+        type: ["_type", categorySchema.shape._type],
         slug: ["slug.current", q.string()],
       },
       "_type == 'tag'": {
-        type: ["_type", q.literal("tag")],
+        type: ["_type", categorySchema.shape._type],
         slug: ["slug.current", q.string()],
       },
     }),

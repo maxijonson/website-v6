@@ -6,8 +6,10 @@ import { homeSkillsDetailsSelection } from "./home-skills-details";
 import { homeProjectsDetailsSelection } from "./home-projects-details";
 import { homeExperienceDetailsSelection } from "./home-experience-details";
 import { homeCredentialsDetailsSelection } from "./home-credentials-details";
+import { homePageSchema } from "../../../../sanity.schemas";
 
 export const homePageDetailsSelection = {
+  type: ["_type", homePageSchema.shape._type],
   sections: q("sections")
     .filter()
     .select({

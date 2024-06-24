@@ -11,7 +11,7 @@ import { webhookBodyQuery } from "./query";
 import { serverEnv } from "@/env/env-server";
 import { useCdn } from "../../../../../sanity/env";
 
-const webhookBodySchema = webhookBodyQuery.slice(0).schema;
+const webhookBodySchema = webhookBodyQuery.schema;
 
 export const POST = async (req: NextRequest) => {
   try {

@@ -3,6 +3,7 @@ import { authorSchema } from "../../sanity.schemas";
 import { makeImageDetailsQuery } from "./image-details";
 
 export const authorDetailsSelection = {
+  type: ["_type", authorSchema.shape._type],
   id: ["_id", authorSchema.shape._id],
   createdAt: ["_createdAt", authorSchema.shape._createdAt],
   updatedAt: ["_updatedAt", authorSchema.shape._updatedAt],

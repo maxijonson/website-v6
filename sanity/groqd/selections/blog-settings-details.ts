@@ -3,6 +3,7 @@ import { blogSettingsSchema } from "../../sanity.schemas";
 import { makeImageDetailsQuery } from "./image-details";
 
 export const blogSettingsDetailsSelection = {
+  type: ["_type", blogSettingsSchema.shape._type],
   id: ["_id", blogSettingsSchema.shape._id],
   createdAt: ["_createdAt", blogSettingsSchema.shape._createdAt],
   updatedAt: ["_updatedAt", blogSettingsSchema.shape._updatedAt],

@@ -1,9 +1,8 @@
+import { webhookBodyQuery } from "@/app/api/webhooks/sanity/query";
 import { existsSync } from "fs";
 import fs from "fs/promises";
 import { format } from "groqfmt-nodejs";
 import path from "path";
-import { contentDetailsSelection } from "../../sanity/groqd/selections/content/content-details";
-import { makeGetPostByIdQuery } from "../../sanity/queries/post/getPostById";
 
 (async () => {
   try {
@@ -17,11 +16,7 @@ import { makeGetPostByIdQuery } from "../../sanity/queries/post/getPostById";
       console.info("sandbox.groq created");
     }
 
-    const query = makeGetPostByIdQuery()
-      .slice(0)
-      .grabOne$("body")
-      .filter()
-      .select(contentDetailsSelection);
+    const query = webhookBodyQuery;
 
     const queryFormatted = format(query.query);
     await fs.writeFile(queryFile, queryFormatted, "utf-8");

@@ -3,6 +3,7 @@ import { categorySchema } from "../../sanity.schemas";
 import { makeImageDetailsQuery } from "./image-details";
 
 export const categoryDetailsSelection = {
+  type: ["_type", categorySchema.shape._type],
   id: ["_id", categorySchema.shape._id],
   createdAt: ["_createdAt", categorySchema.shape._createdAt],
   updatedAt: ["_updatedAt", categorySchema.shape._updatedAt],
