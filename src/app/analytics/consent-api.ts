@@ -1,15 +1,15 @@
 import { z } from "zod";
 
-export const CONSENT_COOKIE_NAME = "consent";
+export const STORED_CONSENT_NAME = "consent";
 
-export const consentCookieSchema = z.object({
+export const storedConsentSchema = z.object({
   version: z.literal(1),
   purposes: z.object({
     cookieless: z.boolean(),
   }),
 });
-export type ConsentCookie = z.infer<typeof consentCookieSchema>;
-export type Purpose = keyof ConsentCookie["purposes"];
+export type StoredConsent = z.infer<typeof storedConsentSchema>;
+export type Purpose = keyof StoredConsent["purposes"];
 export type Consent = Record<Purpose, boolean>;
 
 export class ConsentApi {
@@ -39,23 +39,15 @@ export class ConsentApi {
     this.isReady = true;
 
     try {
-      const cookies = Object.fromEntries(
-        document.cookie
-          .split("; ")
-          .map((v) => v.split(/=(.*)/s).map(decodeURIComponent)),
-      );
-      const consentCookieText: string = cookies[CONSENT_COOKIE_NAME];
-      if (consentCookieText) {
+      const consentStr = localStorage.getItem(STORED_CONSENT_NAME);
+      if (consentStr) {
         try {
-          const parsedConsent = consentCookieSchema.parse(
-            JSON.parse(consentCookieText),
+          const parsedConsent = storedConsentSchema.parse(
+            JSON.parse(consentStr),
           );
           this.consent = { ...parsedConsent.purposes };
         } catch {
-          this.warn(
-            "Failed to parse consent cookie. Resetting consent.",
-            consentCookieText,
-          );
+          this.warn("Failed to parse consent. Resetting consent.", consentStr);
         }
       }
     } catch {
@@ -77,7 +69,7 @@ export class ConsentApi {
     this.consent = { ...consent };
     const newConsent = { ...this.consent };
 
-    this.refreshCookie();
+    this.refreshStoredConsent();
     this.fireConsentChange(newConsent, previousConsent);
   }
 
@@ -86,7 +78,7 @@ export class ConsentApi {
     this.consent[purpose] = value;
     const newConsent = { ...this.consent };
 
-    this.refreshCookie();
+    this.refreshStoredConsent();
     this.fireConsentChange(newConsent, previousConsent);
   }
 
@@ -137,18 +129,16 @@ export class ConsentApi {
     });
   }
 
-  private static refreshCookie(): void {
+  public static refreshStoredConsent(): void {
     try {
-      const cookieValue = consentCookieSchema.parse({
+      const value = storedConsentSchema.parse({
         version: 1,
         purposes: this.consent,
       });
-      // Expires in 1 year
-      const maxAge = 60 * 60 * 24 * 365;
-      document.cookie = `${CONSENT_COOKIE_NAME}=${JSON.stringify(cookieValue)}; path=/; max-age=${maxAge}`;
-      this.log("Updated consent cookie", { ...this.consent });
+      localStorage.setItem(STORED_CONSENT_NAME, JSON.stringify(value));
+      this.log("Updated consent", { ...this.consent });
     } catch (error) {
-      this.error("Failed to update consent cookie", error);
+      this.error("Failed to update consent", error);
     }
   }
 

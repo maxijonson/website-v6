@@ -47,7 +47,7 @@ const PrivacyPolicyPage = async () => {
         </p>
         <Content
           className={cn(
-            "prose max-w-none text-stone-950",
+            "prose max-w-none break-words text-stone-950",
             "dark:prose-invert dark:text-stone-50",
           )}
           value={content}

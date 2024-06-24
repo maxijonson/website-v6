@@ -62,10 +62,14 @@ export class PostHogAnalyticsProvider extends AnalyticsProvider {
         advanced_disable_feature_flags_on_first_load: true,
         advanced_disable_toolbar_metrics: true,
         disable_session_recording: true,
+        disable_persistence: true,
+        disable_surveys: true,
+        disable_scroll_properties: true,
         enable_heatmaps: false,
         autocapture: false,
         save_referrer: false,
         persistence: "memory",
+        person_profiles: "never",
         loaded: () => {
           this.log("Initialized");
 

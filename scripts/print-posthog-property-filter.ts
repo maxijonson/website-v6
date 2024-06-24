@@ -4,6 +4,14 @@ const baseProperties = [
   "geoip_latitude",
   "geoip_longitude",
   "geoip_city_name",
+  "geoip_time_zone",
+  "browser_version",
+  "os_version",
+  "raw_user_agent",
+  "screen_width",
+  "screen_height",
+  "viewport_width",
+  "viewport_height",
 ];
 
 const filteredProperties = baseProperties.reduce<string[]>((acc, property) => {

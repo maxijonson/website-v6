@@ -12,6 +12,7 @@ import DevUtilsClient from "./components/dev-utils/dev-utils";
 import SpeedInsightsClient from "./components/speed-insights-client/speed-insights-client";
 import VercelAnalyticsClient from "./components/vercel-analytics-client/vercel-analytics-client";
 import "./globals.css";
+import ConsentBanner from "./components/consent-banner/consent-banner";
 
 export const generateMetadata = (): Metadata => {
   const description =
@@ -92,6 +93,7 @@ const RootLayout = ({
         <AnalyticsProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <DevUtilsClient />
+            <ConsentBanner />
             {children}
           </ThemeProvider>
         </AnalyticsProvider>
