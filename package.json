@@ -18,7 +18,6 @@
     "groq:fmt": "tsx scripts/groq/groqfmt.ts",
     "groq:preview": "npm run dotenvx -- tsx scripts/groq/groq-preview.ts",
     "posthog:print-filter": "npm run dotenvx -- tsx scripts/posthog/posthog-print-filter.ts",
-    "posthog:delete-person": "npm run dotenvx -- tsx scripts/posthog/posthog-delete-person.ts",
     "tunnel": "npm run dotenvx -- tsx scripts/tunnel.ts --env-file=.env.local"
   },
   "dependencies": {
