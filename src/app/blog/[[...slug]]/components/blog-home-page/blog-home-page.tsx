@@ -11,6 +11,7 @@ import {
 import { urlForImage } from "../../../../../../sanity/utils/image";
 import BlogOverview from "../blog-overview/blog-overview";
 import { getBaseURL } from "@/utils/getBaseURL";
+import PageView from "@/app/components/analytics/page-view";
 
 const BlogHomePage = async () => {
   const [latestPosts, categories, blogSettings] = await Promise.all([
@@ -33,6 +34,7 @@ const BlogHomePage = async () => {
 
   return (
     <>
+      <PageView type="blog-home" />
       <BlogOverview
         hero={{
           banner: urlForImage(blogSettings.image),

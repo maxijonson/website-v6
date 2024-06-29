@@ -21,7 +21,9 @@ import PostBody from "../post-body/post-body";
 import TableOfContents from "../table-of-contents/table-of-contents";
 import BlogPostCoffee from "./blog-post-coffee";
 import BlogPostComments from "./blog-post-comments";
+import BlogPostRead from "./blog-post-read";
 import BlogPostShare from "./blog-post-share";
+import PageView from "@/app/components/analytics/page-view";
 
 const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   if (slug.length !== 1) notFound();
@@ -36,6 +38,8 @@ const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
 
   return (
     <div>
+      <PageView type="blog-post" />
+      <BlogPostRead slug={post.slug} />
       <BlogHeader />
       <main className="min-h-dvh">
         <article>

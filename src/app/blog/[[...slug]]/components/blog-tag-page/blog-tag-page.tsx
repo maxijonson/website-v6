@@ -8,6 +8,7 @@ import { findTagBySlug } from "../../../../../../sanity/queries/tags/findTagBySl
 import { urlForImage } from "../../../../../../sanity/utils/image";
 import type { BlogPageProps } from "../../page";
 import BlogOverview from "../blog-overview/blog-overview";
+import PageView from "@/app/components/analytics/page-view";
 
 const BlogTagPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   if (slug.length !== 1) notFound();
@@ -19,6 +20,7 @@ const BlogTagPage = async ({ params: { slug = [] } }: BlogPageProps) => {
 
   return (
     <>
+      <PageView type="blog-tag" />
       <BlogOverview
         hero={{
           banner: urlForImage(tag.image),

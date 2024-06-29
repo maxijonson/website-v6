@@ -4,12 +4,14 @@ import { Button } from "@/components/ui/button";
 import { RxEnvelopeClosed } from "react-icons/rx";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { AnalyticsManager } from "@/app/analytics/analytics-manager";
 
 const ContactEmail = () => {
   const [showCopied, setShowCopied] = useState(false);
 
   const copyEmail = async () => {
     if (showCopied) return;
+    AnalyticsManager.track("contact_click", { contact_type: "email" });
     try {
       await navigator.clipboard.writeText("tristan.chin@chintristan.io");
       setShowCopied(true);

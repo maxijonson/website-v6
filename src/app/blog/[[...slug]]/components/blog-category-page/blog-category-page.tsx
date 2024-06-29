@@ -14,6 +14,7 @@ import {
 } from "../../../../../../sanity/queries/post/getRecentPosts";
 import { getBaseURL } from "@/utils/getBaseURL";
 import StructuredData from "@/components/structured-data/structured-data";
+import PageView from "@/app/components/analytics/page-view";
 
 const BlogCategoryPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   if (slug.length !== 1) notFound();
@@ -40,6 +41,7 @@ const BlogCategoryPage = async ({ params: { slug = [] } }: BlogPageProps) => {
 
   return (
     <>
+      <PageView type="blog-category" />
       <BlogOverview
         hero={{
           banner: urlForImage(category.image),

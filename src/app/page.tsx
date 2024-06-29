@@ -9,12 +9,14 @@ import Skills from "./components/skills/skills";
 import { getHomePage } from "../../sanity/queries/pages/home-page/getHomePage";
 import TristanStructuredData from "@/components/structured-data/tristan-structured-data";
 import StructuredData from "@/components/structured-data/structured-data";
+import PageView from "./components/analytics/page-view";
 
 const Home = async () => {
   const { sections } = await getHomePage();
 
   return (
     <div>
+      <PageView type="home" />
       <HomeHeader />
       <main>
         {sections.map((section) => {

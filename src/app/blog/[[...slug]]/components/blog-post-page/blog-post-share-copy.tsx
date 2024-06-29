@@ -1,4 +1,5 @@
 "use client";
+import { AnalyticsManager } from "@/app/analytics/analytics-manager";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -14,6 +15,7 @@ const BlogPostShareCopy = ({ url, className }: BlogPostShareCopyProps) => {
 
   const onClick = () => {
     if (copied) return;
+    AnalyticsManager.track("post_share", { share_type: "copy" });
     navigator.clipboard.writeText(url);
     setCopied(true);
     setTimeout(() => {

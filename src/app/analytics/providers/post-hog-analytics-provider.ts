@@ -38,6 +38,32 @@ export class PostHogAnalyticsProvider extends AnalyticsProvider {
     // Since PostHog is configured to be cookieless, we don't want to identify users
   }
 
+  public set(properties: Record<string, any>): void {
+    if (!this.isEnabled) {
+      return this.queueSet(properties);
+    }
+    posthog.register(properties);
+    this.log("Set properties", properties);
+  }
+
+  public setOnce(properties: Record<string, any>): void {
+    if (!this.isEnabled) {
+      return this.queueSetOnce(properties);
+    }
+    posthog.register_once(properties);
+    this.log("Set once properties", properties);
+  }
+
+  public unset(...properties: string[]): void {
+    if (!this.isEnabled) {
+      return this.queueUnset(...properties);
+    }
+    properties.forEach((property) => {
+      posthog.unregister(property);
+    });
+    this.log("Unset properties", properties);
+  }
+
   private get isOptedIn(): boolean {
     return !posthog.has_opted_out_capturing();
   }
@@ -54,7 +80,7 @@ export class PostHogAnalyticsProvider extends AnalyticsProvider {
         capture_pageview: false,
         capture_pageleave: true,
         _onCapture: (eventName, eventData) => {
-          this.log("Tracked event", eventName, eventData);
+          this.log("Tracked event", eventName, eventData.properties);
         },
         debug: Boolean(AnalyticsProvider.enableLogging),
         advanced_disable_decide: true,
@@ -63,6 +89,8 @@ export class PostHogAnalyticsProvider extends AnalyticsProvider {
         advanced_disable_toolbar_metrics: true,
         disable_session_recording: true,
         disable_persistence: true,
+        disable_cookie: true,
+        cookie_expiration: 0,
         disable_surveys: true,
         disable_scroll_properties: true,
         enable_heatmaps: false,

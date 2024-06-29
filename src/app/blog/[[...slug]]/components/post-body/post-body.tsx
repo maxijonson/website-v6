@@ -4,6 +4,7 @@ import { type PortableTextReactComponents } from "next-sanity";
 import type { ContentDetails } from "../../../../../../sanity/groqd/selections/content/content-details";
 import PostBodyHeading from "./components/post-body-heading";
 import PostBodyImage from "./components/post-body-image";
+import { POST_BODY_ID } from "../blog-post-page/blog-post-read";
 
 export interface PostBodyProps {
   body: ContentDetails;
@@ -28,6 +29,7 @@ const PostBody = ({ body, className }: PostBodyProps) => {
   return (
     <Content
       className={cn("prose prose-stone mx-auto dark:prose-invert", className)}
+      id={POST_BODY_ID}
       value={body}
       components={postBodyComponents}
     />

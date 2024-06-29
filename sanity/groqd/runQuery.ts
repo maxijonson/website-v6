@@ -1,7 +1,7 @@
-import { clientEnv } from "@/env/env-client";
 import { makeSafeQueryRunner } from "groqd";
 import type { FilteredResponseQueryOptions } from "next-sanity";
 import { client } from "../client";
+import { PHASE_PRODUCTION_BUILD } from "next/dist/shared/lib/constants";
 
 export type RunQueryParams = Record<string, unknown>;
 export type RunQueryOptions = FilteredResponseQueryOptions;
@@ -20,10 +20,11 @@ export const runQuery = makeSafeQueryRunner(
     const perspective: RunQueryOptions["perspective"] =
       options?.perspective ?? (isDraftMode ? "previewDrafts" : "published");
 
-    const stega: RunQueryOptions["stega"] =
-      options?.stega ??
-      (perspective === "previewDrafts" ||
-        clientEnv.NEXT_PUBLIC_VERCEL_ENV === "preview");
+    const stega: RunQueryOptions["stega"] = (() => {
+      if (process.env.NEXT_PHASE === PHASE_PRODUCTION_BUILD) return false;
+      if (options?.stega !== undefined) return options.stega;
+      return isDraftMode;
+    })();
 
     const token = await (async () => {
       try {

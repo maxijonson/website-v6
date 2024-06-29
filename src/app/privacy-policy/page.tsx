@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import type { PortableTextReactComponents } from "next-sanity";
 import { getPrivacyPolicyPage } from "../../../sanity/queries/pages/privacy-policy-page/getPrivacyPolicyPage";
 import PostBodyHeading from "../blog/[[...slug]]/components/post-body/components/post-body-heading";
+import PageView from "../components/analytics/page-view";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -28,6 +29,7 @@ const PrivacyPolicyPage = async () => {
 
   return (
     <div>
+      <PageView type="privacy-policy" />
       <Header />
       <main
         className={cn("m-auto max-w-screen-lg px-6 pb-4 pt-24", "md:pt-24")}

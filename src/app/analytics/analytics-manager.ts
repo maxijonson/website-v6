@@ -6,9 +6,37 @@ export class AnalyticsManager {
     new PostHogAnalyticsProvider(),
   ];
 
-  public static track(event: string, properties?: Record<string, any>): void {
+  public static track(...args: Parameters<AnalyticsProvider["track"]>): void {
     this.providers.forEach((provider) => {
-      provider.track(event, properties);
+      provider.track(...args);
+    });
+  }
+
+  public static identify(
+    ...args: Parameters<AnalyticsProvider["identify"]>
+  ): void {
+    this.providers.forEach((provider) => {
+      provider.identify(...args);
+    });
+  }
+
+  public static set(...args: Parameters<AnalyticsProvider["set"]>): void {
+    this.providers.forEach((provider) => {
+      provider.set(...args);
+    });
+  }
+
+  public static setOnce(
+    ...args: Parameters<AnalyticsProvider["setOnce"]>
+  ): void {
+    this.providers.forEach((provider) => {
+      provider.setOnce(...args);
+    });
+  }
+
+  public static unset(...args: Parameters<AnalyticsProvider["unset"]>): void {
+    this.providers.forEach((provider) => {
+      provider.unset(...args);
     });
   }
 

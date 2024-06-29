@@ -11,6 +11,7 @@ import ContentInternalLink from "./components/content-internal-link";
 
 export interface ContentProps extends PortableTextProps {
   className?: string;
+  id?: string;
 }
 
 const defaultContentComponents: Partial<PortableTextReactComponents> = {
@@ -25,9 +26,14 @@ const defaultContentComponents: Partial<PortableTextReactComponents> = {
   },
 };
 
-const Content = ({ className, components = {}, ...props }: ContentProps) => {
+const Content = ({
+  className,
+  id,
+  components = {},
+  ...props
+}: ContentProps) => {
   return (
-    <div className={className}>
+    <div className={className} id={id}>
       <PortableText
         {...props}
         components={{
