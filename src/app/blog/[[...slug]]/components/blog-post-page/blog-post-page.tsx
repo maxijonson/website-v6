@@ -45,7 +45,13 @@ const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
           post_title: post.title,
         }}
       />
-      <BlogPostRead slug={post.slug} />
+      <BlogPostRead time={0} depth={0} event="blog_post_start" />
+      <BlogPostRead time={1000 * 30} depth={0.35} event="blog_post_read" />
+      <BlogPostRead
+        time={1000 * 60 * 2}
+        depth={0.75}
+        event="blog_post_finish"
+      />
       <BlogHeader />
       <main className="min-h-dvh">
         <article>

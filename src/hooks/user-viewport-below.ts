@@ -14,14 +14,13 @@ export const useViewportBelow = (
       return;
     }
 
-    const handleScroll = () =>
-      requestAnimationFrame(() => {
-        const { height, y } = element.getBoundingClientRect();
-        const thresholdedHeight = thresholdInPx
-          ? height + threshold
-          : height * threshold;
-        setIsViewportBelow(y + thresholdedHeight < 0);
-      });
+    const handleScroll = () => {
+      const { height, y } = element.getBoundingClientRect();
+      const thresholdedHeight = thresholdInPx
+        ? height + threshold
+        : height * threshold;
+      setIsViewportBelow(y + thresholdedHeight < 0);
+    };
 
     window.addEventListener("scroll", handleScroll);
     handleScroll();

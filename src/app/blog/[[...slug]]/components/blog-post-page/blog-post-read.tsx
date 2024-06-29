@@ -2,38 +2,42 @@
 
 import { AnalyticsManager } from "@/app/analytics/analytics-manager";
 import { useViewportBelow } from "@/hooks/user-viewport-below";
-import { useEffect, useState } from "react";
-
-const POST_READ_TIME = 1000 * 30;
+import { useEffect, useRef, useState } from "react";
 
 export const POST_BODY_ID = "blog-post-body";
-const POST_READ_DEPTH = 0.35;
 
 export interface BlogPostReadProps {
-  slug: string;
+  time: number;
+  depth: number;
+  event: string;
 }
 
-const BlogPostRead = ({ slug }: BlogPostReadProps) => {
-  const [timeReached, setTimeReached] = useState(false);
-  const depthReached = useViewportBelow(`#${POST_BODY_ID}`, POST_READ_DEPTH);
-  const [loggedView, setLoggedView] = useState(false);
+const BlogPostRead = ({ time, depth, event }: BlogPostReadProps) => {
+  const start = useRef(Date.now());
+  const [readTimeReached, setReadTimeReached] = useState(false);
+  const readDepthReached = useViewportBelow(`#${POST_BODY_ID}`, depth);
+  const [loggedRead, setLoggedRead] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setTimeReached(true);
-    }, POST_READ_TIME);
+      setReadTimeReached(true);
+    }, time);
 
     return () => {
       clearTimeout(timeout);
     };
-  }, []);
+  }, [time]);
 
   useEffect(() => {
-    if (timeReached && depthReached && !loggedView) {
-      AnalyticsManager.track("blog_post_read");
-      setLoggedView(true);
+    if (readTimeReached && readDepthReached && !loggedRead) {
+      const readTime = Date.now() - start.current;
+      AnalyticsManager.track(event, {
+        read_time_ms: readTime,
+        read_time_s: Math.round(readTime / 1000),
+      });
+      setLoggedRead(true);
     }
-  }, [timeReached, depthReached, loggedView, slug]);
+  }, [readTimeReached, readDepthReached, loggedRead, event]);
 
   return null;
 };
