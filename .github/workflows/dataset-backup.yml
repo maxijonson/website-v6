@@ -32,7 +32,6 @@ jobs:
           # Below are not actually used, just to satisfy env validation
           NEXT_PUBLIC_VERCEL_ENV: production
           NEXT_PUBLIC_POSTHOG_KEY: "phc_x"
-          NEXT_PUBLIC_POSTHOG_HOST: "https://eu.i.posthog.com"
       - name: Authenticate with Google Cloud
         uses: "google-github-actions/auth@v2"
         with:
