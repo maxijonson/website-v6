@@ -32,7 +32,7 @@ const BlogHero = ({
   author,
 }: BlogHeroProps) => {
   const breadcrumbClassName = cn(
-    "max-w-40 truncate",
+    "max-w-40 truncate leading-[normal]",
     "sm:max-w-60",
     "md:max-w-80",
   );
@@ -89,7 +89,7 @@ const BlogHero = ({
                     variant={
                       i === breadcrumbs.length - 1 ? "default" : "outline"
                     }
-                    className={cn("text-nowrap rounded-full uppercase", {
+                    className={cn("text-nowrap rounded-full py-1 uppercase", {
                       [cn(
                         "bg-stone-50/50 transition-all",
                         "hover:bg-stone-50/80",
