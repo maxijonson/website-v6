@@ -102,6 +102,22 @@ const nextConfig = {
     }
     return headers;
   },
+
+  async rewrites() {
+    return [
+      {
+        source: "/ingest/static/:path*",
+        destination: "https://eu-assets.i.posthog.com/static/:path*",
+      },
+      {
+        source: "/ingest/:path*",
+        destination: "https://eu.i.posthog.com/:path*",
+      },
+    ];
+  },
+
+  // This is required to support PostHog trailing slash API requests. If this is problematic, try reverse-proxy with a middleware instead https://posthog.com/docs/advanced/proxy/nextjs-middleware .
+  skipTrailingSlashRedirect: true,
 };
 
 export default withVanillaExtract(nextConfig);

@@ -76,7 +76,8 @@ export class PostHogAnalyticsProvider extends AnalyticsProvider {
     if (!this.hasInit && this.hasConsent) {
       this.log("Initializing");
       posthog.init(clientEnv.NEXT_PUBLIC_POSTHOG_KEY, {
-        api_host: clientEnv.NEXT_PUBLIC_POSTHOG_HOST,
+        api_host: "/ingest",
+        ui_host: "https://eu.posthog.com",
         capture_pageview: false,
         capture_pageleave: true,
         _onCapture: (eventName, eventData) => {
