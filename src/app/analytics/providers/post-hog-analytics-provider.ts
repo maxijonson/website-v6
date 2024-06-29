@@ -79,7 +79,7 @@ export class PostHogAnalyticsProvider extends AnalyticsProvider {
         api_host: "/ingest",
         ui_host: "https://eu.posthog.com",
         capture_pageview: false,
-        capture_pageleave: true,
+        capture_pageleave: false,
         _onCapture: (eventName, eventData) => {
           this.log("Tracked event", eventName, eventData.properties);
         },
@@ -120,7 +120,6 @@ export class PostHogAnalyticsProvider extends AnalyticsProvider {
       posthog.opt_in_capturing();
     } else if (!this.hasConsent && this.isOptedIn) {
       posthog.opt_out_capturing();
-      posthog.config.capture_pageleave = false;
     }
   }
 }
