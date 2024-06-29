@@ -34,7 +34,7 @@ const BlogHomePage = async () => {
 
   return (
     <>
-      <PageView type="blog-home" />
+      <PageView setProperties={{ page_type: "blog-home" }} />
       <BlogOverview
         hero={{
           banner: urlForImage(blogSettings.image),

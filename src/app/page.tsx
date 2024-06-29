@@ -16,7 +16,7 @@ const Home = async () => {
 
   return (
     <div>
-      <PageView type="home" />
+      <PageView setProperties={{ page_type: "home" }} />
       <HomeHeader />
       <main>
         {sections.map((section) => {

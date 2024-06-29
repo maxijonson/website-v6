@@ -20,7 +20,7 @@ const BlogTagPage = async ({ params: { slug = [] } }: BlogPageProps) => {
 
   return (
     <>
-      <PageView type="blog-tag" />
+      <PageView setProperties={{ page_type: "blog-tag" }} />
       <BlogOverview
         hero={{
           banner: urlForImage(tag.image),

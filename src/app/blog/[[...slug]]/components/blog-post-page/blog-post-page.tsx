@@ -38,7 +38,13 @@ const BlogPostPage = async ({ params: { slug = [] } }: BlogPageProps) => {
 
   return (
     <div>
-      <PageView type="blog-post" />
+      <PageView
+        setProperties={{
+          page_type: "blog-post",
+          post_slug: post.slug,
+          post_title: post.title,
+        }}
+      />
       <BlogPostRead slug={post.slug} />
       <BlogHeader />
       <main className="min-h-dvh">

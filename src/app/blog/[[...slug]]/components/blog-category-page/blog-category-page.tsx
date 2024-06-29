@@ -41,7 +41,7 @@ const BlogCategoryPage = async ({ params: { slug = [] } }: BlogPageProps) => {
 
   return (
     <>
-      <PageView type="blog-category" />
+      <PageView setProperties={{ page_type: "blog-category" }} />
       <BlogOverview
         hero={{
           banner: urlForImage(category.image),

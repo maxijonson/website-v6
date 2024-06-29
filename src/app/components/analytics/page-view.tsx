@@ -1,26 +1,27 @@
 "use client";
 
 import { AnalyticsManager } from "@/app/analytics/analytics-manager";
+import { stegaClean } from "@sanity/client/stega";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 interface PageViewProps {
-  type?: string;
+  setProperties?: Record<string, any>;
 }
 
-const PageView = ({ type }: PageViewProps) => {
+const PageView = ({ setProperties }: PageViewProps) => {
   const pathname = usePathname();
   const lastPathname = useRef("");
 
   useEffect(() => {
     const cleanup = () => {
-      if (type) {
-        AnalyticsManager.unset("page_type");
+      if (setProperties) {
+        AnalyticsManager.unset(...Object.keys(setProperties));
       }
     };
 
-    if (type) {
-      AnalyticsManager.set({ page_type: type });
+    if (setProperties) {
+      AnalyticsManager.set(stegaClean(setProperties));
     }
 
     if (pathname === lastPathname.current) return cleanup;
@@ -30,7 +31,7 @@ const PageView = ({ type }: PageViewProps) => {
     });
 
     return cleanup;
-  }, [pathname, type]);
+  }, [pathname, setProperties]);
 
   return null;
 };

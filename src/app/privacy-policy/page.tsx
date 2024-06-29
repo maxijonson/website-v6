@@ -29,7 +29,7 @@ const PrivacyPolicyPage = async () => {
 
   return (
     <div>
-      <PageView type="privacy-policy" />
+      <PageView setProperties={{ page_type: "privacy-policy" }} />
       <Header />
       <main
         className={cn("m-auto max-w-screen-lg px-6 pb-4 pt-24", "md:pt-24")}
