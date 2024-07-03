@@ -4,20 +4,21 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import IconifyIcon from "@/components/iconify-icon/iconify-icon";
 import Content from "@/components/content/content";
 
-export type ContentAlertPreviewSelection = Pick<
+type ContentAlertPreviewSelection = Pick<
   ContentAlert,
   "title" | "message" | "icon" | "variant"
 >;
 
-export type ContentAlertPreviewProps = PreviewProps & {
-  selection: ContentAlertPreviewSelection;
-};
+type ContentAlertPreviewProps = PreviewProps &
+  Partial<{
+    selection: ContentAlertPreviewSelection;
+  }>;
 
 const ContentAlertPreview = ({
   selection,
   ...props
 }: ContentAlertPreviewProps) => {
-  const { title, message, icon, variant } = selection;
+  const { title, message, icon, variant } = selection || {};
 
   return (
     <div>

@@ -2,9 +2,11 @@ import { validatePreviewUrl } from "@sanity/preview-url-secret";
 import { draftMode } from "next/headers";
 import { redirect } from "next/navigation";
 import { client } from "@/../sanity/client";
-import { readToken } from "@/../sanity/token";
+import { serverEnv } from "@/env/env-server";
 
-const clientWithToken = client.withConfig({ token: readToken });
+const clientWithToken = client.withConfig({
+  token: serverEnv.SANITY_API_READ_TOKEN,
+});
 
 export async function GET(request: Request) {
   const { isValid, redirectTo = "/" } = await validatePreviewUrl(

@@ -1,9 +1,11 @@
+import { serverEnv } from "@/env/env-server";
 import { client } from "../../../../sanity/client";
-import { readToken } from "../../../../sanity/token";
 import StudioPage from "../components/studio-page/studio-page";
 import type { DynamicRouteHandler } from "../page";
 
-const clientWithToken = client.withConfig({ token: readToken });
+const clientWithToken = client.withConfig({
+  token: serverEnv.SANITY_API_READ_TOKEN,
+});
 
 const findDatasetByPath = async (path: string) => {
   const datasets = await clientWithToken.datasets.list();

@@ -2,6 +2,7 @@ import { makeSafeQueryRunner } from "groqd";
 import type { FilteredResponseQueryOptions } from "next-sanity";
 import { client } from "../client";
 import { PHASE_PRODUCTION_BUILD } from "next/dist/shared/lib/constants";
+import { serverEnv } from "@/env/env-server";
 
 export type RunQueryParams = Record<string, unknown>;
 export type RunQueryOptions = FilteredResponseQueryOptions;
@@ -26,12 +27,11 @@ export const runQuery = makeSafeQueryRunner(
       return isDraftMode;
     })();
 
-    const token = await (async () => {
+    const token = (() => {
       try {
         if (options?.token) return options.token;
         if (perspective !== "previewDrafts") return undefined;
-        const { readToken } = await import("../token");
-        return readToken;
+        return serverEnv.SANITY_API_READ_TOKEN;
       } catch {
         return undefined;
       }
