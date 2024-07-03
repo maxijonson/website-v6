@@ -11,6 +11,7 @@ const BlogPostCoffee = () => {
   return (
     <Link
       href="https://buymeacoffee.com/maxijonson"
+      target="_blank"
       className="mx-auto"
       onClick={() => {
         AnalyticsManager.track("bmc_click");
