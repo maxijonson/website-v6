@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "npm run lint && next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint --max-warnings=0 && prettier --check . && tsc --noEmit",
     "format": "prettier --write .",
@@ -54,6 +55,7 @@
     "jiti": "^1.21.6",
     "next": "14.2.4",
     "next-sanity": "^9.4.2",
+    "next-sitemap": "^4.2.3",
     "next-themes": "^0.3.0",
     "posthog-js": "^1.143.0",
     "posthog-node": "^4.0.1",

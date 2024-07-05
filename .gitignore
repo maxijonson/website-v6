@@ -45,3 +45,7 @@ sanity/exports/*
 !sanity/exports/.gitkeep
 
 **/*.swp
+
+public/robots.txt
+public/sitemap.xml
+public/sitemap-*.xml
