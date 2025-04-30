@@ -27,6 +27,7 @@ const BlogHomePage = async () => {
         posts: await getRecentPostsByCategoryId(
           category.id,
           postDetailsSelection,
+          7,
         ),
       };
     }),
