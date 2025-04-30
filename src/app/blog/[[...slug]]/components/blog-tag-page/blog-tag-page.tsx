@@ -9,6 +9,7 @@ import { urlForImage } from "../../../../../../sanity/utils/image";
 import type { BlogPageProps } from "../../page";
 import BlogOverview from "../blog-overview/blog-overview";
 import PageView from "@/app/components/analytics/page-view";
+import { getPostsByTagId } from "../../../../../../sanity/queries/post/getPostsByTagId";
 
 const BlogTagPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   if (slug.length !== 1) notFound();
@@ -17,6 +18,7 @@ const BlogTagPage = async ({ params: { slug = [] } }: BlogPageProps) => {
   if (!tag) notFound();
 
   const latestPosts = await getRecentPostsByTagId(tag.id, postDetailsSelection);
+  const posts = await getPostsByTagId(tag.id, postDetailsSelection);
 
   return (
     <>
@@ -39,6 +41,11 @@ const BlogTagPage = async ({ params: { slug = [] } }: BlogPageProps) => {
             title: "Latest Posts",
             posts: latestPosts,
             variant: "featured",
+          },
+          {
+            title: "Older Posts",
+            posts,
+            variant: "grid",
           },
         ]}
       />

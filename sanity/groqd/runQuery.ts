@@ -8,7 +8,20 @@ export type RunQueryParams = Record<string, unknown>;
 export type RunQueryOptions = FilteredResponseQueryOptions;
 
 export const runQuery = makeSafeQueryRunner(
-  async (query, params?: RunQueryParams, options?: RunQueryOptions) => {
+  async (query, _params?: RunQueryParams, options?: RunQueryOptions) => {
+    const params = (() => {
+      if (!_params) return undefined;
+      // Strip out undefined values from params, because Sanity is still receiving param=undefined, which is not valid.
+      return Object.entries(_params).reduce<RunQueryParams>(
+        (acc, [key, value]) => {
+          if (value === undefined) return acc;
+          acc[key] = value;
+          return acc;
+        },
+        {},
+      );
+    })();
+
     const isDraftMode = await (async () => {
       try {
         const { draftMode } = await import("next/headers");

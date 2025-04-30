@@ -6,8 +6,14 @@ import { getTagsByCategoryId } from "../../../../../../sanity/queries/tags/getTa
 import { urlForImage } from "../../../../../../sanity/utils/image";
 import { categoryDetailsSelection } from "../../../../../../sanity/groqd/selections/category-details";
 import { pick } from "../../../../../../sanity/groqd/selections/pick";
-import { tagDetailsSelection } from "../../../../../../sanity/groqd/selections/tag-details";
-import { postDetailsSelection } from "../../../../../../sanity/groqd/selections/post-details";
+import {
+  tagDetailsSelection,
+  type TagDetails,
+} from "../../../../../../sanity/groqd/selections/tag-details";
+import {
+  postDetailsSelection,
+  type PostDetails,
+} from "../../../../../../sanity/groqd/selections/post-details";
 import {
   getRecentPostsByCategoryId,
   getRecentPostsByTagId,
@@ -30,14 +36,18 @@ const BlogCategoryPage = async ({ params: { slug = [] } }: BlogPageProps) => {
     getRecentPostsByCategoryId(category.id, postDetailsSelection),
   ]);
 
-  const latestPostsByTag = await Promise.all(
-    tags.map(async (tag) => {
-      return {
-        tag,
-        posts: await getRecentPostsByTagId(tag.id, postDetailsSelection),
-      };
-    }),
-  );
+  const usedIds = new Set(latestPosts.map((post) => post.id));
+  const latestPostsByTag: {
+    tag: Pick<TagDetails, "id" | "name" | "slug">;
+    posts: PostDetails[];
+  }[] = [];
+  for (const tag of tags) {
+    const posts = await getRecentPostsByTagId(tag.id, postDetailsSelection, {
+      excludeIds: Array.from(usedIds),
+    });
+    posts.forEach((p) => usedIds.add(p.id));
+    latestPostsByTag.push({ tag, posts });
+  }
 
   return (
     <>

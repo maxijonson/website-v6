@@ -11,17 +11,22 @@ import { getQueryTag } from "../../utils/getQueryTag";
 const runLatestPostsQuery = <S extends Selection>(
   query: UnknownArrayQuery,
   selection: S,
-  amount = 4,
+  { amount = 4 }: { amount?: number } = {},
   params?: RunQueryParams,
   options?: RunQueryOptions,
-) => runSlicedQuery(query, selection, 0, amount - 1, params, options);
+) => {
+  return runSlicedQuery(query, selection, 0, amount - 1, params, options);
+};
 
-export const getRecentPosts = <S extends Selection>(selection: S, amount = 4) =>
+export const getRecentPosts = <S extends Selection>(
+  selection: S,
+  { amount = 4, excludeIds }: { amount?: number; excludeIds?: string[] } = {},
+) =>
   runLatestPostsQuery(
-    makeGetPostsQuery(),
+    makeGetPostsQuery(excludeIds ? `!(_id in $excludeIds)` : undefined),
     selection,
-    amount,
-    {},
+    { amount },
+    { excludeIds },
     {
       tag: getQueryTag("post", "getRecentPosts"),
       next: { tags: [cacheTag.posts] },
@@ -31,13 +36,15 @@ export const getRecentPosts = <S extends Selection>(selection: S, amount = 4) =>
 export const getRecentPostsByCategoryId = <S extends Selection>(
   categoryId: string,
   selection: S,
-  amount = 3,
+  { amount = 3, excludeIds }: { amount?: number; excludeIds?: string[] } = {},
 ) =>
   runLatestPostsQuery(
-    makeGetPostsByCategoryIdQuery(),
+    makeGetPostsByCategoryIdQuery(
+      excludeIds ? `!(_id in $excludeIds)` : undefined,
+    ),
     selection,
-    amount,
-    { categoryId },
+    { amount },
+    { categoryId, excludeIds },
     {
       tag: getQueryTag("post", "getRecentPostsByCategoryId"),
       next: { tags: [categoryId, cacheTag.posts] },
@@ -47,13 +54,13 @@ export const getRecentPostsByCategoryId = <S extends Selection>(
 export const getRecentPostsByTagId = <S extends Selection>(
   tagId: string,
   selection: S,
-  amount = 3,
+  { amount = 3, excludeIds }: { amount?: number; excludeIds?: string[] } = {},
 ) =>
   runLatestPostsQuery(
-    makeGetPostsByTagIdQuery(),
+    makeGetPostsByTagIdQuery(excludeIds ? `!(_id in $excludeIds)` : undefined),
     selection,
-    amount,
-    { tagId },
+    { amount },
+    { tagId, excludeIds },
     {
       tag: getQueryTag("post", "getRecentPostsByTagId"),
       next: { tags: [tagId, cacheTag.posts] },

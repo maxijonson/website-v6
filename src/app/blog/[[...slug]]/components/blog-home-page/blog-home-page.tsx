@@ -1,7 +1,13 @@
 import StructuredData from "@/components/structured-data/structured-data";
 import { blogSettingsDetailsSelection } from "../../../../../../sanity/groqd/selections/blog-settings-details";
-import { categoryDetailsSelection } from "../../../../../../sanity/groqd/selections/category-details";
-import { postDetailsSelection } from "../../../../../../sanity/groqd/selections/post-details";
+import {
+  categoryDetailsSelection,
+  type CategoryDetails,
+} from "../../../../../../sanity/groqd/selections/category-details";
+import {
+  postDetailsSelection,
+  type PostDetails,
+} from "../../../../../../sanity/groqd/selections/post-details";
 import { getBlogSettings } from "../../../../../../sanity/queries/blog-settings/getBlogSettings";
 import { getCategories } from "../../../../../../sanity/queries/categories/getCategories";
 import {
@@ -20,18 +26,20 @@ const BlogHomePage = async () => {
     getBlogSettings(blogSettingsDetailsSelection),
   ]);
 
-  const latestPostsByCategory = await Promise.all(
-    categories.map(async (category) => {
-      return {
-        category,
-        posts: await getRecentPostsByCategoryId(
-          category.id,
-          postDetailsSelection,
-          7,
-        ),
-      };
-    }),
-  );
+  const usedIds = new Set(latestPosts.map((post) => post.id));
+  const latestPostsByCategory: {
+    category: CategoryDetails;
+    posts: PostDetails[];
+  }[] = [];
+  for (const category of categories) {
+    const posts = await getRecentPostsByCategoryId(
+      category.id,
+      postDetailsSelection,
+      { excludeIds: Array.from(usedIds) },
+    );
+    posts.forEach((p) => usedIds.add(p.id));
+    latestPostsByCategory.push({ category, posts });
+  }
 
   return (
     <>
