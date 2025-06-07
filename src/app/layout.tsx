@@ -13,6 +13,7 @@ import SpeedInsightsClient from "./components/speed-insights-client/speed-insigh
 import VercelAnalyticsClient from "./components/vercel-analytics-client/vercel-analytics-client";
 import "./globals.css";
 import ConsentBanner from "./components/consent-banner/consent-banner";
+import Script from "next/script";
 
 export const generateMetadata = (): Metadata => {
   const description =
@@ -89,6 +90,14 @@ const RootLayout = ({
       suppressHydrationWarning
       className={cn(scrollbarClassName, "scroll-smooth")}
     >
+      <head>
+        <Script
+          id="clickrank"
+          src={`https://js.clickrank.ai/seo/3fd46b5a-a301-4992-bf62-6ced7189bbe3/script?${new Date().getTime()}`}
+          async
+          strategy="afterInteractive"
+        />
+      </head>
       <body className={fontSans.className}>
         <AnalyticsProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
